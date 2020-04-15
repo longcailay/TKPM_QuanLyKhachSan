@@ -25,12 +25,20 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import WSPACE.*;
 
 public class HomePage extends JFrame {
 	
 	
 	
 	//global variable
+	//Các group Layout cho 3 Panel chính
+	private GroupLayout groupLayout;
+	
 	//3 Panel chinh
 	private JPanel pnWorkspace;
 	private JPanel pnMenu;
@@ -45,7 +53,12 @@ public class HomePage extends JFrame {
 	public static JButton btnThuePhong;	
 	public static JButton btnThanhTon;
 	
-
+	//panel Title
+	public static JLabel lblTitle;
+	
+	//workspace 
+	public static wsThuePhong wsThuePhong;
+	private JLabel lblNewLabel;
 	
 	
 	/**
@@ -92,28 +105,70 @@ public class HomePage extends JFrame {
 		btnBaoCao.setBounds(0, 472, 270, 73);
 		pnMenu.add(btnBaoCao);
 		
-		btnCaiDat = new JButton("C\u00E0i \u0110\u1EB7t");
+		btnCaiDat = new JButton("Cài Đặt");
 		btnCaiDat.setBounds(0, 542, 270, 79);
 		pnMenu.add(btnCaiDat);
 		
 		btnThuePhong = new JButton("Thuê Phòng");
+		btnThuePhong.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setText(btnThuePhong.getText());
+				//clear workspace hiện tại ???
+				pnWorkspace.setVisible(false);
+				
+				wsThuePhong = new wsThuePhong();
+				wsThuePhong.setVisible(true);
+				
+				groupLayout = new GroupLayout(getContentPane());
+				groupLayout.setHorizontalGroup(
+					groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(pnMenu, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(wsThuePhong, GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
+								.addComponent(pnTitle, GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)))
+				);
+				groupLayout.setVerticalGroup(
+					groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(pnMenu, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(pnTitle, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wsThuePhong, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
+				);
+				
+				getContentPane().setLayout(groupLayout);
+				
+			}
+		});
+		btnThuePhong.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 		btnThuePhong.setActionCommand("Thuê Phòng");
 		btnThuePhong.setBounds(0, 109, 270, 73);
 		pnMenu.add(btnThuePhong);
 		
-		btnThanhTon = new JButton("Thanh To\u00E1n");
+		btnThanhTon = new JButton("Thanh Toán");
 		btnThanhTon.setBounds(0, 181, 270, 73);
 		pnMenu.add(btnThanhTon);
 		
+		pnMenu.setLayout(null);
 	}
 	public void setupTitle(JPanel pnTitle) {
 		pnTitle.setAlignmentY(0.0f);
 		pnTitle.setAlignmentX(0.0f);
 		pnTitle.setBackground(Color.GREEN);
+		
+		lblTitle = new JLabel("Tiêu Đề");
 	}
 	
 	public void setupWorkspace(JPanel pnWorkspace) {
 		pnWorkspace.setBackground(new Color(102, 255, 255));
+		
 	}
 	public HomePage() {		
 		setSize(new Dimension(1200, 800));
@@ -132,7 +187,8 @@ public class HomePage extends JFrame {
 		setupWorkspace(pnWorkspace);
 		
 		
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		//Begin: add group Layout 3 panel chính
+		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -150,11 +206,30 @@ public class HomePage extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(pnWorkspace, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
 		);
-		pnMenu.setLayout(null);
-		getContentPane().setLayout(groupLayout);	
+		//End: add group Layout 3 panel chính
+		
+		
+		//Begin: group Layout cho panel Title
+		GroupLayout gl_pnTitle = new GroupLayout(pnTitle);
+		gl_pnTitle.setHorizontalGroup(
+			gl_pnTitle.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnTitle.createSequentialGroup()
+					.addGap(357)
+					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(371, Short.MAX_VALUE))
+		);
+		gl_pnTitle.setVerticalGroup(
+			gl_pnTitle.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnTitle.createSequentialGroup()
+					.addGap(5)
+					.addComponent(lblTitle, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		pnTitle.setLayout(gl_pnTitle);
+		//End: group Layout cho panel Title
 		
 		
 		
-		
+		getContentPane().setLayout(groupLayout);//Quan trọng set Layout cho 3 Panel Chính trên HomePage	
 	}
 }
