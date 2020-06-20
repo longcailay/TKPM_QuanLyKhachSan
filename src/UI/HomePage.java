@@ -109,6 +109,10 @@ public class HomePage extends JFrame {
 		btnCaiDat.setBounds(0, 542, 270, 79);
 		pnMenu.add(btnCaiDat);
 		
+		
+		wsThuePhong = new wsThuePhong();
+		wsThuePhong.setVisible(false);
+		
 		btnThuePhong = new JButton("Thuê Phòng");
 		btnThuePhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -116,7 +120,7 @@ public class HomePage extends JFrame {
 				//clear workspace hiện tại ???
 				pnWorkspace.setVisible(false);
 				
-				wsThuePhong = new wsThuePhong();
+				//wsThuePhong = new wsThuePhong();
 				wsThuePhong.setVisible(true);
 				
 				groupLayout = new GroupLayout(getContentPane());
