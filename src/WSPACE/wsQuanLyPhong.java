@@ -1,5 +1,8 @@
 package WSPACE;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -8,11 +11,17 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import javax.swing.border.BevelBorder;
+
+import UI.HomePage;
 
 public class wsQuanLyPhong extends JPanel {
 	
@@ -43,8 +52,8 @@ public class wsQuanLyPhong extends JPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-						.addComponent(panel_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		
@@ -53,27 +62,30 @@ public class wsQuanLyPhong extends JPanel {
 		panel_3.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel_3.setAutoscrolls(true);
 		panel_3.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
-				.addComponent(panel_3, Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 586, GroupLayout.DEFAULT_SIZE)
+				.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 586, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.BASELINE)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
+					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE, Short.MAX_VALUE))
 		);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		
-		JButton btnNewButton_2;
+		JButton btnNewButton_2 = new JButton();
 		for(int i=0; i<30; i++) {
-		btnNewButton_2 = new JButton("New button");
+		btnNewButton_2 = new JButton("New button" + i);
+		btnNewButton_2.setName("New button" + i);
 		btnNewButton_2.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
 		panel_3.add(btnNewButton_2);
 		}
+		
+		
+		
 		
 		JLabel lblNewLabel = new JLabel("Ch\u1ECDn lo\u1EA1i ph\u00F2ng");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -106,9 +118,9 @@ public class wsQuanLyPhong extends JPanel {
 							.addComponent(lblTnhTrng, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)))
 					.addGap(63)
 					.addComponent(btnDuyet)
-					.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+					.addGap(37)
 					.addComponent(btnThemPhongMoi)
-					.addGap(26))
+					.addContainerGap(26, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -123,10 +135,19 @@ public class wsQuanLyPhong extends JPanel {
 						.addComponent(cmbTinhTrang, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnDuyet)
 						.addComponent(btnThemPhongMoi))
-					.addContainerGap(29, Short.MAX_VALUE))
+					.addContainerGap(27, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
+		
+		btnThemPhongMoi.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				HomePage.lblTitle.setText(btnThemPhongMoi.getText());
+			}
+		});
 		
 		JLabel lblNewLabel_3 = new JLabel("Danh S\u00E1ch Kh\u00E1ch Thu\u00EA");
 		
