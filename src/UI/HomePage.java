@@ -12,8 +12,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import WSPACE.*;
 
@@ -28,23 +26,18 @@ public class HomePage extends JFrame {
 	private JPanel pnMenu;
 	private JPanel pnTitle;
 	
+	//panel Title
+	public static JLabel lblTitle;
+	
 	//Panel Menu
 	public static JButton btnQuanLyPhong;
+	public static JButton btnThuePhong;	
 	public static JButton btnHoaDon;	
 	public static JButton btnNhanVien;	
 	public static JButton btnBaoCao;	
 	public static JButton btnCaiDat;	
-	public static JButton btnThuePhong;	
-	public static JButton btnThanhTon;
-	
-	//panel Title
-	public static JLabel lblTitle;
-	
-	//workspace 
-	public static wsQuanLyPhong wsQuanLyPhong;
-	public static wsThuePhong wsThuePhong;
-	
-	
+	public static JButton btnThanhToan;
+
 	
 	/**
 	 * Launch the application.
@@ -54,6 +47,7 @@ public class HomePage extends JFrame {
 			public void run() {
 				try {
 					HomePage frame = new HomePage();
+					frame.InitializeComponent();
 					frame.btnQuanLyPhong.doClick();
 					frame.setVisible(true);	
 				} catch (Exception e) {
@@ -73,132 +67,58 @@ public class HomePage extends JFrame {
 		pnMenu.setBackground(Color.YELLOW);
 		pnMenu.setForeground(new Color(0, 255, 0));
 		
+		InitializePanelMenu(pnMenu);//set vị trí và kích thước các Button trong PanelMenu
 		
-		//các button chức năng chính
-		
-		
-		wsQuanLyPhong = new wsQuanLyPhong();
-		wsQuanLyPhong.setVisible(false);
-		
-		btnQuanLyPhong = new JButton("Quản Lý Phòng");
+		//Xử lý các sự kiện
 		btnQuanLyPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnQuanLyPhong.getText());
 				//clear workspace hiện tại ???
+				//pnWorkspace = 
 				pnWorkspace.setVisible(false);
-				
+				pnWorkspace = new wsQuanLyPhong();
 				//wsThuePhong = new wsThuePhong();
-				wsQuanLyPhong.setVisible(true);
+				pnWorkspace.setVisible(true);
 				
-				groupLayout = new GroupLayout(getContentPane());
-				groupLayout.setHorizontalGroup(
-					groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(pnMenu, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(wsQuanLyPhong, GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
-								.addComponent(pnTitle, GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)))
-				);
-				groupLayout.setVerticalGroup(
-					groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(pnMenu, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(pnTitle, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(wsQuanLyPhong, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
-				);
+				addGroupLayoutPanels(pnWorkspace);
 				
 				getContentPane().setLayout(groupLayout);
-				
 			}
 		});
-		btnQuanLyPhong.setBounds(0, 109, 270, 73);
-		pnMenu.add(btnQuanLyPhong);
+
 		
-		
-		btnHoaDon = new JButton("Hóa Đơn");
-		btnHoaDon.setBounds(0, 254, 270, 73);
-		pnMenu.add(btnHoaDon);
-		
-		btnNhanVien = new JButton("Nhân Viên");
-		btnNhanVien.setBounds(0, 400, 270, 73);
-		pnMenu.add(btnNhanVien);
-		
-		btnBaoCao = new JButton("Báo Cáo");
-		btnBaoCao.setBounds(0, 472, 270, 73);
-		pnMenu.add(btnBaoCao);
-		
-		btnCaiDat = new JButton("Cài Đặt");
-		btnCaiDat.setBounds(0, 542, 270, 79);
-		pnMenu.add(btnCaiDat);
-		
-		
-		wsThuePhong = new wsThuePhong();
-		wsThuePhong.setVisible(false);
-		
-		btnThuePhong = new JButton("Thuê Phòng");
 		btnThuePhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnThuePhong.getText());
-				//clear workspace hiện tại ???
-				wsQuanLyPhong.setVisible(false);
 				pnWorkspace.setVisible(false);
+				pnWorkspace = new wsThuePhong();
+				pnWorkspace.setVisible(true);
 				
-				//wsThuePhong = new wsThuePhong();
-				wsThuePhong.setVisible(true);
-				
-				groupLayout = new GroupLayout(getContentPane());
-				groupLayout.setHorizontalGroup(
-					groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(pnMenu, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(wsThuePhong, GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
-								.addComponent(pnTitle, GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)))
-				);
-				groupLayout.setVerticalGroup(
-					groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(pnMenu, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(pnTitle, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(wsThuePhong, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
-				);
+				addGroupLayoutPanels(pnWorkspace);
 				
 				getContentPane().setLayout(groupLayout);
-				
 			}
 		});
-		btnThuePhong.setActionCommand("Thuê Phòng");
-		btnThuePhong.setBounds(0, 327, 270, 73);
-		pnMenu.add(btnThuePhong);
-		
-		
-		btnThanhTon = new JButton("Thanh Toán");
-		btnThanhTon.setBounds(0, 181, 270, 73);
-		pnMenu.add(btnThanhTon);
 		
 		pnMenu.setLayout(null);
 	}
+	
 	public void setupTitle(JPanel pnTitle) {
 		pnTitle.setAlignmentY(0.0f);
 		pnTitle.setAlignmentX(0.0f);
-		pnTitle.setBackground(Color.GREEN);
-		
-		lblTitle = new JLabel("Quản lý phòng");
+		pnTitle.setBackground(Color.green);
+		lblTitle = new JLabel();
 	}
 	
 	public void setupWorkspace(JPanel pnWorkspace) {
-		pnWorkspace.setBackground(new Color(102, 255, 255));
+		//pnWorkspace.setBackground(new Color(102, 5, 255));
 	}
+	
 	
 	//Khung làm việc dùng Group layout để bố trí các Panel chính cho chương trình
 	//Gồm có 3 Panel chính: Workspace, title, menu chức năng
 	public void addGroupLayoutPanels(JPanel workSpace)
 	{
-		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -217,6 +137,44 @@ public class HomePage extends JFrame {
 					.addComponent(workSpace, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
 		);
 	}
+	
+	public void InitializePanelMenu(JPanel pnMenu)
+	{
+		btnQuanLyPhong = new JButton("Quản Lý Phòng");
+		btnQuanLyPhong.setBounds(0, 109, 270, 73);
+		pnMenu.add(btnQuanLyPhong);
+		
+		btnThuePhong = new JButton("Thuê Phòng");
+		btnThuePhong.setBounds(0, 327, 270, 73);
+		pnMenu.add(btnThuePhong);
+		
+		btnHoaDon = new JButton("Hóa Đơn");
+		btnHoaDon.setBounds(0, 254, 270, 73);
+		pnMenu.add(btnHoaDon);
+		
+		btnNhanVien = new JButton("Nhân Viên");
+		btnNhanVien.setBounds(0, 400, 270, 73);
+		pnMenu.add(btnNhanVien);
+		
+		btnBaoCao = new JButton("Báo Cáo");
+		btnBaoCao.setBounds(0, 472, 270, 73);
+		pnMenu.add(btnBaoCao);
+		
+		btnCaiDat = new JButton("Cài Đặt");
+		btnCaiDat.setBounds(0, 542, 270, 79);
+		pnMenu.add(btnCaiDat);
+		
+		btnThanhToan = new JButton("Thanh Toán");
+		btnThanhToan.setBounds(0, 181, 270, 73);
+		pnMenu.add(btnThanhToan);
+	}
+	
+	public void InitializeComponent() 
+	{
+		groupLayout = new GroupLayout(getContentPane());
+				
+	}
+	
 	
 	public HomePage() {		
 		setSize(new Dimension(1200, 800));
@@ -253,7 +211,6 @@ public class HomePage extends JFrame {
 		);
 		pnTitle.setLayout(gl_pnTitle);
 		//End: group Layout cho panel Title
-		
 		
 		
 		getContentPane().setLayout(groupLayout);//Quan trọng set Layout cho 3 Panel Chính trên HomePage	
