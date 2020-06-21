@@ -16,8 +16,6 @@ import javax.swing.JLabel;
 import WSPACE.*;
 
 public class HomePage extends JFrame {
-	
-	//global variable
 	//Các group Layout cho 3 Panel chính
 	private GroupLayout groupLayout;
 	
@@ -47,7 +45,6 @@ public class HomePage extends JFrame {
 			public void run() {
 				try {
 					HomePage frame = new HomePage();
-					frame.InitializeComponent();
 					frame.btnQuanLyPhong.doClick();
 					frame.setVisible(true);	
 				} catch (Exception e) {
@@ -69,38 +66,65 @@ public class HomePage extends JFrame {
 		
 		InitializePanelMenu(pnMenu);//set vị trí và kích thước các Button trong PanelMenu
 		
-		//Xử lý các sự kiện
+		//Tạo các workSpace khi nhấn các nút chức năng
 		btnQuanLyPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnQuanLyPhong.getText());
-				//clear workspace hiện tại ???
-				//pnWorkspace = 
-				pnWorkspace.setVisible(false);
-				pnWorkspace = new wsQuanLyPhong();
-				//wsThuePhong = new wsThuePhong();
-				pnWorkspace.setVisible(true);
-				
-				addGroupLayoutPanels(pnWorkspace);
-				
-				getContentPane().setLayout(groupLayout);
+				loadNewWorkspace("QuanLyPhong");
 			}
 		});
-
 		
 		btnThuePhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnThuePhong.getText());
-				pnWorkspace.setVisible(false);
-				pnWorkspace = new wsThuePhong();
-				pnWorkspace.setVisible(true);
-				
-				addGroupLayoutPanels(pnWorkspace);
-				
-				getContentPane().setLayout(groupLayout);
+				loadNewWorkspace("ThuePhong");
 			}
 		});
 		
+		btnNhanVien.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setText(btnNhanVien.getText());
+				loadNewWorkspace("NhanVien");
+			}
+		});
+		
+		
 		pnMenu.setLayout(null);
+	}
+	
+	public void loadNewWorkspace(String ws)
+	{
+		pnWorkspace.setVisible(false);
+		if(ws == "NhanVien") {
+			pnWorkspace = new wsNhanVien();
+		}else if (ws == "ThuePhong")
+		{
+			pnWorkspace = new wsThuePhong();
+		}else if (ws == "BaoCao")
+		{
+			pnWorkspace = new wsBaoCao();
+		}else if (ws == "CaiDat")
+		{
+			pnWorkspace = new wsCaiDat();
+		}else if (ws == "HoaDon")
+		{
+			pnWorkspace = new wsHoaDon();
+		}else if (ws == "ThuePhong")
+		{
+			pnWorkspace = new wsThuePhong();
+		}
+		else if (ws == "QuanLyPhong")
+		{
+			pnWorkspace = new wsQuanLyPhong();
+		}
+		else
+		{
+			pnWorkspace = new wsThanhToan();
+		}
+		pnWorkspace.setVisible(true);
+		addGroupLayoutPanels(pnWorkspace);
+		getContentPane().setLayout(groupLayout);
 	}
 	
 	public void setupTitle(JPanel pnTitle) {
@@ -119,6 +143,7 @@ public class HomePage extends JFrame {
 	//Gồm có 3 Panel chính: Workspace, title, menu chức năng
 	public void addGroupLayoutPanels(JPanel workSpace)
 	{
+		groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -168,17 +193,12 @@ public class HomePage extends JFrame {
 		btnThanhToan.setBounds(0, 181, 270, 73);
 		pnMenu.add(btnThanhToan);
 	}
-	
-	public void InitializeComponent() 
-	{
-		groupLayout = new GroupLayout(getContentPane());
-				
-	}
-	
+		
 	
 	public HomePage() {		
 		setSize(new Dimension(1200, 800));
 		setTitle("HoApp");
+		setLocationRelativeTo(null);
 
 		//Cài đặt Panel Menu
 		pnMenu = new JPanel();
