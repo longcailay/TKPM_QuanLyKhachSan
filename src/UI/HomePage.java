@@ -198,7 +198,7 @@ public class HomePage extends JFrame {
 	public HomePage() {		
 		setSize(new Dimension(1200, 800));
 		setTitle("HoApp");
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(null);//set center of screen
 
 		//Cài đặt Panel Menu
 		pnMenu = new JPanel();
