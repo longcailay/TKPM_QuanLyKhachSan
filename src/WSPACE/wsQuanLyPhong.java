@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -24,7 +25,11 @@ import javax.swing.border.BevelBorder;
 import UI.HomePage;
 
 public class wsQuanLyPhong extends JPanel {
-	
+	/*Khai báo các biến*/
+	public static JComboBox cmbLoaiPhong;
+	public static JComboBox cmbTinhTrang;
+	public static JButton btnDuyet;
+	public static JButton btnThemPhongMoi;
 	/**
 	 * Create the panel.
 	 */
@@ -76,15 +81,20 @@ public class wsQuanLyPhong extends JPanel {
 					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE, Short.MAX_VALUE))
 		);
 		
-		JButton btnNewButton_2 = new JButton();
-		for(int i=0; i<30; i++) {
-		btnNewButton_2 = new JButton("New button" + i);
-		btnNewButton_2.setName("New button" + i);
-		btnNewButton_2.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
-		panel_3.add(btnNewButton_2);
+		
+		for(int i = 0; i < 30; i++) {
+		JButton btn = new JButton("Button" + i);
+		btn.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
+		btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				HomePage.lblTitle.setText(btn.getText());
+			}
+		});
+		panel_3.add(btn);
 		}
-		
-		
 		
 		
 		JLabel lblNewLabel = new JLabel("Ch\u1ECDn lo\u1EA1i ph\u00F2ng");
@@ -93,15 +103,15 @@ public class wsQuanLyPhong extends JPanel {
 		JLabel lblTnhTrng = new JLabel("T\u00ECnh tr\u1EA1ng");
 		lblTnhTrng.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		JComboBox cmbLoaiPhong = new JComboBox();
+		cmbLoaiPhong = new JComboBox();
 		cmbLoaiPhong.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Vip", "Bình thường"}));
 		
-		JComboBox cmbTinhTrang = new JComboBox();
+		cmbTinhTrang = new JComboBox();
 		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả"}));
 		
-		JButton btnDuyet = new JButton("Duyệt");
+		btnDuyet = new JButton("Duyệt");
 		
-		JButton btnThemPhongMoi = new JButton("Thêm phòng");
+		btnThemPhongMoi = new JButton("Thêm phòng");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
