@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -30,19 +31,37 @@ import javax.swing.BoxLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import DAO.*;
+import DTO.*;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.GridLayout;
 
 public class wsQuanLyPhong extends JPanel {
+	
 	/*Khai báo các biến*/
-	public static JComboBox cmbLoaiPhong;
-	public static JComboBox cmbTinhTrang;
-	public static JButton btnDuyet;
-	public static JButton btnThemPhongMoi;
+	//các panel
+	private JPanel panel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JPanel panel_3;
+	
+	
+	private JComboBox cmbLoaiPhong;
+	private JComboBox cmbTinhTrang;
+	private JButton btnDuyet;
+	private JButton btnThemPhongMoi;
+	private JLabel lblPhong;
 	private JTextField txtTinhTrang;
 	private JTextField txtNgayThue;
-	private JTable table;
-	private JTextField textField;
+	private JTable tbDanhSachKhachThue;
+	private JTextField txtGhiChu;
+	
+	private JButton btnThuePhong;
+	private JButton btnTraPhong;
+	private JButton btnSuaPhong;
+	private JButton btnXoaPhong;
 	/**
 	 * Create the panel.
 	 */
@@ -50,11 +69,11 @@ public class wsQuanLyPhong extends JPanel {
 		//JPanel pnWorkspace = new JPanel();
 		this.setBackground(Color.PINK);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentY(0.0f);
 		
-		JPanel panel_2 = new JPanel();
+		panel_2 = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -81,7 +100,7 @@ public class wsQuanLyPhong extends JPanel {
 		lblNewLabel_1.setBounds(69, 57, 75, 20);
 		panel_2.add(lblNewLabel_1);
 		
-		JLabel lblPhong = new JLabel("New label");
+		lblPhong = new JLabel("New label");
 		lblPhong.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblPhong.setBounds(154, 57, 45, 20);
 		panel_2.add(lblPhong);
@@ -98,7 +117,7 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(txtTinhTrang);
 		txtTinhTrang.setColumns(10);
 		
-		JLabel lblNgayThue = new JLabel("Tình trạng");
+		JLabel lblNgayThue = new JLabel("Ngày thuê");
 		lblNgayThue.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNgayThue.setBounds(42, 192, 75, 13);
 		panel_2.add(lblNgayThue);
@@ -115,42 +134,42 @@ public class wsQuanLyPhong extends JPanel {
 		lblKhchHng.setBounds(42, 246, 75, 13);
 		panel_2.add(lblKhchHng);
 		
-		table = new JTable();
-		table.setBounds(10, 269, 250, 115);
-		panel_2.add(table);
+		tbDanhSachKhachThue = new JTable();
+		tbDanhSachKhachThue.setBounds(10, 269, 250, 115);
+		panel_2.add(tbDanhSachKhachThue);
 		
 		JLabel lblGhiCh = new JLabel("Ghi chú");
 		lblGhiCh.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblGhiCh.setBounds(42, 411, 75, 13);
 		panel_2.add(lblGhiCh);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 434, 250, 63);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		txtGhiChu = new JTextField();
+		txtGhiChu.setBounds(10, 434, 250, 63);
+		panel_2.add(txtGhiChu);
+		txtGhiChu.setColumns(10);
 		
-		JButton btnThuePhong = new JButton("Thuê phòng");
+		btnThuePhong = new JButton("Thuê phòng");
 		btnThuePhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnThuePhong.setBounds(10, 516, 117, 33);
 		panel_2.add(btnThuePhong);
 		
-		JButton btnTraPhong = new JButton("Trả phòng");
+		btnTraPhong = new JButton("Trả phòng");
 		btnTraPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnTraPhong.setBounds(143, 516, 117, 33);
 		panel_2.add(btnTraPhong);
 		
-		JButton btnSuaPhong = new JButton("Sửa phòng");
+		btnSuaPhong = new JButton("Sửa phòng");
 		btnSuaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSuaPhong.setBounds(10, 579, 117, 33);
 		panel_2.add(btnSuaPhong);
 		
-		JButton btnXoaPhong = new JButton("Xóa phòng");
+		btnXoaPhong = new JButton("Xóa phòng");
 		btnXoaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnXoaPhong.setBounds(143, 579, 117, 33);
 		panel_2.add(btnXoaPhong);
 		
-		JPanel panel_1 = new JPanel();
-		JPanel panel_3 = new JPanel();
+		panel_1 = new JPanel();
+		panel_3 = new JPanel();
 		panel_3.setMinimumSize(new Dimension(15, 15));
 		panel_3.setForeground(new Color(0, 0, 0));
 		panel_3.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -253,4 +272,21 @@ public class wsQuanLyPhong extends JPanel {
 		setLayout(groupLayout);
 
 	}
+	
+	void LoadDSPhong()
+    {
+        ArrayList<Phong> listPhong = null;
+        try {
+			listPhong = PhongDAO.LoadDSPhong();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        HienThiDanhSachPhong(listPhong);
+    }
+	
+	void HienThiDanhSachPhong(ArrayList<Phong> listPhong)
+    {
+        
+    }
+	
 }
