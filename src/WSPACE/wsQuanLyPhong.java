@@ -193,18 +193,11 @@ public class wsQuanLyPhong extends JPanel {
 		
 		
 		//load danh sách các phòng
-		for(int i = 0; i < 30; i++) {
-		JButton btn = new JButton("Button" + i);
-		btn.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
-		btn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				HomePage.lblTitle.setText(btn.getText());
-			}
-		});
-		panel_3.add(btn);
+		try {
+			LoadDSPhong();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		
@@ -262,7 +255,6 @@ public class wsQuanLyPhong extends JPanel {
 		panel.setLayout(gl_panel);
 		
 		btnThemPhongMoi.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -273,20 +265,26 @@ public class wsQuanLyPhong extends JPanel {
 
 	}
 	
-	void LoadDSPhong()
+	public void HienThiDanhSachPhong(ArrayList<Phong> listPhong)
     {
-        ArrayList<Phong> listPhong = null;
-        try {
-			listPhong = PhongDAO.LoadDSPhong();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for(Phong phong: listPhong) {
+			JButton b = new JButton(phong.getTenPhong());
+			b.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
+			b.setBackground(Color.WHITE);
+			
+			b.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					HomePage.lblTitle.setText(b.getText());
+				}
+			});
+			panel_3.add(b);
 		}
+    }
+	void LoadDSPhong() throws SQLException
+    {
+        ArrayList<Phong> listPhong = PhongDAO.LoadDSPhong();
         HienThiDanhSachPhong(listPhong);
     }
-	
-	void HienThiDanhSachPhong(ArrayList<Phong> listPhong)
-    {
-        
-    }
-	
 }

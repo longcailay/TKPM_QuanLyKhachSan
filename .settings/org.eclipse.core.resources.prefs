@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/DAO/PhongDAO.java=UTF-8
 encoding//src/DTO/Phong.java=UTF-8
+encoding//src/DataConnection/DataProvider.java=UTF-8
 encoding//src/UI/HomePage.java=UTF-8
 encoding//src/WSPACE/wsQuanLyPhong.java=UTF-8
