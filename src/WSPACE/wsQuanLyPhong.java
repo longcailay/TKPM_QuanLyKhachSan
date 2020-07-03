@@ -22,7 +22,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import javax.swing.border.BevelBorder;
-
+import ButtonPhong.*;
 import UI.HomePage;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -267,19 +267,46 @@ public class wsQuanLyPhong extends JPanel {
 	
 	public void HienThiDanhSachPhong(ArrayList<Phong> listPhong)
     {
+		String pathImage = "/images/roomBConTrong.png";
 		for(Phong phong: listPhong) {
-			JButton b = new JButton(phong.getTenPhong() + "   " + phong.getLoaiPhong());
-			b.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
-			b.setBackground(Color.WHITE);
-			//b.add
-			b.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					HomePage.lblTitle.setText(b.getText());
+			
+			if(phong.getTinhTrang() == 0) {
+				if(phong.getLoaiPhong().equals("Loại A")) {
+					pathImage = "/images/roomAConTrong.png";
 				}
-			});
-			panel_3.add(b);
+				
+				if(phong.getLoaiPhong().equals("Loại B")) {
+					pathImage = "/images/roomBConTrong.png";
+				}
+				if(phong.getLoaiPhong().equals("Loại C")) {
+					pathImage = "/images/roomCConTrong.png";
+				}
+			}
+			
+			if(phong.getTinhTrang() == 1) {
+				if(phong.getLoaiPhong().equals("Loại A")) {
+					pathImage = "/images/roomADangThue.png";
+				}
+				if(phong.getLoaiPhong().equals("Loại B")) {
+					pathImage = "/images/roomBDangThue.png";
+				}
+				if(phong.getLoaiPhong().equals("Loại C")) {
+					pathImage = "/images/roomCDangThue.png";
+				}
+			}
+			
+			System.out.println("Tinh trang"+  phong.getTinhTrang() + "  " + phong.getLoaiPhong() + "  " + pathImage);
+			if(phong.getTinhTrang() == 0 || phong.getTinhTrang() == 1) {//Nếu không phải phòng đã bị xóa thì add vào panel
+				ButtonPhong b = new ButtonPhong(phong.getId(), phong.getTenPhong(), pathImage);
+				b.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				panel_3.add(b);
+			}
 		}
     }
 	void LoadDSPhong() throws SQLException
