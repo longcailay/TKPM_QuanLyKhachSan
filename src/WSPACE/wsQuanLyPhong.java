@@ -32,7 +32,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import DAO.*;
+import BUS.*;
 import DTO.*;
 
 import com.jgoodies.forms.layout.FormSpecs;
@@ -74,6 +74,7 @@ public class wsQuanLyPhong extends JPanel {
 		panel.setAlignmentY(0.0f);
 		
 		panel_2 = new JPanel();
+		panel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 10));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -101,8 +102,8 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(lblNewLabel_1);
 		
 		lblPhong = new JLabel("New label");
-		lblPhong.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPhong.setBounds(154, 57, 45, 20);
+		lblPhong.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblPhong.setBounds(154, 47, 69, 33);
 		panel_2.add(lblPhong);
 		
 		JLabel lblNewLabel_3 = new JLabel("Tình trạng");
@@ -111,7 +112,9 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(lblNewLabel_3);
 		
 		txtTinhTrang = new JTextField();
-		txtTinhTrang.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtTinhTrang.setDisabledTextColor(Color.BLACK);
+		txtTinhTrang.setForeground(Color.RED);
+		txtTinhTrang.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		txtTinhTrang.setEnabled(false);
 		txtTinhTrang.setBounds(127, 137, 96, 19);
 		panel_2.add(txtTinhTrang);
@@ -170,6 +173,7 @@ public class wsQuanLyPhong extends JPanel {
 		
 		panel_1 = new JPanel();
 		panel_3 = new JPanel();
+		panel_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		panel_3.setMinimumSize(new Dimension(15, 15));
 		panel_3.setForeground(new Color(0, 0, 0));
 		panel_3.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -301,7 +305,15 @@ public class wsQuanLyPhong extends JPanel {
 				b.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
+						lblPhong.setText(b.getText());	
+						String tinhTrang = "";
+						if(phong.getTinhTrang() == 0) {
+							tinhTrang = "Còn trống";
+						}
+						else {
+							tinhTrang = "Đã thuê";
+						}
+						txtTinhTrang.setText(tinhTrang);
 						
 					}
 				});
@@ -311,7 +323,7 @@ public class wsQuanLyPhong extends JPanel {
     }
 	void LoadDSPhong() throws SQLException
     {
-        ArrayList<Phong> listPhong = PhongDAO.LoadDSPhong();
+        ArrayList<Phong> listPhong = PhongBUS.LoadDSPhong();
         HienThiDanhSachPhong(listPhong);
     }
 }
