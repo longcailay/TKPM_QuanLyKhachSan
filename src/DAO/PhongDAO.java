@@ -18,8 +18,7 @@ public class PhongDAO {
 		Phong phong = null;
 		
 		int countRow  = table.getRowCount();
-		//System.out.println("Ô" + numRow);
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < countRow; i++) {
 			int id = (int) table.getModel().getValueAt(i, 0);
 			String tenPhong =  (String) table.getModel().getValueAt(i, 1);
 			String loaiPhong = (String) table.getModel().getValueAt(i, 2);
@@ -28,18 +27,6 @@ public class PhongDAO {
 			phong = new Phong(id, tenPhong, loaiPhong, ghiChu, tinhTrang);
 			result.add(phong);
 		}
-		
-//		try {
-//			resultSet.next();//int id, String tenPhong, String loaiPhong, String ghiChu, int tinhTrang
-//			phong = new Phong(resultSet.getInt("ID"),resultSet.getString("TenPhong"),resultSet.getNString("TenLoai"),resultSet.getString("GhiChu"),resultSet.getInt("TinhTrang"));
-//			System.out.println("U:" + phong.getGhiChu());
-//			result.add(phong);
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		System.out.println("So dong: " + result.size());
 		return result;
 	}
 	

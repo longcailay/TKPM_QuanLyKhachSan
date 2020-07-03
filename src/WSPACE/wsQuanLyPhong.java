@@ -268,10 +268,10 @@ public class wsQuanLyPhong extends JPanel {
 	public void HienThiDanhSachPhong(ArrayList<Phong> listPhong)
     {
 		for(Phong phong: listPhong) {
-			JButton b = new JButton(phong.getTenPhong());
+			JButton b = new JButton(phong.getTenPhong() + "   " + phong.getLoaiPhong());
 			b.setPreferredSize(new Dimension(108, 100));//Kích thước chuẩn
 			b.setBackground(Color.WHITE);
-			
+			//b.add
 			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
