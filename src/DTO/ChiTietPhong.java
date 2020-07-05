@@ -1,14 +1,16 @@
 package DTO;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.ArrayList;
 
 public class ChiTietPhong {
 	private int id;
 	private String tenPhong;
 	private String ghiChu;
 	private int tinhTrang;
-	private String tenLoai;
+	private int loaiPhong;
 	private Date ngayThue;
+	private ArrayList<Khach> danhSachKhach;
 	public int getId() {
 		return id;
 	}
@@ -33,11 +35,11 @@ public class ChiTietPhong {
 	public void setTinhTrang(int tinhTrang) {
 		this.tinhTrang = tinhTrang;
 	}
-	public String getTenLoai() {
-		return tenLoai;
+	public int getLoaiPhong() {
+		return loaiPhong;
 	}
-	public void setTenLoai(String tenLoai) {
-		this.tenLoai = tenLoai;
+	public void setTenLoai(int loaiPhong) {
+		this.loaiPhong = loaiPhong;
 	}
 	public Date getNgayThue() {
 		return ngayThue;
@@ -45,11 +47,29 @@ public class ChiTietPhong {
 	public void setNgayThue(Date ngayThue) {
 		this.ngayThue = ngayThue;
 	}
-	public ChiTietPhong(int ID, String TenPhong, String GhiChu,	int TinhTrang,String TenLoai,Date NgayThue) {
-		id = ID;
-		tenPhong = TenPhong;
-		ghiChu = GhiChu;
-		tinhTrang = TinhTrang;
-		ngayThue = NgayThue;
+	public ArrayList<Khach> getDanhSachKhach() {
+		return danhSachKhach;
 	}
+	public void setDanhSachKhach(ArrayList<Khach> danhSachKhach) {
+		this.danhSachKhach = danhSachKhach;
+	}
+	public ChiTietPhong(int id, String tenPhong, String ghiChu, int tinhTrang, int loaiPhong, Date ngayThue, ArrayList<Khach> danhSachKhach) {
+		this.id = id;
+		this.tenPhong = tenPhong;
+		this.ghiChu = ghiChu;
+		this.tinhTrang = tinhTrang;
+		this.loaiPhong = loaiPhong;
+		this.ngayThue = ngayThue;
+		this.danhSachKhach = danhSachKhach;
+	}
+	public ChiTietPhong() {
+		this.id = 0;
+		this.tenPhong = null;
+		this.ghiChu = null;
+		this.tinhTrang = -1;
+		this.loaiPhong = 0;
+		this.ngayThue = null;
+		this.danhSachKhach = null;
+	}
+	
 }

@@ -59,6 +59,7 @@ public class DataProvider {
 //		}
 //		return numberRecord;
 //	}
+	
 	/*Nguồn: https://stackoverflow.com/questions/10620448/most-simple-code-to-populate-jtable-from-resultset*/
 	private DefaultTableModel buildTableModel(ResultSet rs)
 	        throws SQLException {

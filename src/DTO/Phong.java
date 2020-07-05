@@ -46,7 +46,6 @@ public class Phong {
 	}
 
 	public Phong(int id, String tenPhong, String loaiPhong, String ghiChu, int tinhTrang) {
-		super();
 		this.id = id;
 		this.tenPhong = tenPhong;
 		this.loaiPhong = loaiPhong;

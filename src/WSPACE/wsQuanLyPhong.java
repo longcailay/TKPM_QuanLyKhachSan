@@ -16,16 +16,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.TableColumnModelListener;
+
 import ButtonPhong.*;
 import UI.HomePage;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JEditorPane;
 import javax.swing.BoxLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -37,6 +41,9 @@ import DTO.*;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.GridLayout;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class wsQuanLyPhong extends JPanel {
 	
@@ -132,10 +139,7 @@ public class wsQuanLyPhong extends JPanel {
 		txtNgayThue.setBounds(127, 190, 96, 19);
 		panel_2.add(txtNgayThue);
 		
-		JLabel lblKhchHng = new JLabel("Khách hàng");
-		lblKhchHng.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblKhchHng.setBounds(42, 246, 75, 13);
-		panel_2.add(lblKhchHng);
+		
 		
 		tbDanhSachKhachThue = new JTable();
 		tbDanhSachKhachThue.setBounds(10, 269, 250, 115);
@@ -299,22 +303,13 @@ public class wsQuanLyPhong extends JPanel {
 				}
 			}
 			
-			System.out.println("Tinh trang"+  phong.getTinhTrang() + "  " + phong.getLoaiPhong() + "  " + pathImage);
+			//System.out.println("Tinh trang"+  phong.getTinhTrang() + "  " + phong.getLoaiPhong() + "  " + pathImage);
 			if(phong.getTinhTrang() == 0 || phong.getTinhTrang() == 1) {//Nếu không phải phòng đã bị xóa thì add vào panel
 				ButtonPhong b = new ButtonPhong(phong.getId(), phong.getTenPhong(), pathImage);
 				b.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						lblPhong.setText(b.getText());	
-						String tinhTrang = "";
-						if(phong.getTinhTrang() == 0) {
-							tinhTrang = "Còn trống";
-						}
-						else {
-							tinhTrang = "Đã thuê";
-						}
-						txtTinhTrang.setText(tinhTrang);
-						
+						LoadChiTietPhong(Integer.parseInt(b.getName()));						
 					}
 				});
 				panel_3.add(b);
@@ -326,4 +321,26 @@ public class wsQuanLyPhong extends JPanel {
         ArrayList<Phong> listPhong = PhongBUS.LoadDSPhong();
         HienThiDanhSachPhong(listPhong);
     }
+	void LoadChiTietPhong(int idPhong) {
+		ChiTietPhong ctp = PhongBUS.LoadChiTietPhong(idPhong);
+		lblPhong.setText(ctp.getTenPhong());
+		String tinhTrang = "";
+		if(ctp.getTinhTrang() == 0) {
+			tinhTrang = "Còn trống";
+		}
+		else {
+			tinhTrang = "Đã thuê";
+			txtNgayThue.setText(ctp.getNgayThue().toString());
+		}
+		txtTinhTrang.setText(tinhTrang);
+		txtGhiChu.setText(ctp.getGhiChu());
+		
+		String[] tblHead={"Item Name","Price","Qty","Discount"};
+		DefaultTableModel dtm=new DefaultTableModel(tblHead,0);
+		JTable tbl=new JTable(dtm);
+		//tbDanhSachKhachThue
+		String[] item={"A","B","C","D"};
+		dtm.addRow(item);
+		
+	}
 }
