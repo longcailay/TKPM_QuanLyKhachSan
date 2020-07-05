@@ -114,7 +114,7 @@ public class wsQuanLyPhong extends JPanel {
 		lblNewLabel_1.setBounds(69, 57, 75, 20);
 		panel_2.add(lblNewLabel_1);
 		
-		lblPhong = new JLabel("New label");
+		lblPhong = new JLabel("");
 		lblPhong.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblPhong.setBounds(154, 47, 69, 33);
 		panel_2.add(lblPhong);
@@ -252,6 +252,14 @@ public class wsQuanLyPhong extends JPanel {
 		btnDuyet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				while(panel_3.getComponentCount() > 0) {
+					panel_3.remove(0);
+				}
+				
+				/*Đoạn bên dưới để load lại panel_3 cho nó không bị lỗi :)) vi diệu*/
+				panel_3.setVisible(false);
+				panel_3.setVisible(true);
+				
 				btnDuyetClick();
 			}
 		});
@@ -409,7 +417,6 @@ public class wsQuanLyPhong extends JPanel {
 		if(cmbTinhTrang.getSelectedItem().toString().equals("Tất cả")) {
 			tinhTrang = -2;
 		}
-		
 		ArrayList<Phong> dsPhong = PhongBUS.LoadDSPhongTheoLoaiPhongVaTinhTrang(loaiPhong, tinhTrang);
 		HienThiDanhSachPhong(dsPhong);
 	}
