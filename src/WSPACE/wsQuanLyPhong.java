@@ -62,7 +62,10 @@ public class wsQuanLyPhong extends JPanel {
 	private JLabel lblPhong;
 	private JTextField txtTinhTrang;
 	private JTextField txtNgayThue;
+	
+	private DefaultTableModel dfmTable;
 	private JTable tbDanhSachKhachThue;
+	
 	private JTextField txtGhiChu;
 	
 	private JButton btnThuePhong;
@@ -123,7 +126,7 @@ public class wsQuanLyPhong extends JPanel {
 		txtTinhTrang.setForeground(Color.RED);
 		txtTinhTrang.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		txtTinhTrang.setEnabled(false);
-		txtTinhTrang.setBounds(127, 137, 96, 19);
+		txtTinhTrang.setBounds(127, 137, 133, 19);
 		panel_2.add(txtTinhTrang);
 		txtTinhTrang.setColumns(10);
 		
@@ -133,15 +136,27 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(lblNgayThue);
 		
 		txtNgayThue = new JTextField();
+		txtNgayThue.setDisabledTextColor(Color.BLACK);
+		txtNgayThue.setEditable(false);
 		txtNgayThue.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtNgayThue.setEnabled(false);
 		txtNgayThue.setColumns(10);
-		txtNgayThue.setBounds(127, 190, 96, 19);
+		txtNgayThue.setBounds(127, 190, 133, 19);
 		panel_2.add(txtNgayThue);
 		
 		
+		dfmTable = new DefaultTableModel();
+		dfmTable.addColumn("STT");
+		dfmTable.addColumn("Họ Tên");
+		dfmTable.addColumn("Loại khách");		
+		tbDanhSachKhachThue = new JTable(dfmTable);
 		
-		tbDanhSachKhachThue = new JTable();
+		tbDanhSachKhachThue.getColumnModel().getColumn(0).setMaxWidth(1);
+		tbDanhSachKhachThue.getColumnModel().getColumn(2).setMaxWidth(70);
+		tbDanhSachKhachThue.getColumnModel().getColumn(0).setResizable(false);
+		tbDanhSachKhachThue.getColumnModel().getColumn(1).setResizable(false);
+		tbDanhSachKhachThue.getColumnModel().getColumn(2).setResizable(false);
+		
 		tbDanhSachKhachThue.setBounds(10, 269, 250, 115);
 		panel_2.add(tbDanhSachKhachThue);
 		
@@ -174,6 +189,11 @@ public class wsQuanLyPhong extends JPanel {
 		btnXoaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnXoaPhong.setBounds(143, 579, 117, 33);
 		panel_2.add(btnXoaPhong);
+		
+		JLabel lblKhchHng = new JLabel("Khách hàng");
+		lblKhchHng.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblKhchHng.setBounds(42, 237, 75, 13);
+		panel_2.add(lblKhchHng);
 		
 		panel_1 = new JPanel();
 		panel_3 = new JPanel();
@@ -327,20 +347,32 @@ public class wsQuanLyPhong extends JPanel {
 		String tinhTrang = "";
 		if(ctp.getTinhTrang() == 0) {
 			tinhTrang = "Còn trống";
+			txtNgayThue.setText("");
 		}
 		else {
 			tinhTrang = "Đã thuê";
-			txtNgayThue.setText(ctp.getNgayThue().toString());
+			String t = ctp.getNgayThue().toString();
+			txtNgayThue.setText(t.substring(0,3) + " " + t.substring(8,10) + "/" + t.substring(4,7) + "/" + t.substring(24));
 		}
 		txtTinhTrang.setText(tinhTrang);
 		txtGhiChu.setText(ctp.getGhiChu());
+		/*Clear table trước đó*/
+		DefaultTableModel model = (DefaultTableModel) tbDanhSachKhachThue.getModel();
+		while(tbDanhSachKhachThue.getRowCount() > 0) {
+			model.removeRow(0);
+		}
 		
-		String[] tblHead={"Item Name","Price","Qty","Discount"};
-		DefaultTableModel dtm=new DefaultTableModel(tblHead,0);
-		JTable tbl=new JTable(dtm);
-		//tbDanhSachKhachThue
-		String[] item={"A","B","C","D"};
-		dtm.addRow(item);
+		//DefaultTableModel model = (DefaultTableModel) tbDanhSachKhachThue.getModel();
+		for(int i = 0; i < ctp.getDanhSachKhach().size(); i++ ) {
+			String loaiKhach = "";
+			if(ctp.getDanhSachKhach().get(i).getLoaiKhach() == 1) {
+				loaiKhach = "Nội địa";
+			}
+			else {
+				loaiKhach= "Nước ngoài";
+			}
+			model.addRow(new Object[] {Integer.toString(i+1),ctp.getDanhSachKhach().get(i).getHoTen(), loaiKhach});
+		}
 		
 	}
 }
