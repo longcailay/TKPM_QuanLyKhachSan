@@ -57,7 +57,7 @@ public class wsQuanLyPhong extends JPanel {
 	
 	private JComboBox cmbLoaiPhong;
 	private JComboBox cmbTinhTrang;
-	private JButton btnDuyet;
+	private JButton btnTimKiem;
 	private JButton btnThemPhongMoi;
 	private JLabel lblPhong;
 	private JTextField txtTinhTrang;
@@ -248,8 +248,8 @@ public class wsQuanLyPhong extends JPanel {
 		cmbTinhTrang = new JComboBox();
 		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Còn trống", "Đã thuê"}));
 		
-		btnDuyet = new JButton("Duyệt");
-		btnDuyet.addActionListener(new ActionListener() {
+		btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				while(panel_3.getComponentCount() > 0) {
@@ -260,7 +260,7 @@ public class wsQuanLyPhong extends JPanel {
 				panel_3.setVisible(false);
 				panel_3.setVisible(true);
 				
-				btnDuyetClick();
+				btnTimKiemClick();
 			}
 		});
 		
@@ -281,7 +281,7 @@ public class wsQuanLyPhong extends JPanel {
 							.addGap(61)
 							.addComponent(lblTnhTrng, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)))
 					.addGap(63)
-					.addComponent(btnDuyet)
+					.addComponent(btnTimKiem)
 					.addGap(37)
 					.addComponent(btnThemPhongMoi)
 					.addContainerGap(26, Short.MAX_VALUE))
@@ -297,7 +297,7 @@ public class wsQuanLyPhong extends JPanel {
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(cmbLoaiPhong, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(cmbTinhTrang, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnDuyet)
+						.addComponent(btnTimKiem)
 						.addComponent(btnThemPhongMoi))
 					.addContainerGap(27, Short.MAX_VALUE))
 		);
@@ -405,7 +405,7 @@ public class wsQuanLyPhong extends JPanel {
 		}
 	}
 	
-	void btnDuyetClick() {
+	void btnTimKiemClick() {
 		String loaiPhong = cmbLoaiPhong.getSelectedItem().toString();
 		int tinhTrang = -1;
 		if(cmbTinhTrang.getSelectedItem().toString().equals("Đã thuê")) {
