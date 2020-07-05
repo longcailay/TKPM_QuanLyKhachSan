@@ -10,6 +10,10 @@ public class PhongBUS {
 		return PhongDAO.LoadDSPhong();
 	}
 	
+	public static ArrayList<Phong> LoadDSPhongTheoLoaiPhongVaTinhTrang(String lp, int tt){
+		return PhongDAO.LoadDSPhongTheoLoaiPhongVaTinhTrang(lp, tt);
+	}
+	
 	public static ChiTietPhong LoadChiTietPhong(int idPhong) {
 		return PhongDAO.LoadChiTietPhong(idPhong);
 	}

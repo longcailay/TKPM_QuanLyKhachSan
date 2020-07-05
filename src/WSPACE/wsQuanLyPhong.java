@@ -72,6 +72,9 @@ public class wsQuanLyPhong extends JPanel {
 	private JButton btnTraPhong;
 	private JButton btnSuaPhong;
 	private JButton btnXoaPhong;
+	
+	
+	private GroupLayout gl_panel;
 	/**
 	 * Create the panel.
 	 */
@@ -196,6 +199,7 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(lblKhchHng);
 		
 		panel_1 = new JPanel();
+		
 		panel_3 = new JPanel();
 		panel_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		panel_3.setMinimumSize(new Dimension(15, 15));
@@ -204,7 +208,7 @@ public class wsQuanLyPhong extends JPanel {
 		panel_3.setAutoscrolls(true);
 		panel_3.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
@@ -237,17 +241,21 @@ public class wsQuanLyPhong extends JPanel {
 		lblTnhTrng.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		cmbLoaiPhong = new JComboBox();
-		//cmbLoaiPhong.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Vip", "Bình thường"}));
 		loadDSLoaiPhong();
-		/*Load combobox Loai phong*/
-		
 		
 		
 		
 		cmbTinhTrang = new JComboBox();
-		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả"}));
+		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Còn trống", "Đã thuê"}));
 		
 		btnDuyet = new JButton("Duyệt");
+		btnDuyet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnDuyetClick();
+			}
+		});
+		
 		
 		btnThemPhongMoi = new JButton("Thêm phòng");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
@@ -379,16 +387,30 @@ public class wsQuanLyPhong extends JPanel {
 			}
 			model.addRow(new Object[] {Integer.toString(i+1),ctp.getDanhSachKhach().get(i).getHoTen(), loaiKhach});
 		}
-		
 	}
 	
 	void loadDSLoaiPhong() {
-		ArrayList<LoaiPhong> listLP = LoaiPhongBUS.loadDSLoaiPhong();
 		cmbLoaiPhong.addItem("Tất cả");
+		ArrayList<LoaiPhong> listLP = LoaiPhongBUS.loadDSLoaiPhong();
 		for(LoaiPhong loaiPhong: listLP) {
-			//strcmbLoaiPhong.
 			cmbLoaiPhong.addItem(loaiPhong.getTenLoai());
-			//cmbLoaiPhong.setModel(new DefaultComboBoxModel(listLP.get(0).getTenLoai());
 		}
+	}
+	
+	void btnDuyetClick() {
+		String loaiPhong = cmbLoaiPhong.getSelectedItem().toString();
+		int tinhTrang = -1;
+		if(cmbTinhTrang.getSelectedItem().toString().equals("Đã thuê")) {
+			tinhTrang = 1;
+		}
+		if(cmbTinhTrang.getSelectedItem().toString().equals("Còn trống")) {
+			tinhTrang = 0;
+		}
+		if(cmbTinhTrang.getSelectedItem().toString().equals("Tất cả")) {
+			tinhTrang = -2;
+		}
+		
+		ArrayList<Phong> dsPhong = PhongBUS.LoadDSPhongTheoLoaiPhongVaTinhTrang(loaiPhong, tinhTrang);
+		HienThiDanhSachPhong(dsPhong);
 	}
 }

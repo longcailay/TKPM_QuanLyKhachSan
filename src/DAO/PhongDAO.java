@@ -30,6 +30,26 @@ public class PhongDAO {
 		return result;
 	}
 	
+	public static ArrayList<Phong> LoadDSPhongTheoLoaiPhongVaTinhTrang(String lp, int tt){
+		ArrayList<Phong> result = new ArrayList<Phong>();
+		String query = "pro_LoadDanhSachPhongTheoLoaiPhongVaTinhTrang \"" + lp + "\", " + tt;
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		Phong phong = null;
+		
+		int countRow  = table.getRowCount();
+		for(int i = 0; i < countRow; i++) {
+			int id = (int) table.getModel().getValueAt(i, 0);
+			String tenPhong =  (String) table.getModel().getValueAt(i, 1);
+			String loaiPhong = (String) table.getModel().getValueAt(i, 2);
+			String ghiChu = (String) table.getModel().getValueAt(i, 3);
+			int tinhTrang = (int) table.getModel().getValueAt(i, 4);
+			phong = new Phong(id, tenPhong, loaiPhong, ghiChu, tinhTrang);
+			result.add(phong);
+		}
+		return result;
+	}
+	
 	public static ChiTietPhong LoadChiTietPhong(int idPhong){
 		int id = 0;
 		String tenPhong = null;
