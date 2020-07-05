@@ -40,8 +40,6 @@ public class PhongDAO {
 		ArrayList<Khach> dsKhach = new ArrayList<Khach>();
 		
 		String query = "pro_LoadChiTietPhong " + idPhong;
-		
-		System.out.println(query);
 		DataProvider dp = new DataProvider();
 		JTable table = dp.ExcuteQuery(query);
 		if(table.getRowCount() >=1) {
@@ -52,12 +50,10 @@ public class PhongDAO {
 			loaiPhong = (int) table.getModel().getValueAt(0, 4);
 			if(table.getModel().getValueAt(0, 5) != null) {
 				String strNgayThue = ((String) table.getModel().getValueAt(0, 5).toString()).substring(0, 10);//Chỉ lấy phần yyyy-MM-dd mà bỏ phần time HH:mm:ss
-				System.out.println("HO" + strNgayThue.substring(0, 10));
 				try {
 					ngayThue = new SimpleDateFormat("yyyy-MM-dd").parse(strNgayThue);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					System.out.println("Vao day ");
 					e.printStackTrace();
 				}	
 			}

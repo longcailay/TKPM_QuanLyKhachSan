@@ -226,7 +226,8 @@ public class wsQuanLyPhong extends JPanel {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}		
+		
 		
 		
 		JLabel lblNewLabel = new JLabel("Ch\u1ECDn lo\u1EA1i ph\u00F2ng");
@@ -236,7 +237,12 @@ public class wsQuanLyPhong extends JPanel {
 		lblTnhTrng.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		cmbLoaiPhong = new JComboBox();
-		cmbLoaiPhong.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Vip", "Bình thường"}));
+		//cmbLoaiPhong.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Vip", "Bình thường"}));
+		loadDSLoaiPhong();
+		/*Load combobox Loai phong*/
+		
+		
+		
 		
 		cmbTinhTrang = new JComboBox();
 		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả"}));
@@ -374,5 +380,15 @@ public class wsQuanLyPhong extends JPanel {
 			model.addRow(new Object[] {Integer.toString(i+1),ctp.getDanhSachKhach().get(i).getHoTen(), loaiKhach});
 		}
 		
+	}
+	
+	void loadDSLoaiPhong() {
+		ArrayList<LoaiPhong> listLP = LoaiPhongBUS.loadDSLoaiPhong();
+		cmbLoaiPhong.addItem("Tất cả");
+		for(LoaiPhong loaiPhong: listLP) {
+			//strcmbLoaiPhong.
+			cmbLoaiPhong.addItem(loaiPhong.getTenLoai());
+			//cmbLoaiPhong.setModel(new DefaultComboBoxModel(listLP.get(0).getTenLoai());
+		}
 	}
 }
