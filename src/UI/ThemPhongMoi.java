@@ -7,12 +7,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
+import com.sun.net.httpserver.Authenticator.Success;
+
+import BUS.PhongBUS;
 import DAO.LoaiPhongDAO;
 import DTO.LoaiPhong;
 
@@ -23,12 +28,16 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextArea;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.awt.Label;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
+import javax.swing.border.EtchedBorder;
 
 public class ThemPhongMoi extends JFrame {
 
@@ -36,7 +45,8 @@ public class ThemPhongMoi extends JFrame {
 	private JTextField txtTenPhong;
 	private JComboBox cmbLoaiPhong;
 	private JEditorPane edpGhiChu;
-	private JButton btnNewButton;
+	private JButton btnThem;
+	private JButton btnHuy;
 	/**
 	 * Launch the application.
 	 */
@@ -62,8 +72,10 @@ public class ThemPhongMoi extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 300, 500, 475);
 		contentPane = new JPanel();
+		contentPane.setForeground(SystemColor.desktop);
+		contentPane.setBorder(null);
 		contentPane.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-		contentPane.setBackground(Color.LIGHT_GRAY);
+		contentPane.setBackground(SystemColor.text);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -80,9 +92,9 @@ public class ThemPhongMoi extends JFrame {
 		contentPane.add(label);
 		
 		txtTenPhong = new JTextField();
+		txtTenPhong.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		txtTenPhong.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTenPhong.setFont(new Font("Tahoma", Font.BOLD, 16));
-		txtTenPhong.setText("102");
 		txtTenPhong.setBounds(222, 62, 199, 33);
 		contentPane.add(txtTenPhong);
 		txtTenPhong.setColumns(10);
@@ -105,12 +117,42 @@ public class ThemPhongMoi extends JFrame {
 		contentPane.add(label_2_1);
 		
 		edpGhiChu = new JEditorPane();
+		edpGhiChu.setToolTipText("");
+		edpGhiChu.setBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0)), new LineBorder(new Color(0, 0, 0))));
 		edpGhiChu.setBounds(94, 199, 327, 125);
 		contentPane.add(edpGhiChu);
 		
-		btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(94, 368, 85, 21);
-		contentPane.add(btnNewButton);
+		btnThem = new JButton("Thêm");
+		btnThem.setBackground(new Color(0, 102, 255));
+		btnThem.setForeground(Color.WHITE);
+		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		btnThem.setBounds(94, 368, 117, 33);
+		contentPane.add(btnThem);
+		btnThem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				btnThemClick();
+			}
+		});
+		
+		
+		btnHuy = new JButton("Hủy");
+		btnHuy.setForeground(SystemColor.desktop);
+		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		btnHuy.setBackground(SystemColor.text);
+		btnHuy.setBounds(304, 368, 117, 33);
+		contentPane.add(btnHuy);
+		btnHuy.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//contentPane.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+				contentPane.setVisible(false);
+				dispose();
+			}
+		});
+		
+		
 	}
 	
 	 void loadLoaiPhong() {
@@ -120,5 +162,16 @@ public class ThemPhongMoi extends JFrame {
 		 }
 		 
 	 }
-	
+	 
+	 void btnThemClick() {
+		 if(PhongBUS.ThemPhongMoi(txtTenPhong.getText(), edpGhiChu.getText(), cmbLoaiPhong.getSelectedItem().toString()) != -1) {
+			 int okButton = JOptionPane.OK_OPTION;
+			 int resultDialog = JOptionPane.showConfirmDialog(null, "Thêm thành công!", "Success", okButton);
+			 if (resultDialog == JOptionPane.OK_OPTION) {
+				 txtTenPhong.setText("");
+				 edpGhiChu.setText("");
+				 WSPACE.wsQuanLyPhong.btnTimKiem.doClick();
+			 }
+		 }
+	 }
 }

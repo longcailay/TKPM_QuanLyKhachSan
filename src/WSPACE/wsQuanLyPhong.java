@@ -27,6 +27,7 @@ import javax.swing.event.TableColumnModelListener;
 
 import ButtonPhong.*;
 import UI.HomePage;
+import UI.ThemPhongMoi;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -57,7 +58,7 @@ public class wsQuanLyPhong extends JPanel {
 	
 	private JComboBox cmbLoaiPhong;
 	private JComboBox cmbTinhTrang;
-	private JButton btnTimKiem;
+	public static JButton btnTimKiem;
 	private JButton btnThemPhongMoi;
 	private JLabel lblPhong;
 	private JTextField txtTinhTrang;
@@ -308,7 +309,8 @@ public class wsQuanLyPhong extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				HomePage.lblTitle.setText(btnThemPhongMoi.getText());
+				ThemPhongMoi tpm = new ThemPhongMoi();
+				tpm.setVisible(true);
 			}
 		});
 		setLayout(groupLayout);

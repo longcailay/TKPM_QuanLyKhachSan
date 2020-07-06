@@ -96,4 +96,30 @@ public class PhongDAO {
 		ChiTietPhong result = new ChiTietPhong(id, tenPhong, ghiChu, tinhTrang, loaiPhong, ngayThue, dsKhach);
 		return result;
 	}
+	
+	public static int ThemPhongMoi(String tenPhong, String ghiChu, String tenLoaiPhong) {
+		int result;
+		String query = "EXEC pro_ThemPhongMoi N'"+ tenPhong + "', N'" + ghiChu + "', N'" + tenLoaiPhong + "'";
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);		
+		return result;
+	}
+	
+	public static Phong LayThongTinPhongTheoTenPhong(String TenPhong) {
+		String query = "pro_LayThongTinPhongTheoTenPhong N'" + TenPhong + "'";
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		Phong phong = null;
+		
+		int countRow  = table.getRowCount();
+		if(countRow > 0) {
+			int id = (int) table.getModel().getValueAt(0, 0);
+			String tenPhong =  (String) table.getModel().getValueAt(0, 1);
+			//String loaiPhong = (String) table.getModel().getValueAt(0, 2);
+			String ghiChu = (String) table.getModel().getValueAt(0, 2);
+			int tinhTrang = (int) table.getModel().getValueAt(0, 3);
+			phong = new Phong(id, tenPhong, "", ghiChu, tinhTrang);
+		}
+		return phong;
+	}
 }
