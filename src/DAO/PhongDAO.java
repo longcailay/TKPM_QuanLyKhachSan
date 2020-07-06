@@ -105,6 +105,15 @@ public class PhongDAO {
 		return result;
 	}
 	
+	/*Bắt đầu sửa từ đây và chưa làm csdl luôn*/
+	public static int SuaPhong(String tenPhong, String ghiChu, String tenLoaiPhong) {
+		int result;
+		String query = "EXEC pro_ThemPhongMoi N'"+ tenPhong + "', N'" + ghiChu + "', N'" + tenLoaiPhong + "'";
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);		
+		return result;
+	}
+	
 	public static Phong LayThongTinPhongTheoTenPhong(String TenPhong) {
 		String query = "pro_LayThongTinPhongTheoTenPhong N'" + TenPhong + "'";
 		DataProvider dp = new DataProvider();
