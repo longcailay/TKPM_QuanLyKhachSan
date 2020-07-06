@@ -58,5 +58,15 @@ public class PhongBUS {
 		
 		return PhongDAO.ThemPhongMoi(tenPhong, ghiChu, tenLoaiPhong);
 	}
+	
+	public static int XoaPhong(String tenPhong) {
+		if(tenPhong.isEmpty()) {//Cái này không cần thiết lắm
+			int btnOK = JOptionPane.OK_OPTION;
+			int r = JOptionPane.showConfirmDialog(null, "Tên phòng không hợp lệ!", "Warning!", btnOK);
+			return -1;
+		}
+		return PhongDAO.XoaPhong(tenPhong);
+		
+	}
 }
 

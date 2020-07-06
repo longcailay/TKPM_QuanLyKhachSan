@@ -9,6 +9,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.ScrollPane;
@@ -77,6 +79,8 @@ public class wsQuanLyPhong extends JPanel {
 	
 	
 	private GroupLayout gl_panel;
+	
+	private ChiTietPhong ctp;
 	/**
 	 * Create the panel.
 	 */
@@ -194,6 +198,28 @@ public class wsQuanLyPhong extends JPanel {
 		btnXoaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnXoaPhong.setBounds(143, 579, 117, 33);
 		panel_2.add(btnXoaPhong);
+		btnXoaPhong.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(lblPhong.getText().length() == 0) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần xóa!","Warning", JOptionPane.WARNING_MESSAGE);
+				}else {
+					if(ctp.getTinhTrang() == 1) {//Phòng đang thuê
+						JOptionPane.showMessageDialog(null, "Vui lòng trả phòng trước khi xóa!", "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						int temp = PhongBUS.XoaPhong(lblPhong.getText());
+						if(temp == 1) {
+							JOptionPane.showMessageDialog(null, "Xóa phòng thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
+							btnTimKiem.doClick();
+						}else {
+							JOptionPane.showMessageDialog(null, "Xóa phòng không thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+			}
+		});
+		
+		
 		
 		JLabel lblKhchHng = new JLabel("Khách hàng");
 		lblKhchHng.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -367,7 +393,7 @@ public class wsQuanLyPhong extends JPanel {
         HienThiDanhSachPhong(listPhong);
     }
 	void LoadChiTietPhong(int idPhong) {
-		ChiTietPhong ctp = PhongBUS.LoadChiTietPhong(idPhong);
+		ctp = PhongBUS.LoadChiTietPhong(idPhong);
 		lblPhong.setText(ctp.getTenPhong());
 		String tinhTrang = "";
 		if(ctp.getTinhTrang() == 0) {
@@ -398,6 +424,7 @@ public class wsQuanLyPhong extends JPanel {
 			}
 			model.addRow(new Object[] {Integer.toString(i+1),ctp.getDanhSachKhach().get(i).getHoTen(), loaiKhach});
 		}
+		
 	}
 	
 	void loadDSLoaiPhong() {

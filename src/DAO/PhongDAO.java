@@ -122,4 +122,11 @@ public class PhongDAO {
 		}
 		return phong;
 	}
+	
+	public static int XoaPhong(String tenPhong) {
+		String query = "pro_XoaPhong N'" + tenPhong + "'";
+		DataProvider dp = new DataProvider();
+		int result = dp.ExcuteNonQuery(query);
+		return result;
+	}
 }
