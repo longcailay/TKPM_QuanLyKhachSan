@@ -67,7 +67,8 @@ public class wsQuanLyPhong extends JPanel {
 	private DefaultTableModel dfmTable;
 	private JTable tbDanhSachKhachThue;
 	
-	private JTextField txtGhiChu;
+	//private JTextField txtGhiChu;
+	private JEditorPane dtpGhiChu;
 	
 	private JButton btnThuePhong;
 	private JButton btnTraPhong;
@@ -169,10 +170,10 @@ public class wsQuanLyPhong extends JPanel {
 		lblGhiCh.setBounds(42, 411, 75, 13);
 		panel_2.add(lblGhiCh);
 		
-		txtGhiChu = new JTextField();
-		txtGhiChu.setBounds(10, 434, 250, 63);
-		panel_2.add(txtGhiChu);
-		txtGhiChu.setColumns(10);
+		dtpGhiChu = new JEditorPane();
+		dtpGhiChu.setBounds(10, 434, 250, 63);
+		panel_2.add(dtpGhiChu);
+		dtpGhiChu.setEditable(false);
 		
 		btnThuePhong = new JButton("Thuê phòng");
 		btnThuePhong.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -379,7 +380,7 @@ public class wsQuanLyPhong extends JPanel {
 			txtNgayThue.setText(t.substring(0,3) + " " + t.substring(8,10) + "/" + t.substring(4,7) + "/" + t.substring(24));
 		}
 		txtTinhTrang.setText(tinhTrang);
-		txtGhiChu.setText(ctp.getGhiChu());
+		dtpGhiChu.setText(ctp.getGhiChu());
 		/*Clear table trước đó*/
 		DefaultTableModel model = (DefaultTableModel) tbDanhSachKhachThue.getModel();
 		while(tbDanhSachKhachThue.getRowCount() > 0) {
