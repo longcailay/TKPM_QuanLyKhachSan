@@ -34,25 +34,21 @@ public class PhongBUS {
 	
 	public static int ThemPhongMoi(String tenPhong, String ghiChu, String tenLoaiPhong) {
 		if(tenPhong.isBlank()){
-			int btnOK = JOptionPane.OK_OPTION;
-			JOptionPane.showConfirmDialog(null, "Tên phòng không được bỏ trống!", "Error", btnOK);
+			JOptionPane.showMessageDialog(null, "Tên phòng không được bỏ trống!","Warning", JOptionPane.WARNING_MESSAGE);
 			return -1;
 		}
 		
 		if(!KiemTraTenPhongHopLe(tenPhong)) {
-			int btnOK1 = JOptionPane.OK_OPTION;
-			JOptionPane.showConfirmDialog(null, "Tên phòng chỉ bao gồm kí tự (a -> z và A-> Z) và số (0 -> 9)!", "Warning", btnOK1);
+			JOptionPane.showMessageDialog(null, "Tên phòng chỉ bao gồm kí tự (a -> z và A-> Z) và số (0 -> 9)!","Warning", JOptionPane.WARNING_MESSAGE);
 			return -1;
 		}
 		if(tenPhong.length() > 10) {
-			int btnOK1 = JOptionPane.OK_OPTION;
-			JOptionPane.showConfirmDialog(null, "Tên phòng quá dài! (> 10 kí tự)", "Warning", btnOK1);
+			JOptionPane.showMessageDialog(null, "Tên phòng quá dài! (> 10 kí tự)","Warning", JOptionPane.WARNING_MESSAGE);
 			return -1;
 		}
 		Phong phong = PhongDAO.LayThongTinPhongTheoTenPhong(tenPhong);
 		if(phong != null) {//Tên phòng này đã tồn tại trong CSDL (dù đã đánh dấu bị xóa (tình trạng = -1))
-			int btnOK2 = JOptionPane.OK_OPTION;
-			JOptionPane.showConfirmDialog(null, "Tên phòng đã tồn tại hoặc không phù hợp!", "Error", btnOK2);
+			JOptionPane.showMessageDialog(null, "Tên phòng đã tồn tại hoặc không phù hợp!","Warning", JOptionPane.WARNING_MESSAGE);
 			return -1;
 		}
 		

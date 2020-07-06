@@ -146,7 +146,6 @@ public class ThemPhongMoi extends JFrame {
 		btnHuy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//contentPane.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 				contentPane.setVisible(false);
 				dispose();
 			}
@@ -165,13 +164,12 @@ public class ThemPhongMoi extends JFrame {
 	 
 	 void btnThemClick() {
 		 if(PhongBUS.ThemPhongMoi(txtTenPhong.getText(), edpGhiChu.getText(), cmbLoaiPhong.getSelectedItem().toString()) != -1) {
-			 int okButton = JOptionPane.OK_OPTION;
-			 int resultDialog = JOptionPane.showConfirmDialog(null, "Thêm thành công!", "Success", okButton);
-			 if (resultDialog == JOptionPane.OK_OPTION) {
-				 txtTenPhong.setText("");
-				 edpGhiChu.setText("");
-				 WSPACE.wsQuanLyPhong.btnTimKiem.doClick();
-			 }
+			 JOptionPane.showMessageDialog(null, "Thêm thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
+			 txtTenPhong.setText("");
+			 edpGhiChu.setText("");
+			 WSPACE.wsQuanLyPhong.btnTimKiem.doClick();
+		 }else {
+			 txtTenPhong.setText("");
 		 }
 	 }
 }

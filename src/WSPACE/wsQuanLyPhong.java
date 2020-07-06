@@ -210,6 +210,8 @@ public class wsQuanLyPhong extends JPanel {
 						int temp = PhongBUS.XoaPhong(lblPhong.getText());
 						if(temp == 1) {
 							JOptionPane.showMessageDialog(null, "Xóa phòng thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
+							LoadChiTietPhong(-1);
+							
 							btnTimKiem.doClick();
 						}else {
 							JOptionPane.showMessageDialog(null, "Xóa phòng không thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -435,7 +437,7 @@ public class wsQuanLyPhong extends JPanel {
 		}
 	}
 	
-	void btnTimKiemClick() {
+	public void btnTimKiemClick() {
 		String loaiPhong = cmbLoaiPhong.getSelectedItem().toString();
 		int tinhTrang = -1;
 		if(cmbTinhTrang.getSelectedItem().toString().equals("Đã thuê")) {
