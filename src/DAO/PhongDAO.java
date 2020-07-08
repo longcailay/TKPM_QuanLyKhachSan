@@ -124,10 +124,10 @@ public class PhongDAO {
 		if(countRow > 0) {
 			int id = (int) table.getModel().getValueAt(0, 0);
 			String tenPhong =  (String) table.getModel().getValueAt(0, 1);
-			//String loaiPhong = (String) table.getModel().getValueAt(0, 2);
 			String ghiChu = (String) table.getModel().getValueAt(0, 2);
 			int tinhTrang = (int) table.getModel().getValueAt(0, 3);
-			phong = new Phong(id, tenPhong, "", ghiChu, tinhTrang);
+			String loaiPhong = (String) table.getModel().getValueAt(0, 5);
+			phong = new Phong(id, tenPhong, loaiPhong, ghiChu, tinhTrang);
 		}
 		return phong;
 	}

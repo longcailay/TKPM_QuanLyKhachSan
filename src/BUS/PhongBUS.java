@@ -76,5 +76,8 @@ public class PhongBUS {
 		return PhongDAO.SuaPhong(tenPhong, loaiPhong, ghiChu);
 	}
 	
+	public static Phong LayThongTinPhongTheoTenPhong(String tenPhong) {
+		return PhongDAO.LayThongTinPhongTheoTenPhong(tenPhong);
+	}
 }
 

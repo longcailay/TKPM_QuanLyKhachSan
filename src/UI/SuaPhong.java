@@ -20,6 +20,7 @@ import com.sun.net.httpserver.Authenticator.Success;
 import BUS.PhongBUS;
 import DAO.LoaiPhongDAO;
 import DTO.LoaiPhong;
+import DTO.Phong;
 import WSPACE.wsQuanLyPhong;
 
 import javax.swing.UIManager;
@@ -154,6 +155,7 @@ public class SuaPhong extends JFrame {
 			}
 		});
 		
+		loadThongTinPhongDangSua();
 		
 	}
 	
@@ -162,6 +164,12 @@ public class SuaPhong extends JFrame {
 		 for(LoaiPhong loaiPhong: listLoaiPhong) {
 			 cmbLoaiPhong.addItem(loaiPhong.getTenLoai());
 		 } 
+	 }
+	 
+	 void loadThongTinPhongDangSua() {
+		 Phong phong = PhongBUS.LayThongTinPhongTheoTenPhong(wsQuanLyPhong.lblPhong.getText());
+		 cmbLoaiPhong.setSelectedItem(phong.getLoaiPhong());
+		 edpGhiChu.setText(phong.getGhiChu());
 	 }
 	 
 	 void btnSuaClick() {

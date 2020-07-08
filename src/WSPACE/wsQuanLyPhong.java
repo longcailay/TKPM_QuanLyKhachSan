@@ -62,7 +62,7 @@ public class wsQuanLyPhong extends JPanel {
 	private JComboBox cmbLoaiPhong;
 	private JComboBox cmbTinhTrang;
 	public static JButton btnTimKiem;
-	private JButton btnThemPhongMoi;
+	private JButton btnThuePhong;
 	public static JLabel lblPhong = new JLabel("");
 	private JTextField txtTinhTrang;
 	private JTextField txtNgayThue;
@@ -73,7 +73,7 @@ public class wsQuanLyPhong extends JPanel {
 	//private JTextField txtGhiChu;
 	private JEditorPane dtpGhiChu;
 	
-	private JButton btnThuePhong;
+	private JButton btnThemPhongMoi;
 	private JButton btnTraPhong;
 	private JButton btnSuaPhong;
 	private JButton btnXoaPhong;
@@ -181,10 +181,10 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(dtpGhiChu);
 		dtpGhiChu.setEditable(false);
 		
-		btnThuePhong = new JButton("Thuê phòng");
-		btnThuePhong.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnThuePhong.setBounds(10, 516, 117, 33);
-		panel_2.add(btnThuePhong);
+		btnThemPhongMoi = new JButton("Thêm phòng");
+		btnThemPhongMoi.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnThemPhongMoi.setBounds(10, 516, 117, 33);
+		panel_2.add(btnThemPhongMoi);
 		
 		btnTraPhong = new JButton("Trả phòng");
 		btnTraPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -293,7 +293,7 @@ public class wsQuanLyPhong extends JPanel {
 		});
 		
 		
-		btnThemPhongMoi = new JButton("Thêm phòng");
+		btnThuePhong= new JButton("Thuê phòng");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -311,7 +311,7 @@ public class wsQuanLyPhong extends JPanel {
 					.addGap(63)
 					.addComponent(btnTimKiem)
 					.addGap(37)
-					.addComponent(btnThemPhongMoi)
+					.addComponent(btnThuePhong)
 					.addContainerGap(26, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
@@ -326,7 +326,7 @@ public class wsQuanLyPhong extends JPanel {
 						.addComponent(cmbLoaiPhong, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(cmbTinhTrang, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnTimKiem)
-						.addComponent(btnThemPhongMoi))
+						.addComponent(btnThuePhong))
 					.addContainerGap(27, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
