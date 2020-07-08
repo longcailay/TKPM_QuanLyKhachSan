@@ -81,7 +81,8 @@ public class wsQuanLyPhong extends JPanel {
 	
 	private GroupLayout gl_panel;
 	
-	private ChiTietPhong ctp;
+	public static ChiTietPhong ctp = new ChiTietPhong();
+	public static JButton btnChiTietPhong = new JButton();
 	/**
 	 * Create the panel.
 	 */
@@ -379,9 +380,10 @@ public class wsQuanLyPhong extends JPanel {
 				b.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						LoadChiTietPhong(Integer.parseInt(b.getName()));						
+						LoadChiTietPhong(Integer.parseInt(b.getName()));	
+						btnChiTietPhong = b;
 					}
-				});
+				});				
 				panel_3.add(b);
 			}
 		}

@@ -169,7 +169,9 @@ public class SuaPhong extends JFrame {
 			 JOptionPane.showMessageDialog(null, "Sửa thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
 			 txtTenPhong.setText("");
 			 edpGhiChu.setText("");
-			 WSPACE.wsQuanLyPhong.btnTimKiem.doClick();
+			 wsQuanLyPhong.btnChiTietPhong.doClick();
+			 setVisible(false);
+			 dispose();
 		 }else {
 			 txtTenPhong.setText("");
 		 }
