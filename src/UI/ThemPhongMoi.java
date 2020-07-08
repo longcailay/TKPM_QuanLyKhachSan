@@ -31,6 +31,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.awt.Label;
 import javax.swing.SwingConstants;
@@ -38,6 +39,7 @@ import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
+import java.awt.event.WindowAdapter;
 
 public class ThemPhongMoi extends JFrame {
 
@@ -67,6 +69,13 @@ public class ThemPhongMoi extends JFrame {
 	 * Create the frame.
 	 */
 	public ThemPhongMoi() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				HomePage.pnMenu.setVisible(true);
+			}
+		});
+		
 		setResizable(false);
 		setTitle("HoApp - Thêm phòng mới");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,4 +181,14 @@ public class ThemPhongMoi extends JFrame {
 			 txtTenPhong.setText("");
 		 }
 	 }
+	 
+	 
+	 //Do lúc ta nhấn Exit Form thêm phòng mới, Homepage exit theo nên mới dùng code bên dưới
+	 @Override
+	public void setDefaultCloseOperation(int operation) {
+		// TODO Auto-generated method stub
+		 operation = 1;
+		super.setDefaultCloseOperation(operation);
+	}
+	 
 }

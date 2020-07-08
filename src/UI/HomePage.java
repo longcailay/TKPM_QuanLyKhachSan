@@ -21,7 +21,7 @@ public class HomePage extends JFrame {
 	
 	//3 Panel chinh
 	private JPanel pnWorkspace;
-	private JPanel pnMenu;
+	public static JPanel pnMenu = new JPanel();
 	private JPanel pnTitle;
 	
 	//panel Title

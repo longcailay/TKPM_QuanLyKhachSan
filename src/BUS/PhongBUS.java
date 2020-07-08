@@ -57,12 +57,24 @@ public class PhongBUS {
 	
 	public static int XoaPhong(String tenPhong) {
 		if(tenPhong.isEmpty()) {//Cái này không cần thiết lắm
-			int btnOK = JOptionPane.OK_OPTION;
-			int r = JOptionPane.showConfirmDialog(null, "Tên phòng không hợp lệ!", "Warning!", btnOK);
+			JOptionPane.showMessageDialog(null, "Tên phòng không hợp lệ!", "Warning!", JOptionPane.WARNING_MESSAGE);
 			return -1;
 		}
 		return PhongDAO.XoaPhong(tenPhong);
-		
 	}
+	
+	public static int SuaPhong(String tenPhong, String loaiPhong, String ghiChu) {
+		if(tenPhong.isBlank()) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần sửa!","Warning!", JOptionPane.WARNING_MESSAGE);
+			return -1;
+		}
+		if(PhongDAO.LayThongTinPhongTheoTenPhong(tenPhong) == null) {
+			JOptionPane.showMessageDialog(null, "Phòng này không tồn tại trong CSDL!", "Warnig", JOptionPane.WARNING_MESSAGE);
+			return -1;
+		}
+		
+		return PhongDAO.SuaPhong(tenPhong, loaiPhong, ghiChu);
+	}
+	
 }
 

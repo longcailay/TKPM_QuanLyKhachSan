@@ -20,6 +20,7 @@ import com.sun.net.httpserver.Authenticator.Success;
 import BUS.PhongBUS;
 import DAO.LoaiPhongDAO;
 import DTO.LoaiPhong;
+import WSPACE.wsQuanLyPhong;
 
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
@@ -68,7 +69,7 @@ public class SuaPhong extends JFrame {
 	 */
 	public SuaPhong() {
 		setResizable(false);
-		setTitle("HoApp - S\u1EEDa ph\u00F2ng");
+		setTitle("HoApp - Sửa phòng");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 300, 500, 475);
 		contentPane = new JPanel();
@@ -98,6 +99,8 @@ public class SuaPhong extends JFrame {
 		txtTenPhong.setBounds(222, 62, 199, 33);
 		contentPane.add(txtTenPhong);
 		txtTenPhong.setColumns(10);
+		txtTenPhong.setText(wsQuanLyPhong.lblPhong.getText());
+		txtTenPhong.setEditable(false);
 		
 		Label label_2 = new Label("Ghi chú");
 		label_2.setForeground(Color.BLACK);
@@ -158,12 +161,11 @@ public class SuaPhong extends JFrame {
 		 ArrayList<LoaiPhong> listLoaiPhong = LoaiPhongDAO.loadDSLoaiPhong();
 		 for(LoaiPhong loaiPhong: listLoaiPhong) {
 			 cmbLoaiPhong.addItem(loaiPhong.getTenLoai());
-		 }
-		 
+		 } 
 	 }
 	 
 	 void btnSuaClick() {
-		 if(PhongBUS.SuaPhong(txtTenPhong.getText(), edpGhiChu.getText(), cmbLoaiPhong.getSelectedItem().toString()) != -1) {
+		 if(PhongBUS.SuaPhong(txtTenPhong.getText(), cmbLoaiPhong.getSelectedItem().toString(), edpGhiChu.getText()) != -1) {
 			 JOptionPane.showMessageDialog(null, "Sửa thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
 			 txtTenPhong.setText("");
 			 edpGhiChu.setText("");
@@ -172,4 +174,12 @@ public class SuaPhong extends JFrame {
 			 txtTenPhong.setText("");
 		 }
 	 }
+	 
+	 
+	 @Override
+	public void setDefaultCloseOperation(int operation) {
+		// TODO Auto-generated method stub
+		 operation = 1;
+		super.setDefaultCloseOperation(operation);
+	}
 }

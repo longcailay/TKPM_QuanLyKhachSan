@@ -29,6 +29,7 @@ import javax.swing.event.TableColumnModelListener;
 
 import ButtonPhong.*;
 import UI.HomePage;
+import UI.SuaPhong;
 import UI.ThemPhongMoi;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -62,7 +63,7 @@ public class wsQuanLyPhong extends JPanel {
 	private JComboBox cmbTinhTrang;
 	public static JButton btnTimKiem;
 	private JButton btnThemPhongMoi;
-	private JLabel lblPhong;
+	public static JLabel lblPhong = new JLabel("");
 	private JTextField txtTinhTrang;
 	private JTextField txtNgayThue;
 	
@@ -193,6 +194,18 @@ public class wsQuanLyPhong extends JPanel {
 		btnSuaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSuaPhong.setBounds(10, 579, 117, 33);
 		panel_2.add(btnSuaPhong);
+		btnSuaPhong.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(lblPhong.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần sửa!","Warning", JOptionPane.WARNING_MESSAGE);
+				}else {
+					SuaPhong sp = new SuaPhong();
+					sp.setVisible(true);
+				}
+			}
+		});
+		
 		
 		btnXoaPhong = new JButton("Xóa phòng");
 		btnXoaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -201,23 +214,7 @@ public class wsQuanLyPhong extends JPanel {
 		btnXoaPhong.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(lblPhong.getText().length() == 0) {
-					JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần xóa!","Warning", JOptionPane.WARNING_MESSAGE);
-				}else {
-					if(ctp.getTinhTrang() == 1) {//Phòng đang thuê
-						JOptionPane.showMessageDialog(null, "Vui lòng trả phòng trước khi xóa!", "Error", JOptionPane.ERROR_MESSAGE);
-					}else {
-						int temp = PhongBUS.XoaPhong(lblPhong.getText());
-						if(temp == 1) {
-							JOptionPane.showMessageDialog(null, "Xóa phòng thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
-							LoadChiTietPhong(-1);
-							
-							btnTimKiem.doClick();
-						}else {
-							JOptionPane.showMessageDialog(null, "Xóa phòng không thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				}
+				btnXoaClick();
 			}
 		});
 		
@@ -452,4 +449,28 @@ public class wsQuanLyPhong extends JPanel {
 		ArrayList<Phong> dsPhong = PhongBUS.LoadDSPhongTheoLoaiPhongVaTinhTrang(loaiPhong, tinhTrang);
 		HienThiDanhSachPhong(dsPhong);
 	}
+	void btnXoaClick() {
+		if(lblPhong.getText().length() == 0) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần xóa!","Warning", JOptionPane.WARNING_MESSAGE);
+		}else {
+			if(ctp.getTinhTrang() == 1) {//Phòng đang thuê
+				JOptionPane.showMessageDialog(null, "Vui lòng trả phòng trước khi xóa!", "Error", JOptionPane.ERROR_MESSAGE);
+			}else {
+				int btnOK = JOptionPane.OK_CANCEL_OPTION;
+				int rs = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa phòng " + lblPhong.getText() + " không?", "Warning", btnOK);
+				if(JOptionPane.OK_OPTION == rs) {
+					int temp = PhongBUS.XoaPhong(lblPhong.getText());
+					if(temp == 1) {
+						JOptionPane.showMessageDialog(null, "Xóa phòng thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
+						LoadChiTietPhong(-1);
+						lblPhong.setText("");
+						btnTimKiem.doClick();
+					}else {
+						JOptionPane.showMessageDialog(null, "Xóa phòng không thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		}
+	}
+	
 }
