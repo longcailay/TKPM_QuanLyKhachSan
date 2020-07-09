@@ -44,6 +44,8 @@ public class ThuePhong extends JFrame {
 	private JTextField txtDiaChi;
 	private JTable table;
 
+	
+	private String tenPhong = "102";//Cái này là tạm thời
 	/**
 	 * Launch the application.
 	 */
@@ -155,7 +157,7 @@ public class ThuePhong extends JFrame {
 
 		
 		
-		JLabel lblPhong = new JLabel("101");
+		JLabel lblPhong = new JLabel(tenPhong);
 		lblPhong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblPhong.setBounds(395, 70, 105, 32);
 		contentPane.add(lblPhong);

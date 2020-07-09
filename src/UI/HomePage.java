@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import DTO.NguoiDung;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -37,7 +40,7 @@ public class HomePage extends JFrame {
 	public static JButton btnThanhToan;
 
 	//Cái này là người dùng
-	
+	public static NguoiDung nguoiDung = new NguoiDung();
 	/**
 	 * Launch the application.
 	 */
