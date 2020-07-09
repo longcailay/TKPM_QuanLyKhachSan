@@ -36,6 +36,7 @@ public class HomePage extends JFrame {
 	public static JButton btnCaiDat;	
 	public static JButton btnThanhToan;
 
+	//Cái này là người dùng
 	
 	/**
 	 * Launch the application.
