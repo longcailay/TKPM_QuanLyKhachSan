@@ -178,6 +178,7 @@ public class SuaPhong extends JFrame {
 			 txtTenPhong.setText("");
 			 edpGhiChu.setText("");
 			 wsQuanLyPhong.btnChiTietPhong.doClick();
+			 wsQuanLyPhong.btnTimKiem.doClick();
 			 setVisible(false);
 			 dispose();
 		 }else {

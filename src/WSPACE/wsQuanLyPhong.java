@@ -294,6 +294,13 @@ public class wsQuanLyPhong extends JPanel {
 		
 		
 		btnThuePhong= new JButton("Thuê phòng");
+		btnThuePhong.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnThuePhongClick();
+			}
+		});
+		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -451,6 +458,7 @@ public class wsQuanLyPhong extends JPanel {
 		ArrayList<Phong> dsPhong = PhongBUS.LoadDSPhongTheoLoaiPhongVaTinhTrang(loaiPhong, tinhTrang);
 		HienThiDanhSachPhong(dsPhong);
 	}
+	
 	void btnXoaClick() {
 		if(lblPhong.getText().length() == 0) {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần xóa!","Warning", JOptionPane.WARNING_MESSAGE);
@@ -471,6 +479,18 @@ public class wsQuanLyPhong extends JPanel {
 						JOptionPane.showMessageDialog(null, "Xóa phòng không thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
+			}
+		}
+	}
+	
+	void btnThuePhongClick() {
+		if(lblPhong.getText().length() == 0) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần thuê!","Warning", JOptionPane.WARNING_MESSAGE);
+		}else {
+			if(ctp.getTinhTrang() == 1) {//Phòng đang thuê
+				JOptionPane.showMessageDialog(null, "Vui lòng trả phòng trước khi thuê phòng!", "Error", JOptionPane.ERROR_MESSAGE);
+			}else {
+				
 			}
 		}
 	}
