@@ -211,7 +211,14 @@ public class ThuePhong extends JFrame {
 		btnCapNhat.setBounds(870, 144, 98, 21);
 		contentPane.add(btnCapNhat);
 		
+		//Set cho nút xóa và cập nhật ẩn đi nếu chưa click dòng này trong danh sách khách
+		btnXoa.setVisible(false);
+		btnCapNhat.setVisible(false);
 		
-		
+		loadCMBLoaiKhach();
+	}
+	
+	void loadCMBLoaiKhach() {
+		Khach
 	}
 }
