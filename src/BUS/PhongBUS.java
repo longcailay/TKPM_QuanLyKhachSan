@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import DTO.ChiTietPhong;
+import DTO.LoaiKhach;
 import DTO.Phong;
+import DAO.LoaiKhachDAO;
 import DAO.PhongDAO;
 public class PhongBUS {
 	public static ArrayList<Phong> LoadDSPhong(){
@@ -79,5 +81,7 @@ public class PhongBUS {
 	public static Phong LayThongTinPhongTheoTenPhong(String tenPhong) {
 		return PhongDAO.LayThongTinPhongTheoTenPhong(tenPhong);
 	}
+	
+	
 }
 

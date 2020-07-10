@@ -55,6 +55,9 @@ public class LoaiPhong {
 		this.soLuongKhachToiDa = soLuongKhachToiDa;
 		PhuThu = phuThu;
 	}
+	public LoaiPhong() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	

@@ -29,4 +29,22 @@ public class LoaiPhongDAO {
 		}
 		return result;
 	}
+	public static LoaiPhong loadLoaiPhongTheoTenPhong(String tenPhong) {
+		LoaiPhong result = new LoaiPhong();
+		String query = "EXEC pro_LoadLoaiPhongTheoTenPhong N'" + tenPhong + "'";
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		
+		if(table.getRowCount() > 0) {
+			int id = (int) table.getModel().getValueAt(0, 0);
+			String tenLoai = (String) table.getModel().getValueAt(0, 1);
+			BigDecimal donGia = (BigDecimal) table.getModel().getValueAt(0, 2);
+			int slKhachBT = (int) table.getModel().getValueAt(0, 3);
+			int slKhachTD = (int) table.getModel().getValueAt(0, 4);
+			double phuThu = (double) table.getModel().getValueAt(0, 5);
+			result = new LoaiPhong(id, tenLoai, donGia, slKhachBT, slKhachTD, phuThu);
+		}
+		return result;
+	}
+	
 }
