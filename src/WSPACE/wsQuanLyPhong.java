@@ -31,6 +31,8 @@ import ButtonPhong.*;
 import UI.HomePage;
 import UI.SuaPhong;
 import UI.ThemPhongMoi;
+import UI.ThuePhong;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -83,6 +85,8 @@ public class wsQuanLyPhong extends JPanel {
 	
 	public static ChiTietPhong ctp = new ChiTietPhong();
 	public static JButton btnChiTietPhong = new JButton();
+	
+	public static PhieuThue phieuThue = new PhieuThue();
 	/**
 	 * Create the panel.
 	 */
@@ -490,7 +494,14 @@ public class wsQuanLyPhong extends JPanel {
 			if(ctp.getTinhTrang() == 1) {//Phòng đang thuê
 				JOptionPane.showMessageDialog(null, "Vui lòng trả phòng trước khi thuê phòng!", "Error", JOptionPane.ERROR_MESSAGE);
 			}else {
-				
+				phieuThue.setId(-1);
+				phieuThue.setIdNguoiDung(HomePage.nguoiDung.getId());
+				phieuThue.setIdPhong(PhongBUS.LayThongTinPhongTheoTenPhong(lblPhong.getText()).getId());
+				phieuThue.setTenPhong(lblPhong.getText());
+				phieuThue.setTinhTrang(0);
+				phieuThue.setDanhSachKhach(new ArrayList<Khach>());
+				ThuePhong tp = new ThuePhong(phieuThue);
+				tp.setVisible(true);
 			}
 		}
 	}

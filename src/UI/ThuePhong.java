@@ -11,11 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Panel;
+
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.Scrollable;
 import javax.swing.SpinnerDateModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.UIManager;
@@ -29,6 +33,7 @@ import java.awt.Button;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +56,7 @@ import BUS.PhongBUS;
 import DTO.Khach;
 import DTO.LoaiKhach;
 import DTO.PhieuThue;
+import WSPACE.wsQuanLyPhong;
 
 
 
@@ -64,16 +70,18 @@ public class ThuePhong extends JFrame {
 	private JLabel lblPhong;
 	private JSpinner spnNgayThue;
 	private JTable tbDanhSachKhach;
+	private JScrollPane scrollPane;
 	
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnCapNhat;
+	private JButton btnOK;
 	private JButton btnXacNhan;
 
-	
+	private JPanel panel;
 	private String tenPhong = "102";//Cái này là tạm thời
-	private PhieuThue phieuThue = new PhieuThue();
-	ArrayList<Khach> listKhach = new ArrayList<Khach>();
+	private static PhieuThue phieuThue = wsQuanLyPhong.phieuThue;
+	ArrayList<Khach> listKhach = wsQuanLyPhong.phieuThue.getDanhSachKhach();
 	/**
 	 * Launch the application.
 	 */
@@ -81,7 +89,7 @@ public class ThuePhong extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ThuePhong frame = new ThuePhong();
+					ThuePhong frame = new ThuePhong(phieuThue);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -93,7 +101,7 @@ public class ThuePhong extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ThuePhong() {
+	public ThuePhong(PhieuThue phieuThue) {
 		setTitle("HoApp - Thuê phòng");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +112,7 @@ public class ThuePhong extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 0, 1, (Color) Color.LIGHT_GRAY));
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(0, 0, 308, 478);
@@ -167,13 +175,26 @@ public class ThuePhong extends JFrame {
 		});
 		
 		
+		btnOK = new JButton("OK");
+		btnOK.setForeground(Color.WHITE);
+		btnOK.setBackground(new Color(0, 0, 255));
+		btnOK.setBounds(106, 432, 85, 21);
+		panel.add(btnOK);
+		btnOK.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnOKClick();
+			}
+		});
+		btnOK.setVisible(false);
+		
 		cmbLoaiKhach = new JComboBox();
 		cmbLoaiKhach.setBounds(10, 192, 288, 32);
 		panel.add(cmbLoaiKhach);
 		
 		JLabel lblDanhSchKhch = new JLabel("Phiếu thuê phòng");
 		lblDanhSchKhch.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblDanhSchKhch.setBounds(428, 25, 190, 32);
+		lblDanhSchKhch.setBounds(585, 23, 190, 32);
 		contentPane.add(lblDanhSchKhch);
 		
 		
@@ -208,7 +229,7 @@ public class ThuePhong extends JFrame {
 		btnXacNhan.setBounds(600, 428, 98, 21);
 		contentPane.add(btnXacNhan);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(331, 175, 639, 182);
 		contentPane.add(scrollPane);
 		
@@ -239,24 +260,56 @@ public class ThuePhong extends JFrame {
 		tbDanhSachKhach.getColumnModel().getColumn(3).setMaxWidth(250);
 		tbDanhSachKhach.getColumnModel().getColumn(4).setResizable(false);
 		tbDanhSachKhach.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tbDanhSachKhach.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if( tbDanhSachKhach.getSelectedRow() != -1 && tbDanhSachKhach.getSelectedRow() <= listKhach.size() - 1) {
+					loadTableDanhSachKhach();
+					btnCapNhat.setVisible(true);
+					btnXoa.setVisible(true);
+				}
+				else {
+					btnCapNhat.setVisible(false);
+					btnXoa.setVisible(false);
+				}
+			}
+		});
+		
 		
 		btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setBackground(Color.RED);
 		btnXoa.setBounds(749, 144, 98, 21);
 		contentPane.add(btnXoa);
+		btnXoa.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnXoaClick();
+			}
+		});
 		
 		btnCapNhat = new JButton("Cập nhật");
 		btnCapNhat.setForeground(Color.WHITE);
 		btnCapNhat.setBackground(new Color(222, 184, 135));
 		btnCapNhat.setBounds(870, 144, 98, 21);
 		contentPane.add(btnCapNhat);
+		btnCapNhat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnCapNhatClick();
+			}
+		});
+		
+		JLabel lblNewLabel_2 = new JLabel(Integer.toString(phieuThue.getId()));
+		lblNewLabel_2.setBounds(318, 23, 45, 13);
+		contentPane.add(lblNewLabel_2);
 		
 		//Set cho nút xóa và cập nhật ẩn đi nếu chưa click dòng này trong danh sách khách
 		btnXoa.setVisible(false);
 		btnCapNhat.setVisible(false);
 		
 		loadCMBLoaiKhach();
+		loadTableDanhSachKhach();
 		taoPhieuThue();
 	}
 	
@@ -277,9 +330,7 @@ public class ThuePhong extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int idPhong = PhongBUS.LayThongTinPhongTheoTenPhong(lblPhong.getText()).getId();
-		int idNguoiDung = HomePage.nguoiDung.getId();
-		phieuThue = new PhieuThue(0, dateNgayThue, null, 0, idPhong, idNguoiDung , lblPhong.getText(), null);
+		phieuThue.setNgayThue(dateNgayThue);
 	}
 	private boolean KiemTraCMNDHopLe(String cmnd) {
 		boolean result = true;
@@ -322,10 +373,22 @@ public class ThuePhong extends JFrame {
 			Khach khach = new Khach(0, txtHoten.getText(), txtSoCMND.getText(), txtDiaChi.getText(), idLoaiKhach );
 			listKhach.add(khach);
 			loadTableDanhSachKhach();
+			txtHoten.setText("");
+			txtSoCMND.setText("");
+			txtDiaChi.setText("");
 		}
 	}
 	
 	void loadTableDanhSachKhach() {
+		int r = 0;
+		int c = 0;
+		r = tbDanhSachKhach.getRowCount();
+		c = tbDanhSachKhach.getColumnCount();
+		for(int i = 0; i < r; i++) {
+			for(int j = 0; j < c; j++) {
+				tbDanhSachKhach.setValueAt(null, i, j);
+			}
+		}
 		int row = 0;
 		for(Khach khach: listKhach) {
 			tbDanhSachKhach.setValueAt(row + 1, row, 0);
@@ -335,5 +398,51 @@ public class ThuePhong extends JFrame {
 			tbDanhSachKhach.setValueAt(khach.getDiaChi(),row, 4);
 			row++;
 		}
+	}
+
+	void btnXoaClick() {
+		loadTableDanhSachKhach();
+		listKhach.remove(tbDanhSachKhach.getSelectedRow());
+		loadTableDanhSachKhach();
+		tbDanhSachKhach.setSelectionMode(0);
+	}
+	void btnCapNhatClick() {
+		btnThem.setVisible(false);
+		panel.setBackground(Color.LIGHT_GRAY);
+		btnOK.setVisible(true);
+		tbDanhSachKhach.setEnabled(false);
+		btnXoa.setEnabled(false);
+		
+		txtHoten.setText(listKhach.get(tbDanhSachKhach.getSelectedRow()).getHoTen());
+		txtSoCMND.setText(listKhach.get(tbDanhSachKhach.getSelectedRow()).getCmnd());
+		txtDiaChi.setText(listKhach.get(tbDanhSachKhach.getSelectedRow()).getDiaChi());
+		cmbLoaiKhach.setSelectedItem(tbDanhSachKhach.getValueAt(tbDanhSachKhach.getSelectedRow(), 2));
+	}
+	
+	void btnOKClick() {		
+		if(kiemTraThongTinKhachHopLe()) {
+			int idLoaiKhach = LoaiKhachBUS.LoadMaLoaiKhachTheoTenLoaiKhach(cmbLoaiKhach.getSelectedItem().toString());
+			listKhach.get(tbDanhSachKhach.getSelectedRow()).setCmnd(txtSoCMND.getText());
+			listKhach.get(tbDanhSachKhach.getSelectedRow()).setDiaChi(txtDiaChi.getText());
+			listKhach.get(tbDanhSachKhach.getSelectedRow()).setHoTen(txtHoten.getText());
+			listKhach.get(tbDanhSachKhach.getSelectedRow()).setLoaiKhach(idLoaiKhach);
+			loadTableDanhSachKhach();
+			txtHoten.setText("");
+			txtSoCMND.setText("");
+			txtDiaChi.setText("");
+			JOptionPane.showMessageDialog(null, "Cập nhật thành công!", "Information!", JOptionPane.INFORMATION_MESSAGE);
+			tbDanhSachKhach.setSelectionMode(0);
+			tbDanhSachKhach.setEnabled(true);
+			btnXoa.setEnabled(true);
+			btnOK.setVisible(false);
+			panel.setBackground(Color.WHITE);
+			btnThem.setVisible(true);
+		}
+	}
+	@Override
+	public void setDefaultCloseOperation(int operation) {
+		// TODO Auto-generated method stub
+		operation = 1;
+		super.setDefaultCloseOperation(operation);
 	}
 }
