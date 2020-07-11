@@ -77,13 +77,13 @@ public class NguoiDung {
 		this.phanQuyen = phanQuyen;
 	}
 	public NguoiDung() {
-		this.id = 0;
+		this.id = 1;
 		this.hoTen = "Nguyễn Văn A";
-		this.cmnd = "";
-		this.sdt = "";
-		this.diaChi = "";
-		this.taiKhoan = "";
-		this.matKhau = "";
+		this.cmnd = "123456789";
+		this.sdt = "0329435555";
+		this.diaChi = "Tien giang";
+		this.taiKhoan = "admin";
+		this.matKhau = "113";
 		this.tinhTrang = 1;
 		this.phanQuyen = 1;
 	}

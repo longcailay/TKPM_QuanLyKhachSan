@@ -7,7 +7,7 @@ public class PhieuThue {
 	private int id;
 	private Date NgayThue;
 	private Date NgayKetThuc;
-	private int tinhTrang;
+	private int tinhTrang;/*-1. đã bị xóa, 0. Đang thuê phòng và chưa thanh toán,  1. Đã trả phòng và đã thanh toán,  2. Đã trả phòng và chưa thanh toán*/
 	private int idPhong;
 	private int idNguoiDung;
 	private String tenPhong;

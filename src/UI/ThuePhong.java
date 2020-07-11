@@ -52,11 +52,15 @@ import javax.swing.table.JTableHeader;
 
 import BUS.LoaiKhachBUS;
 import BUS.LoaiPhongBUS;
+import BUS.PhieuThueBUS;
 import BUS.PhongBUS;
+import DAO.PhieuThueDAO;
 import DTO.Khach;
 import DTO.LoaiKhach;
 import DTO.PhieuThue;
 import WSPACE.wsQuanLyPhong;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 
 
@@ -77,9 +81,10 @@ public class ThuePhong extends JFrame {
 	private JButton btnCapNhat;
 	private JButton btnOK;
 	private JButton btnXacNhan;
+	private JButton btnHuy;
 
 	private JPanel panel;
-	private String tenPhong = "102";//Cái này là tạm thời
+	private String tenPhong = "";//Cái này là tạm thời
 	private static PhieuThue phieuThue = wsQuanLyPhong.phieuThue;
 	ArrayList<Khach> listKhach = wsQuanLyPhong.phieuThue.getDanhSachKhach();
 	/**
@@ -206,6 +211,11 @@ public class ThuePhong extends JFrame {
 		contentPane.add(lblNewLabel_1_2);
 		
 		spnNgayThue = new JSpinner(new SpinnerDateModel());
+		spnNgayThue.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				phieuThue.setNgayThue((Date)spnNgayThue.getValue());
+			}
+		});
 		spnNgayThue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spnNgayThue.setBounds(657, 75, 153, 27);
 		contentPane.add(spnNgayThue);
@@ -213,7 +223,7 @@ public class ThuePhong extends JFrame {
 
 		
 		
-		lblPhong = new JLabel(tenPhong);
+		lblPhong = new JLabel(phieuThue.getTenPhong());
 		lblPhong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblPhong.setBounds(395, 70, 105, 32);
 		contentPane.add(lblPhong);
@@ -226,8 +236,15 @@ public class ThuePhong extends JFrame {
 		btnXacNhan = new JButton("Xác nhận");
 		btnXacNhan.setForeground(Color.WHITE);
 		btnXacNhan.setBackground(Color.BLUE);
-		btnXacNhan.setBounds(600, 428, 98, 21);
+		btnXacNhan.setBounds(585, 428, 98, 21);
 		contentPane.add(btnXacNhan);
+		btnXacNhan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnXacNhanClick();
+			}
+		});
+		
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(331, 175, 639, 182);
@@ -304,6 +321,19 @@ public class ThuePhong extends JFrame {
 		lblNewLabel_2.setBounds(318, 23, 45, 13);
 		contentPane.add(lblNewLabel_2);
 		
+		btnHuy = new JButton("Hủy");
+		btnHuy.setForeground(Color.BLACK);
+		btnHuy.setBackground(Color.WHITE);
+		btnHuy.setBounds(712, 428, 98, 21);
+		contentPane.add(btnHuy);
+		btnHuy.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentPane.setVisible(false);
+				dispose();
+			}
+		});
+		
 		//Set cho nút xóa và cập nhật ẩn đi nếu chưa click dòng này trong danh sách khách
 		btnXoa.setVisible(false);
 		btnCapNhat.setVisible(false);
@@ -352,8 +382,8 @@ public class ThuePhong extends JFrame {
 			JOptionPane.showMessageDialog(null, "Số CMND không hợp lệ!","Warning", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
-		if(txtSoCMND.getText().length() < 5 || txtSoCMND.getText().length() > 20) {
-			JOptionPane.showMessageDialog(null, "Số chữ số của CMND nằm trong khoản 5 -> 20 chữ số!","Warning", JOptionPane.WARNING_MESSAGE);
+		if(txtSoCMND.getText().length() < 5 || txtSoCMND.getText().length() > 15) {
+			JOptionPane.showMessageDialog(null, "Số chữ số của CMND nằm trong khoản 5 -> 15 chữ số!","Warning", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		if(txtDiaChi.getText().isBlank()){
@@ -439,6 +469,49 @@ public class ThuePhong extends JFrame {
 			btnThem.setVisible(true);
 		}
 	}
+	
+	void btnXacNhanClick(){
+		if(phieuThue.getDanhSachKhach().size() == 0) {
+			JOptionPane.showMessageDialog(null, "Phòng thuê phải có ít nhất một khách!","Warning!", JOptionPane.WARNING_MESSAGE);
+			//System.out.println("ll "+ phieuThue.getNgayThue());
+			return;
+		}
+		if(phieuThue.getId() == -1) {//đang tạo mới phiếu thuê
+			/*Kiểm tra ngày cho thuê hợp lệ*/
+			String strNgayKetThucMax = PhieuThueBUS.getNgayKetThucMax(phieuThue.getIdPhong());
+			Date ngayThue = phieuThue.getNgayThue();
+			System.out.println("kk: " + strNgayKetThucMax);
+			if(strNgayKetThucMax != null) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				try {
+					Date ngayKetThucMax = sdf.parse(strNgayKetThucMax);
+					if(ngayThue.before(ngayKetThucMax)) {
+						JOptionPane.showMessageDialog(null, "Ngày bắt đầu không hợp lệ! (Phòng đang cho thuê trong thời gian này)","Warning!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			/*Kết thúc kiểm tra*/
+			
+			
+			
+			int idPhieuThueMoiTao = PhieuThueBUS.TaoPhieuThue(phieuThue);
+			if(idPhieuThueMoiTao != -1) {//tạo phiếu thuê thành công
+				phieuThue.setId(idPhieuThueMoiTao);
+				for(Khach khach: listKhach) {
+					PhieuThueBUS.TaoChiTietPhieuThue(idPhieuThueMoiTao, khach);
+				}
+				JOptionPane.showMessageDialog(null, "Tạo phiếu thuê thành công!","Successfull!", JOptionPane.INFORMATION_MESSAGE);
+				PhieuThueBUS.CapNhatTinhTrangPhongThanhDangThue(phieuThue.getIdPhong());
+			}
+		}
+		contentPane.setVisible(false);
+		dispose();
+	}
+	
 	@Override
 	public void setDefaultCloseOperation(int operation) {
 		// TODO Auto-generated method stub
