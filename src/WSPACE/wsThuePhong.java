@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -16,10 +17,23 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import BUS.LoaiKhachBUS;
+import BUS.NguoiDungBUS;
+import BUS.PhieuThueBUS;
+import DTO.Khach;
+import DTO.PhieuThue;
+
 public class wsThuePhong extends JPanel {
 	private JTable tbPhieuThue;
 	private JTable tbKhachThue;
 	
+	private JButton btnTimKiem;
+	private JButton btnCapNhat;
+	private JButton btnXoaPhieu;
+	private JComboBox cmbTenPhong;
+	private JComboBox cmbTinhTrang;
+	
+	ArrayList<PhieuThue> listPhieuThue = PhieuThueBUS.LoadDanhSachPhieuThue();
 	/**
 	 * Create the panel.
 	 */
@@ -141,11 +155,11 @@ public class wsThuePhong extends JPanel {
 		tbPhieuThue.getColumnModel().getColumn(0).setMaxWidth(30);
 		scrollPane.setViewportView(tbPhieuThue);
 		
-		JButton btnCapNhat = new JButton("Cập nhật");
+		btnCapNhat = new JButton("Cập nhật");
 		btnCapNhat.setBackground(new Color(218, 165, 32));
 		btnCapNhat.setForeground(Color.WHITE);
 		
-		JButton btnXoaPhieu = new JButton("Xóa phiếu");
+		btnXoaPhieu = new JButton("Xóa phiếu");
 		btnXoaPhieu.setBackground(new Color(255, 0, 0));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
@@ -183,7 +197,7 @@ public class wsThuePhong extends JPanel {
 		lblNewLabel.setBounds(40, 20, 90, 20);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JComboBox cmbTenPhong = new JComboBox();
+		cmbTenPhong = new JComboBox();
 		cmbTenPhong.setBounds(140, 18, 188, 21);
 		cmbTenPhong.setFont(new Font("Tahoma", Font.BOLD, 18));
 		cmbTenPhong.setEditable(true);
@@ -192,12 +206,12 @@ public class wsThuePhong extends JPanel {
 		lblNewLabel_1.setBounds(415, 20, 90, 20);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JComboBox cmbTinhTrang = new JComboBox();
+		cmbTinhTrang = new JComboBox();
 		cmbTinhTrang.setBounds(525, 18, 188, 21);
 		cmbTinhTrang.setFont(new Font("Tahoma", Font.BOLD, 18));
 		cmbTinhTrang.setEditable(true);
 		
-		JButton btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBounds(778, 22, 85, 21);
 		panel.setLayout(null);
 		panel.add(lblNewLabel);
@@ -206,6 +220,29 @@ public class wsThuePhong extends JPanel {
 		panel.add(cmbTinhTrang);
 		panel.add(btnTimKiem);
 		setLayout(groupLayout);
-
+		
+		loadDanhSachPhieuThue();
+	}
+	
+	void loadDanhSachPhieuThue() {
+		int r = 0;
+		int c = 0;
+		r = tbPhieuThue.getRowCount();
+		c = tbPhieuThue.getColumnCount();
+		for(int i = 0; i < r; i++) {
+			for(int j = 0; j < c; j++) {
+				tbPhieuThue.setValueAt(null, i, j);
+			}
+		}
+		int row = 0;
+		for(PhieuThue phieuThue: listPhieuThue) {
+			tbPhieuThue.setValueAt(row + 1, row, 0);
+			tbPhieuThue.setValueAt(phieuThue.getTenPhong(), row, 1);
+			tbPhieuThue.setValueAt(phieuThue.getNgayThue(), row, 2);
+			tbPhieuThue.setValueAt(phieuThue.getNgayKetThuc(), row, 3);
+			tbPhieuThue.setValueAt(phieuThue.getTinhTrang(),row, 4);
+			tbPhieuThue.setValueAt(NguoiDungBUS.LoadNguoiDungTheoID(phieuThue.getIdNguoiDung()).getHoTen(), row, 5);
+			row++;
+		}
 	}
 }
