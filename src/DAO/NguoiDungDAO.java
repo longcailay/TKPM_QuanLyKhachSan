@@ -26,4 +26,17 @@ public class NguoiDungDAO {
 		}
 		return result;
 	}
+	
+	public static String LoadTenNguoiDungTheoID(int id) {
+		String  result = "";
+		String query = "SELECT HoTen FROM NGUOI_DUNG WHERE ID = "+ id;
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		if(table.getRowCount() > 0) {
+			String hoTen =(String) table.getModel().getValueAt(0, 0);
+			result = hoTen;
+		}
+		return result;
+	}
+	
 }

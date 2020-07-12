@@ -7,6 +7,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -20,8 +22,13 @@ import javax.swing.table.DefaultTableModel;
 import BUS.LoaiKhachBUS;
 import BUS.NguoiDungBUS;
 import BUS.PhieuThueBUS;
+import BUS.PhongBUS;
 import DTO.Khach;
 import DTO.PhieuThue;
+import DTO.Phong;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class wsThuePhong extends JPanel {
 	private JTable tbPhieuThue;
@@ -34,6 +41,10 @@ public class wsThuePhong extends JPanel {
 	private JComboBox cmbTinhTrang;
 	
 	ArrayList<PhieuThue> listPhieuThue = PhieuThueBUS.LoadDanhSachPhieuThue();
+	
+	private PhieuThue phieuThue = new PhieuThue();
+	ArrayList<Khach> listKhach = new ArrayList<Khach>();
+	ArrayList<Phong> listPhong = PhieuThueBUS.LoadDanhSachPhongCoPhieuThue();
 	/**
 	 * Create the panel.
 	 */
@@ -90,7 +101,14 @@ public class wsThuePhong extends JPanel {
 			new String[] {
 				"STT", "H\u1ECD t\u00EAn", "CMND", "\u0110\u1ECBa ch\u1EC9", "Lo\u1EA1i kh\u00E1ch"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		tbKhachThue.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbKhachThue.getColumnModel().getColumn(0).setMaxWidth(30);
 		scrollPane_1.setViewportView(tbKhachThue);
@@ -124,6 +142,12 @@ public class wsThuePhong extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		tbPhieuThue = new JTable();
+		tbPhieuThue.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				rowPhieuThueClick();
+			}
+		});
 		tbPhieuThue.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null},
@@ -150,7 +174,14 @@ public class wsThuePhong extends JPanel {
 			new String[] {
 				"STT", "T\u00EAn ph\u00F2ng", "Ng\u00E0y thu\u00EA", "Ng\u00E0y tr\u1EA3 ph\u00F2ng", "T\u00ECnh tr\u1EA1ng", "Ng\u01B0\u1EDDi l\u1EADp phi\u1EBFu"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		tbPhieuThue.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbPhieuThue.getColumnModel().getColumn(0).setMaxWidth(30);
 		scrollPane.setViewportView(tbPhieuThue);
@@ -161,6 +192,13 @@ public class wsThuePhong extends JPanel {
 		
 		btnXoaPhieu = new JButton("Xóa phiếu");
 		btnXoaPhieu.setBackground(new Color(255, 0, 0));
+		btnXoaPhieu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnXoaPhieuClick();
+			}
+		});
+		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -207,9 +245,8 @@ public class wsThuePhong extends JPanel {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		cmbTinhTrang = new JComboBox();
-		cmbTinhTrang.setBounds(525, 18, 188, 21);
+		cmbTinhTrang.setBounds(525, 18, 195, 25);
 		cmbTinhTrang.setFont(new Font("Tahoma", Font.BOLD, 18));
-		cmbTinhTrang.setEditable(true);
 		
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBounds(778, 22, 85, 21);
@@ -220,8 +257,17 @@ public class wsThuePhong extends JPanel {
 		panel.add(cmbTinhTrang);
 		panel.add(btnTimKiem);
 		setLayout(groupLayout);
+		btnTimKiem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnTimKiemClick();
+			}
+		});
+		
 		
 		loadDanhSachPhieuThue();
+		loadComboboxTenPhong();
+		loadComboboxTinhTrang();
 	}
 	
 	void loadDanhSachPhieuThue() {
@@ -240,9 +286,98 @@ public class wsThuePhong extends JPanel {
 			tbPhieuThue.setValueAt(phieuThue.getTenPhong(), row, 1);
 			tbPhieuThue.setValueAt(phieuThue.getNgayThue(), row, 2);
 			tbPhieuThue.setValueAt(phieuThue.getNgayKetThuc(), row, 3);
-			tbPhieuThue.setValueAt(phieuThue.getTinhTrang(),row, 4);
-			tbPhieuThue.setValueAt(NguoiDungBUS.LoadNguoiDungTheoID(phieuThue.getIdNguoiDung()).getHoTen(), row, 5);
+			String strTinhTrang = "";
+			switch (phieuThue.getTinhTrang()) {
+				case 0:
+					strTinhTrang = "Đang cho thuê";
+					break;
+				case 1:
+					strTinhTrang = "Đã thanh toán";
+					break;
+				case 2:
+					strTinhTrang = "Chưa thanh toán";
+					break;
+			}
+			tbPhieuThue.setValueAt(strTinhTrang,row, 4);
+			tbPhieuThue.setValueAt(NguoiDungBUS.LoadTenNguoiDungTheoID(phieuThue.getIdNguoiDung()), row, 5);
 			row++;
 		}
+	}
+	void loadComboboxTenPhong() {
+		cmbTenPhong.addItem("Tất cả");
+		for(Phong phong: listPhong) {
+			cmbTenPhong.addItem(phong.getTenPhong());
+		}
+	}
+	
+	void loadComboboxTinhTrang() {
+		cmbTinhTrang.addItem("Tất cả");
+		cmbTinhTrang.addItem("Đang cho thuê");
+		cmbTinhTrang.addItem("Đã thanh toán");
+		cmbTinhTrang.addItem("Chưa thanh toán");
+	}
+	
+	void btnXoaPhieuClick(){
+		if(phieuThue.getId() == -1) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu thuê cần xóa!", "Warning!",JOptionPane.WARNING_MESSAGE);
+		}
+		else {
+			if(phieuThue.getTinhTrang() == 1) {
+				JOptionPane.showMessageDialog(null, "Phiếu thuê đã thanh toán xong, không thể xóa!", "Warning!",JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			int btnOK = JOptionPane.OK_OPTION;
+			int r = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa phiếu thuê!", "Warning!", btnOK);
+			if(r == JOptionPane.OK_OPTION) {
+				if(PhieuThueBUS.XoaPhieuThueTheoID(phieuThue.getId()) != 0){
+					PhongBUS.CapNhatTinhTrangPhongSangConTrong(phieuThue.getIdPhong());
+					listPhieuThue = PhieuThueBUS.LoadDanhSachPhieuThue();
+					loadDanhSachPhieuThue();
+					JOptionPane.showMessageDialog(null, "Xóa phiếu thuê thành công!", "Information!", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		}		
+	}
+	void loadDanhSachKhachCuaPhieuThue() {
+		int r = 0;
+		int c = 0;
+		r = tbKhachThue.getRowCount();
+		c = tbKhachThue.getColumnCount();
+		for(int i = 0; i < r; i++) {
+			for(int j = 0; j < c; j++) {
+				tbKhachThue.setValueAt(null, i, j);
+			}
+		}
+		int row = 0;
+		for(Khach khach: listKhach) {
+			tbKhachThue.setValueAt(row + 1, row, 0);
+			tbKhachThue.setValueAt(khach.getHoTen(), row, 1);
+			tbKhachThue.setValueAt(khach.getCmnd(), row, 2);
+			tbKhachThue.setValueAt(khach.getDiaChi(), row, 3);
+			String strTenLoaiKhach = "";
+			strTenLoaiKhach = LoaiKhachBUS.LoadLoaiKhachTheoID(khach.getLoaiKhach()).getTenLoai();
+			tbKhachThue.setValueAt(strTenLoaiKhach,row, 4);
+			row++;
+		}
+	}
+	
+	void rowPhieuThueClick() {
+		int rSelection = -1;
+		rSelection = tbPhieuThue.getSelectedRow();
+		if(rSelection <= listPhieuThue.size() - 1) {
+			phieuThue = listPhieuThue.get(rSelection);
+			listKhach = phieuThue.getDanhSachKhach();
+			loadDanhSachKhachCuaPhieuThue();
+		}
+		else {
+			phieuThue = new PhieuThue();
+			listKhach = new ArrayList<Khach>();
+			loadDanhSachKhachCuaPhieuThue();
+		}
+	}
+	
+	void btnTimKiemClick() {
+		listPhieuThue = PhieuThueBUS.LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang(cmbTenPhong.getSelectedItem().toString(), cmbTinhTrang.getSelectedItem().toString());
+		loadDanhSachPhieuThue();
 	}
 }

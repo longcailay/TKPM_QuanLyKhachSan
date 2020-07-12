@@ -138,4 +138,11 @@ public class PhongDAO {
 		int result = dp.ExcuteNonQuery(query);
 		return result;
 	}
+	
+	public static int CapNhatTinhTrangPhongSangConTrong(int idPhong) {
+		String query = "UPDATE PHONG SET TinhTrang = 0 WHERE ID = " + idPhong;
+		DataProvider dp = new DataProvider();
+		int result = dp.ExcuteNonQuery(query);
+		return result;
+	}
 }

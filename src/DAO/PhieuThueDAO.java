@@ -8,6 +8,7 @@ import javax.swing.JTable;
 
 import DTO.Khach;
 import DTO.PhieuThue;
+import DTO.Phong;
 import DataConnection.DataProvider;
 
 public class PhieuThueDAO {
@@ -50,7 +51,7 @@ public class PhieuThueDAO {
 	
 	public static String getNgayKetThucMax(int idPhong) {
 		Date temp = new Date();
-		String query = "select Max(NgayKetThuc) from PHIEU_THUE where Phong = " + idPhong;
+		String query = "select Max(NgayKetThuc) from PHIEU_THUE where ID != -1 AND Phong = " + idPhong;
 		DataProvider dp = new DataProvider();
 		JTable table = dp.ExcuteQuery(query);
 		if(table.getRowCount() > 0) {
@@ -83,7 +84,7 @@ public class PhieuThueDAO {
 	
 	public static ArrayList<PhieuThue> LoadDanhSachPhieuThue(){
 		ArrayList<PhieuThue> result = new ArrayList<PhieuThue>();
-		String query = "SELECT PT.*, P.TenPhong FROM PHIEU_THUE PT, PHONG P WHERE PT.Phong = P.ID";
+		String query = "SELECT PT.*, P.TenPhong FROM PHIEU_THUE PT, PHONG P WHERE PT.TinhTrang != -1 AND PT.Phong = P.ID";
 		DataProvider dp = new DataProvider();
 		JTable table = dp.ExcuteQuery(query);
 		int coutRow = table.getRowCount();
@@ -105,7 +106,7 @@ public class PhieuThueDAO {
 	
 	public static PhieuThue LoadPhieuThueTheoID(int idPhieuThue) {
 		PhieuThue result = new PhieuThue();
-		String query = "SELECT PT.*, P.TenPhong FROM PHIEU_THUE PT, PHONG P WHERE PT.Phong = P.ID AND PT.ID = "+ idPhieuThue;
+		String query = "SELECT PT.*, P.TenPhong FROM PHIEU_THUE PT, PHONG P WHERE PT.TinhTrang != -1 AND PT.Phong = P.ID AND PT.ID = "+ idPhieuThue;
 		DataProvider dp = new DataProvider();
 		JTable table = dp.ExcuteQuery(query);
 		int coutRow = table.getRowCount();
@@ -123,5 +124,48 @@ public class PhieuThueDAO {
 		}
 		return result;
 	}
-	
+	 public static int XoaPhieuThueTheoID(int idPhieuThue) {
+		 int result = 0;
+		 String query = "UPDATE PHIEU_THUE SET TinhTrang = -1 WHERE ID = " + idPhieuThue;
+		 DataProvider dp = new DataProvider();
+		 result = dp.ExcuteNonQuery(query);
+		 return result;
+	 }
+	 
+	 public static ArrayList<Phong> LoadDanhSachPhongCoPhieuThue(){
+		ArrayList<Phong> result = new ArrayList<Phong>();
+		String query = "SELECT P.* FROM PHONG P WHERE EXISTS (SELECT ID FROM PHIEU_THUE PT WHERE PT.Phong = P.ID AND PT.TinhTrang != -1)";
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		int coutRow = table.getRowCount();
+		for(int i = 0; i < coutRow; i++) {
+			int id = (int)table.getModel().getValueAt(i, 0);
+			String tenPhong = (String) table.getModel().getValueAt(i, 1);
+			Phong phong = new Phong(id, tenPhong, "", "", 0);
+			result.add(phong);
+		}
+		return result;
+	 }
+	 
+	 public static ArrayList<PhieuThue> LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang(String TenPhong, int TinhTrang){
+			ArrayList<PhieuThue> result = new ArrayList<PhieuThue>();
+			String query = "pro_LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang N'" + TenPhong + "', " + TinhTrang;
+			DataProvider dp = new DataProvider();
+			JTable table = dp.ExcuteQuery(query);
+			int coutRow = table.getRowCount();
+			for(int i = 0; i < coutRow; i++) {
+				int id = (int)table.getModel().getValueAt(i, 0);
+				Date ngayThue = (Date)table.getModel().getValueAt(i, 1);
+				Date ngayKetThuc = (Date)table.getModel().getValueAt(i, 2);
+				int tinhTrang = (int)table.getModel().getValueAt(i, 3);
+				int idPhong = (int)table.getModel().getValueAt(i, 4);
+				int idNguoiDung = (int)table.getModel().getValueAt(i, 5);
+				String tenPhong = (String) table.getModel().getValueAt(i, 6);
+				ArrayList<Khach> danhSachKhach = new ArrayList<Khach>();
+				danhSachKhach = LoadDanhSachKhachTheoIDPhieuThue(id);
+				PhieuThue phieuThue = new PhieuThue(id, ngayThue, ngayKetThuc, tinhTrang, idPhong, idNguoiDung, tenPhong, danhSachKhach);
+				result.add(phieuThue);
+			}
+			return result;
+		}
 }

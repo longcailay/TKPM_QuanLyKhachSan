@@ -72,7 +72,7 @@ public class PhieuThue {
 		this.danhSachKhach = danhSachKhach;
 	}
 	public PhieuThue() {
-		// TODO Auto-generated constructor stub
+		this.id = -1;
 	}
 	
 	

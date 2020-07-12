@@ -173,7 +173,7 @@ public class HomePage extends JFrame {
 		btnQuanLyPhong.setBounds(0, 109, 270, 73);
 		pnMenu.add(btnQuanLyPhong);
 		
-		btnThuePhong = new JButton("Thuê Phòng");
+		btnThuePhong = new JButton("Quản lý phiếu thuê");
 		btnThuePhong.setBounds(0, 327, 270, 73);
 		pnMenu.add(btnThuePhong);
 		

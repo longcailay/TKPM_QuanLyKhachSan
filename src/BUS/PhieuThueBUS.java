@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import DAO.PhieuThueDAO;
 import DTO.Khach;
 import DTO.PhieuThue;
+import DTO.Phong;
 
 public class PhieuThueBUS {
 	public static int TaoPhieuThue(PhieuThue phieuThue) {
@@ -50,4 +51,37 @@ public class PhieuThueBUS {
 	public static ArrayList<PhieuThue> LoadDanhSachPhieuThue(){
 		return PhieuThueDAO.LoadDanhSachPhieuThue();
 	}
+	
+	public static int XoaPhieuThueTheoID(int idPhieuThue) {
+		if(idPhieuThue < 0) {
+			JOptionPane.showMessageDialog(null, "idPhieuThue không hợp lệ!", "Warning!", JOptionPane.WARNING_MESSAGE);
+			return 0;
+		}
+		return PhieuThueDAO.XoaPhieuThueTheoID(idPhieuThue);
+	}
+	
+	public static ArrayList<Phong> LoadDanhSachPhongCoPhieuThue(){
+		return PhieuThueDAO.LoadDanhSachPhongCoPhieuThue();
+	}
+	
+	public static ArrayList<PhieuThue> LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang(String TenPhong, String strTinhTrang){
+		if(TenPhong.isBlank()) {
+			JOptionPane.showMessageDialog(null, "Tên phòng không được bỏ trống!", "Warning!", JOptionPane.WARNING_MESSAGE);
+			return new ArrayList<PhieuThue>();
+		}
+		else {
+			int tinhTrang = -1;
+			if(strTinhTrang.equals("Đang cho thuê")) {
+				tinhTrang = 0;
+			}
+			if(strTinhTrang.equals("Đã thanh toán")) {
+				tinhTrang = 1;
+			}
+			if(strTinhTrang.equals("Chưa thanh toán")) {
+				tinhTrang = 2;
+			}
+			return PhieuThueDAO.LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang(TenPhong, tinhTrang);
+		}
+	}
+	
 }
