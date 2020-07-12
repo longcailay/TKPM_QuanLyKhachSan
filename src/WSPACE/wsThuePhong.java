@@ -11,8 +11,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 import javax.swing.JTable;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class wsThuePhong extends JPanel {
+	private JTable tbPhieuThue;
+	private JTable tbKhachThue;
 	
 	/**
 	 * Create the panel.
@@ -23,12 +29,8 @@ public class wsThuePhong extends JPanel {
 		this.setBackground(Color.PINK);
 		
 		JPanel panel = new JPanel();
-		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panel.setAlignmentY(0.0f);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		panel_1.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
 		JPanel panel_2 = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -36,94 +38,173 @@ public class wsThuePhong extends JPanel {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
+						.addComponent(panel_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+						.addComponent(panel_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)))
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
-		JLabel lblNewLabel_3 = new JLabel("Danh S\u00E1ch Kh\u00E1ch Thu\u00EA");
+		JLabel lblNewLabel_2_1 = new JLabel("Danh sách khách thuê trong phòng");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		
+		tbKhachThue = new JTable();
+		tbKhachThue.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"STT", "H\u1ECD t\u00EAn", "CMND", "\u0110\u1ECBa ch\u1EC9", "Lo\u1EA1i kh\u00E1ch"
+			}
+		));
+		tbKhachThue.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tbKhachThue.getColumnModel().getColumn(0).setMaxWidth(30);
+		scrollPane_1.setViewportView(tbKhachThue);
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(241)
-					.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(272, Short.MAX_VALUE))
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addGap(332)
+							.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 364, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 914, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(24)
-					.addComponent(lblNewLabel_3)
-					.addContainerGap(286, Short.MAX_VALUE))
+					.addGap(10)
+					.addComponent(lblNewLabel_2_1)
+					.addGap(10)
+					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)
+					.addGap(24))
 		);
 		panel_2.setLayout(gl_panel_2);
 		
-		JLabel lblNewLabel_2 = new JLabel("Danh S\u00E1ch Phi\u1EBFu Thu\u00EA");
+		JLabel lblNewLabel_2 = new JLabel("Danh sách phiếu thuê");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		
-		JButton btnPrevious = new JButton("Tr\u1EDF L\u1EA1i");
+		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton btnNext = new JButton("K\u1EBF Ti\u1EBFp");
+		tbPhieuThue = new JTable();
+		tbPhieuThue.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"STT", "T\u00EAn ph\u00F2ng", "Ng\u00E0y thu\u00EA", "Ng\u00E0y tr\u1EA3 ph\u00F2ng", "T\u00ECnh tr\u1EA1ng", "Ng\u01B0\u1EDDi l\u1EADp phi\u1EBFu"
+			}
+		));
+		tbPhieuThue.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tbPhieuThue.getColumnModel().getColumn(0).setMaxWidth(30);
+		scrollPane.setViewportView(tbPhieuThue);
 		
-		JTable table = new JTable();
+		JButton btnCapNhat = new JButton("Cập nhật");
+		btnCapNhat.setBackground(new Color(218, 165, 32));
+		btnCapNhat.setForeground(Color.WHITE);
+		
+		JButton btnXoaPhieu = new JButton("Xóa phiếu");
+		btnXoaPhieu.setBackground(new Color(255, 0, 0));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(195)
-					.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-					.addGap(202))
-				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-					.addGap(126)
-					.addComponent(btnPrevious, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(114)
-					.addComponent(btnNext, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-					.addGap(148))
-				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(table, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(358)
+							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 483, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 914, Short.MAX_VALUE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(309)
+							.addComponent(btnCapNhat)
+							.addGap(113)
+							.addComponent(btnXoaPhieu)))
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(25)
-					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 265, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(table, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-					.addGap(29)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnPrevious)
-						.addComponent(btnNext))
-					.addGap(24))
+						.addComponent(btnCapNhat)
+						.addComponent(btnXoaPhieu))
+					.addGap(19))
 		);
 		panel_1.setLayout(gl_panel_1);
 		
-		JButton btnThuePhong = new JButton("Nh\u1EA5n v\u00E0o");
-		btnThuePhong.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				HomePage.lblTitle.setText("jjjj");
-			}
-		});
-		panel.add(btnThuePhong);
+		JLabel lblNewLabel = new JLabel("T\u00EAn ph\u00F2ng");
+		lblNewLabel.setBounds(40, 20, 90, 20);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JLabel lblNewLabel = new JLabel("C\u1EE7a THu\u00EA Ph\u00F2ng");
+		JComboBox cmbTenPhong = new JComboBox();
+		cmbTenPhong.setBounds(140, 18, 188, 21);
+		cmbTenPhong.setFont(new Font("Tahoma", Font.BOLD, 18));
+		cmbTenPhong.setEditable(true);
+		
+		JLabel lblNewLabel_1 = new JLabel("Tình trạng");
+		lblNewLabel_1.setBounds(415, 20, 90, 20);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		JComboBox cmbTinhTrang = new JComboBox();
+		cmbTinhTrang.setBounds(525, 18, 188, 21);
+		cmbTinhTrang.setFont(new Font("Tahoma", Font.BOLD, 18));
+		cmbTinhTrang.setEditable(true);
+		
+		JButton btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem.setBounds(778, 22, 85, 21);
+		panel.setLayout(null);
 		panel.add(lblNewLabel);
+		panel.add(cmbTenPhong);
+		panel.add(lblNewLabel_1);
+		panel.add(cmbTinhTrang);
+		panel.add(btnTimKiem);
 		setLayout(groupLayout);
 
 	}

@@ -506,6 +506,7 @@ public class ThuePhong extends JFrame {
 				}
 				JOptionPane.showMessageDialog(null, "Tạo phiếu thuê thành công!","Successfull!", JOptionPane.INFORMATION_MESSAGE);
 				PhieuThueBUS.CapNhatTinhTrangPhongThanhDangThue(phieuThue.getIdPhong());
+				wsQuanLyPhong.btnTimKiem.doClick();
 			}
 		}
 		contentPane.setVisible(false);

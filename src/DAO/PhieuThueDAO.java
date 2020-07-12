@@ -1,6 +1,7 @@
 package DAO;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JTable;
@@ -58,6 +59,67 @@ public class PhieuThueDAO {
 		String result = null;
 		if(temp != null) {
 			result = temp.toString();
+		}
+		return result;
+	}
+	
+	public static ArrayList<Khach> LoadDanhSachKhachTheoIDPhieuThue(int idPhieuThue){
+		ArrayList<Khach> result = new ArrayList<Khach>();
+		String query = "SELECT K.* FROM CHI_TIET_PHIEU_THUE CTPT, KHACH K WHERE CTPT.Khach = K.ID AND CTPT.PhieuThue = " + idPhieuThue;
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		int coutRow = table.getRowCount();
+		for(int i = 0; i < coutRow; i++) {
+			int id = (int)table.getModel().getValueAt(i, 0);
+			String hoTen = (String) table.getModel().getValueAt(i, 1);
+			String cmnd = (String) table.getModel().getValueAt(i, 2);
+			String diaChi = (String) table.getModel().getValueAt(i, 3);
+			int loaiKhach = (int) table.getModel().getValueAt(i, 4);
+			Khach khach = new Khach(id, hoTen, cmnd, diaChi, loaiKhach);
+			result.add(khach);
+		}
+		return result;
+	}
+	
+	public static ArrayList<PhieuThue> LoadDanhSachPhieuThue(){
+		ArrayList<PhieuThue> result = new ArrayList<PhieuThue>();
+		String query = "SELECT PT.*, P.TenPhong FROM PHIEU_THUE PT, PHONG P WHERE PT.Phong = P.ID";
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		int coutRow = table.getRowCount();
+		for(int i = 0; i < coutRow; i++) {
+			int id = (int)table.getModel().getValueAt(i, 0);
+			Date ngayThue = (Date)table.getModel().getValueAt(i, 1);
+			Date ngayKetThuc = (Date)table.getModel().getValueAt(i, 2);
+			int tinhTrang = (int)table.getModel().getValueAt(i, 3);
+			int idPhong = (int)table.getModel().getValueAt(i, 4);
+			int idNguoiDung = (int)table.getModel().getValueAt(i, 5);
+			String tenPhong = (String) table.getModel().getValueAt(i, 6);
+			ArrayList<Khach> danhSachKhach = new ArrayList<Khach>();
+			danhSachKhach = LoadDanhSachKhachTheoIDPhieuThue(id);
+			PhieuThue phieuThue = new PhieuThue(id, ngayThue, ngayKetThuc, tinhTrang, idPhong, idNguoiDung, tenPhong, danhSachKhach);
+			result.add(phieuThue);
+		}
+		return result;
+	}
+	
+	public static PhieuThue LoadPhieuThueTheoID(int idPhieuThue) {
+		PhieuThue result = new PhieuThue();
+		String query = "SELECT PT.*, P.TenPhong FROM PHIEU_THUE PT, PHONG P WHERE PT.Phong = P.ID AND PT.ID = "+ idPhieuThue;
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		int coutRow = table.getRowCount();
+		if(coutRow > 0) {
+			int id = (int)table.getModel().getValueAt(0, 0);
+			Date ngayThue = (Date)table.getModel().getValueAt(0, 1);
+			Date ngayKetThuc = (Date)table.getModel().getValueAt(0, 2);
+			int tinhTrang = (int)table.getModel().getValueAt(0, 3);
+			int idPhong = (int)table.getModel().getValueAt(0, 4);
+			int idNguoiDung = (int)table.getModel().getValueAt(0, 5);
+			String tenPhong = (String) table.getModel().getValueAt(0, 6);
+			ArrayList<Khach> danhSachKhach = new ArrayList<Khach>();
+			danhSachKhach = LoadDanhSachKhachTheoIDPhieuThue(id);
+			result = new PhieuThue(id, ngayThue, ngayKetThuc, tinhTrang, idPhong, idNguoiDung, tenPhong, danhSachKhach);
 		}
 		return result;
 	}

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PhieuThue {
-	private int id;
-	private Date NgayThue;
-	private Date NgayKetThuc;
-	private int tinhTrang;/*-1. đã bị xóa, 0. Đang thuê phòng và chưa thanh toán,  1. Đã trả phòng và đã thanh toán,  2. Đã trả phòng và chưa thanh toán*/
-	private int idPhong;
-	private int idNguoiDung;
-	private String tenPhong;
-	private ArrayList<Khach> danhSachKhach;
+	protected int id;
+	protected Date NgayThue;
+	protected Date NgayKetThuc;
+	protected int tinhTrang;/*-1. đã bị xóa, 0. Đang thuê phòng và chưa thanh toán,  1. Đã trả phòng và đã thanh toán,  2. Đã trả phòng và chưa thanh toán*/
+	protected int idPhong;
+	protected int idNguoiDung;
+	protected String tenPhong;
+	protected ArrayList<Khach> danhSachKhach;
 	public int getId() {
 		return id;
 	}

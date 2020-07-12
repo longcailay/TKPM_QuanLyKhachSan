@@ -1,5 +1,6 @@
 package BUS;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -44,5 +45,9 @@ public class PhieuThueBUS {
 	
 	public static String getNgayKetThucMax(int idPhong) {
 		return PhieuThueDAO.getNgayKetThucMax(idPhong);
+	}
+	
+	public static ArrayList<PhieuThue> LoadDanhSachPhieuThue(){
+		return PhieuThueDAO.LoadDanhSachPhieuThue();
 	}
 }
