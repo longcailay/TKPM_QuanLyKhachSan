@@ -83,5 +83,7 @@ public class PhieuThueBUS {
 			return PhieuThueDAO.LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang(TenPhong, tinhTrang);
 		}
 	}
-	
+	public static PhieuThue LoadPhieuThueTheoID(int idPhieuThue) {
+		return PhieuThueDAO.LoadPhieuThueTheoID(idPhieuThue);
+	}
 }

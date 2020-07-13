@@ -1,5 +1,8 @@
 package WSPACE;
+import UI.CapNhatPhieuThue;
 import UI.HomePage;
+import UI.ThuePhong;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -42,8 +45,8 @@ public class wsThuePhong extends JPanel {
 	
 	ArrayList<PhieuThue> listPhieuThue = PhieuThueBUS.LoadDanhSachPhieuThue();
 	
-	private PhieuThue phieuThue = new PhieuThue();
-	ArrayList<Khach> listKhach = new ArrayList<Khach>();
+	public static PhieuThue phieuThue = new PhieuThue();
+	public static ArrayList<Khach> listKhach = new ArrayList<Khach>();
 	ArrayList<Phong> listPhong = PhieuThueBUS.LoadDanhSachPhongCoPhieuThue();
 	/**
 	 * Create the panel.
@@ -150,33 +153,33 @@ public class wsThuePhong extends JPanel {
 		});
 		tbPhieuThue.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"STT", "T\u00EAn ph\u00F2ng", "Ng\u00E0y thu\u00EA", "Ng\u00E0y tr\u1EA3 ph\u00F2ng", "T\u00ECnh tr\u1EA1ng", "Ng\u01B0\u1EDDi l\u1EADp phi\u1EBFu"
+				"STT", "ID", "T\u00EAn ph\u00F2ng", "Ng\u00E0y thu\u00EA", "Ng\u00E0y tr\u1EA3 ph\u00F2ng", "T\u00ECnh tr\u1EA1ng", "Ng\u01B0\u1EDDi l\u1EADp phi\u1EBFu"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false
+				false, true, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -184,11 +187,18 @@ public class wsThuePhong extends JPanel {
 		});
 		tbPhieuThue.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbPhieuThue.getColumnModel().getColumn(0).setMaxWidth(30);
+		tbPhieuThue.getColumnModel().getColumn(1).setMaxWidth(50);
 		scrollPane.setViewportView(tbPhieuThue);
 		
 		btnCapNhat = new JButton("Cập nhật");
 		btnCapNhat.setBackground(new Color(218, 165, 32));
 		btnCapNhat.setForeground(Color.WHITE);
+		btnCapNhat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnCapNhatClick();
+			}
+		});
 		
 		btnXoaPhieu = new JButton("Xóa phiếu");
 		btnXoaPhieu.setBackground(new Color(255, 0, 0));
@@ -283,9 +293,10 @@ public class wsThuePhong extends JPanel {
 		int row = 0;
 		for(PhieuThue phieuThue: listPhieuThue) {
 			tbPhieuThue.setValueAt(row + 1, row, 0);
-			tbPhieuThue.setValueAt(phieuThue.getTenPhong(), row, 1);
-			tbPhieuThue.setValueAt(phieuThue.getNgayThue(), row, 2);
-			tbPhieuThue.setValueAt(phieuThue.getNgayKetThuc(), row, 3);
+			tbPhieuThue.setValueAt(phieuThue.getId(), row, 1);
+			tbPhieuThue.setValueAt(phieuThue.getTenPhong(), row, 2);
+			tbPhieuThue.setValueAt(phieuThue.getNgayThue(), row, 3);
+			tbPhieuThue.setValueAt(phieuThue.getNgayKetThuc(), row, 4);
 			String strTinhTrang = "";
 			switch (phieuThue.getTinhTrang()) {
 				case 0:
@@ -298,8 +309,8 @@ public class wsThuePhong extends JPanel {
 					strTinhTrang = "Chưa thanh toán";
 					break;
 			}
-			tbPhieuThue.setValueAt(strTinhTrang,row, 4);
-			tbPhieuThue.setValueAt(NguoiDungBUS.LoadTenNguoiDungTheoID(phieuThue.getIdNguoiDung()), row, 5);
+			tbPhieuThue.setValueAt(strTinhTrang,row, 5);
+			tbPhieuThue.setValueAt(NguoiDungBUS.LoadTenNguoiDungTheoID(phieuThue.getIdNguoiDung()), row, 6);
 			row++;
 		}
 	}
@@ -379,5 +390,20 @@ public class wsThuePhong extends JPanel {
 	void btnTimKiemClick() {
 		listPhieuThue = PhieuThueBUS.LoadDanhSachPhieuThueTheoTenPhongVaTinhTrang(cmbTenPhong.getSelectedItem().toString(), cmbTinhTrang.getSelectedItem().toString());
 		loadDanhSachPhieuThue();
+	}
+	void btnCapNhatClick() {
+		if(phieuThue.getId() == -1) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu thuê cần cập nhật!", "Warning!", JOptionPane.WARNING_MESSAGE);
+		}
+		else {
+			if(phieuThue.getTinhTrang() == 1) {
+				JOptionPane.showMessageDialog(null, "Không thể cập nhật phiếu thuê đã thanh toán!", "Warning!", JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				phieuThue.setDanhSachKhach(listKhach);
+				UI.CapNhatPhieuThue cnpt = new CapNhatPhieuThue();
+				cnpt.setVisible(true);
+			}
+		}
 	}
 }

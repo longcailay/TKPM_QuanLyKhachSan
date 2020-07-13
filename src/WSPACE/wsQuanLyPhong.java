@@ -500,7 +500,7 @@ public class wsQuanLyPhong extends JPanel {
 				phieuThue.setTenPhong(lblPhong.getText());
 				phieuThue.setTinhTrang(0);
 				phieuThue.setDanhSachKhach(new ArrayList<Khach>());
-				ThuePhong tp = new ThuePhong(phieuThue);
+				ThuePhong tp = new ThuePhong();
 				tp.setVisible(true);
 			}
 		}

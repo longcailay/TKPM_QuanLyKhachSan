@@ -51,7 +51,7 @@ public class PhieuThueDAO {
 	
 	public static String getNgayKetThucMax(int idPhong) {
 		Date temp = new Date();
-		String query = "select Max(NgayKetThuc) from PHIEU_THUE where ID != -1 AND Phong = " + idPhong;
+		String query = "select Max(NgayKetThuc) from PHIEU_THUE where ID != -1 AND TinhTrang != -1 AND Phong = " + idPhong;
 		DataProvider dp = new DataProvider();
 		JTable table = dp.ExcuteQuery(query);
 		if(table.getRowCount() > 0) {

@@ -236,7 +236,6 @@ public class HomePage extends JFrame {
 		pnTitle.setLayout(gl_pnTitle);
 		//End: group Layout cho panel Title
 		
-		
 		getContentPane().setLayout(groupLayout);//Quan trọng set Layout cho 3 Panel Chính trên HomePage	
 	}
 }

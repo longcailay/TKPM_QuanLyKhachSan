@@ -59,12 +59,17 @@ import DTO.Khach;
 import DTO.LoaiKhach;
 import DTO.PhieuThue;
 import WSPACE.wsQuanLyPhong;
+import WSPACE.wsThuePhong;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.SpinnerModel;
 
 
 
-public class ThuePhong extends JFrame {
+public class CapNhatPhieuThue extends JFrame {
 
 	protected JPanel contentPane;
 	protected JTextField txtHoten;
@@ -85,8 +90,8 @@ public class ThuePhong extends JFrame {
 
 	protected JPanel panel;
 	protected String tenPhong = "";//Cái này là tạm thời
-	protected PhieuThue phieuThue = wsQuanLyPhong.phieuThue;
-	protected ArrayList<Khach> listKhach = wsQuanLyPhong.phieuThue.getDanhSachKhach();
+	protected PhieuThue phieuThue = wsThuePhong.phieuThue;
+	protected ArrayList<Khach> listKhach = wsThuePhong.listKhach;
 	/**
 	 * Launch the application.
 	 */
@@ -94,7 +99,7 @@ public class ThuePhong extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ThuePhong frame = new ThuePhong();
+					CapNhatPhieuThue frame = new CapNhatPhieuThue();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,11 +111,10 @@ public class ThuePhong extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ThuePhong() {
-		setTitle("HoApp - Thuê phòng");
+	public CapNhatPhieuThue() {
+		setTitle("HoApp - Cập nhật phiếu thuê" + phieuThue.getId());
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1010, 516);
+		setBounds(100, 100, 1093, 516);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -197,30 +201,38 @@ public class ThuePhong extends JFrame {
 		cmbLoaiKhach.setBounds(10, 192, 288, 32);
 		panel.add(cmbLoaiKhach);
 		
-		JLabel lblDanhSchKhch = new JLabel("Phiếu thuê phòng");
+		JLabel lblDanhSchKhch = new JLabel("Cập nhật phiếu thuê");
 		lblDanhSchKhch.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblDanhSchKhch.setBounds(585, 23, 190, 32);
+		lblDanhSchKhch.setBounds(585, 23, 225, 32);
 		contentPane.add(lblDanhSchKhch);
 		
 		
 		
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Ngày bắt đầu thuê");
+		JLabel lblNewLabel_1_2 = new JLabel("Ngày bắt đầu");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_1_2.setBounds(521, 78, 139, 20);
+		lblNewLabel_1_2.setBounds(467, 78, 105, 20);
 		contentPane.add(lblNewLabel_1_2);
 		
 		spnNgayThue = new JSpinner(new SpinnerDateModel());
-		spnNgayThue.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				phieuThue.setNgayThue((Date)spnNgayThue.getValue());
-			}
-		});
-		spnNgayThue.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		spnNgayThue.setBounds(657, 75, 153, 27);
+		spnNgayThue.setEnabled(false);
+		spnNgayThue.setValue(phieuThue.getNgayThue());
+		spnNgayThue.setFont(new Font("Tahoma", Font.BOLD, 15));
+		spnNgayThue.setBounds(570, 75, 178, 27);
 		contentPane.add(spnNgayThue);
 		
-
+		JSpinner spnNgayKetThuc = new JSpinner(new SpinnerDateModel());
+		if(phieuThue.getNgayKetThuc() != null) {
+			System.out.println("dd");
+			spnNgayKetThuc.setValue(phieuThue.getNgayKetThuc());
+		}
+		else {
+			spnNgayKetThuc = new JSpinner();
+		}
+		spnNgayKetThuc.setEnabled(false);
+		spnNgayKetThuc.setFont(new Font("Tahoma", Font.BOLD, 15));
+		spnNgayKetThuc.setBounds(879, 75, 178, 27);
+		contentPane.add(spnNgayKetThuc);
 		
 		
 		lblPhong = new JLabel(phieuThue.getTenPhong());
@@ -247,7 +259,7 @@ public class ThuePhong extends JFrame {
 		
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(331, 175, 639, 182);
+		scrollPane.setBounds(331, 175, 728, 182);
 		contentPane.add(scrollPane);
 		
 		tbDanhSachKhach = new JTable();
@@ -296,7 +308,7 @@ public class ThuePhong extends JFrame {
 		btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(749, 144, 98, 21);
+		btnXoa.setBounds(833, 144, 98, 21);
 		contentPane.add(btnXoa);
 		btnXoa.addActionListener(new ActionListener() {
 			@Override
@@ -308,7 +320,7 @@ public class ThuePhong extends JFrame {
 		btnCapNhat = new JButton("Cập nhật");
 		btnCapNhat.setForeground(Color.WHITE);
 		btnCapNhat.setBackground(new Color(222, 184, 135));
-		btnCapNhat.setBounds(870, 144, 98, 21);
+		btnCapNhat.setBounds(959, 144, 98, 21);
 		contentPane.add(btnCapNhat);
 		btnCapNhat.addActionListener(new ActionListener() {
 			@Override
@@ -318,7 +330,8 @@ public class ThuePhong extends JFrame {
 		});
 		
 		JLabel lblNewLabel_2 = new JLabel(Integer.toString(phieuThue.getId()));
-		lblNewLabel_2.setBounds(318, 23, 45, 13);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel_2.setBounds(808, 24, 67, 27);
 		contentPane.add(lblNewLabel_2);
 		
 		btnHuy = new JButton("Hủy");
@@ -333,6 +346,14 @@ public class ThuePhong extends JFrame {
 				dispose();
 			}
 		});
+		
+		JLabel lblNewLabel_1_2_1 = new JLabel("Ngày kết thúc");
+		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_2_1.setBounds(774, 78, 105, 20);
+		contentPane.add(lblNewLabel_1_2_1);
+		
+		
+		
 		
 		//Set cho nút xóa và cập nhật ẩn đi nếu chưa click dòng này trong danh sách khách
 		btnXoa.setVisible(false);
@@ -508,12 +529,5 @@ public class ThuePhong extends JFrame {
 		}
 		contentPane.setVisible(false);
 		dispose();
-	}
-	
-	@Override
-	public void setDefaultCloseOperation(int operation) {
-		// TODO Auto-generated method stub
-		operation = 1;
-		super.setDefaultCloseOperation(operation);
 	}
 }
