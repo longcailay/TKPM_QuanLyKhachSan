@@ -131,6 +131,13 @@ public class PhieuThueDAO {
 		 result = dp.ExcuteNonQuery(query);
 		 return result;
 	 }
+	 public static int XoaChiTietPhieuThueTheoID(int idPhieuThue) {
+		 int result = 0;
+		 String query = "DELETE FROM CHI_TIET_PHIEU_THUE WHERE PhieuThue = " + idPhieuThue;
+		 DataProvider dp = new DataProvider();
+		 result = dp.ExcuteNonQuery(query);
+		 return result;
+	 }
 	 
 	 public static ArrayList<Phong> LoadDanhSachPhongCoPhieuThue(){
 		ArrayList<Phong> result = new ArrayList<Phong>();
@@ -168,4 +175,5 @@ public class PhieuThueDAO {
 			}
 			return result;
 		}
+	 
 }

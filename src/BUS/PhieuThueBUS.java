@@ -59,6 +59,13 @@ public class PhieuThueBUS {
 		}
 		return PhieuThueDAO.XoaPhieuThueTheoID(idPhieuThue);
 	}
+	public static int XoaChiTietPhieuThueTheoID(int idPhieuThue) {
+		if(idPhieuThue < 0) {
+			JOptionPane.showMessageDialog(null, "idPhieuThue không hợp lệ!", "Warning!", JOptionPane.WARNING_MESSAGE);
+			return 0;
+		}
+		return PhieuThueDAO.XoaChiTietPhieuThueTheoID(idPhieuThue);
+	}
 	
 	public static ArrayList<Phong> LoadDanhSachPhongCoPhieuThue(){
 		return PhieuThueDAO.LoadDanhSachPhongCoPhieuThue();

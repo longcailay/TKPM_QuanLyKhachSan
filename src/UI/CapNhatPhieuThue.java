@@ -50,6 +50,7 @@ import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import BUS.KhachBUS;
 import BUS.LoaiKhachBUS;
 import BUS.LoaiPhongBUS;
 import BUS.PhieuThueBUS;
@@ -92,6 +93,7 @@ public class CapNhatPhieuThue extends JFrame {
 	protected String tenPhong = "";//Cái này là tạm thời
 	protected PhieuThue phieuThue = wsThuePhong.phieuThue;
 	protected ArrayList<Khach> listKhach = wsThuePhong.listKhach;
+	protected ArrayList<Khach> listKhachBanDau = wsThuePhong.listKhach;//Dùng để xóa danh sách khách hiện tại
 	/**
 	 * Launch the application.
 	 */
@@ -496,37 +498,18 @@ public class CapNhatPhieuThue extends JFrame {
 			JOptionPane.showMessageDialog(null, "Phòng thuê phải có ít nhất một khách!","Warning!", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		if(phieuThue.getId() == -1) {//đang tạo mới phiếu thuê
-			/*Kiểm tra ngày cho thuê hợp lệ*/
-			String strNgayKetThucMax = PhieuThueBUS.getNgayKetThucMax(phieuThue.getIdPhong());
-			Date ngayThue = phieuThue.getNgayThue();
-			System.out.println("kk: " + strNgayKetThucMax);
-			if(strNgayKetThucMax != null) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				try {
-					Date ngayKetThucMax = sdf.parse(strNgayKetThucMax);
-					if(ngayThue.before(ngayKetThucMax)) {
-						JOptionPane.showMessageDialog(null, "Ngày bắt đầu không hợp lệ! (Phòng đang cho thuê trong thời gian này)","Warning!", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			/*Kết thúc kiểm tra*/
-			
-			int idPhieuThueMoiTao = PhieuThueBUS.TaoPhieuThue(phieuThue);
-			if(idPhieuThueMoiTao != -1) {//tạo phiếu thuê thành công
-				phieuThue.setId(idPhieuThueMoiTao);
-				for(Khach khach: listKhach) {
-					PhieuThueBUS.TaoChiTietPhieuThue(idPhieuThueMoiTao, khach);
-				}
-				JOptionPane.showMessageDialog(null, "Tạo phiếu thuê thành công!","Successfull!", JOptionPane.INFORMATION_MESSAGE);
-				PhieuThueBUS.CapNhatTinhTrangPhongThanhDangThue(phieuThue.getIdPhong());
-				wsQuanLyPhong.btnTimKiem.doClick();
-			}
+		
+		/*Xóa khách và chi tiết phiếu thuê ban đầu*/
+		PhieuThueBUS.XoaChiTietPhieuThueTheoID(phieuThue.getId());
+		for(Khach khach: listKhachBanDau) {
+			KhachBUS.XoaKhachTheoID(khach.getId());
 		}
+		//Tạo lại Khách và chi tiết phiếu thuê mới
+		for(Khach khach: listKhach) {
+			PhieuThueBUS.TaoChiTietPhieuThue(phieuThue.getId(), khach);
+		}
+		JOptionPane.showMessageDialog(null, "Cập nhật phiếu thuê thành công!","Information!", JOptionPane.INFORMATION_MESSAGE);
+		
 		contentPane.setVisible(false);
 		dispose();
 	}

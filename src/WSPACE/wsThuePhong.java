@@ -397,7 +397,7 @@ public class wsThuePhong extends JPanel {
 		}
 		else {
 			if(phieuThue.getTinhTrang() == 1) {
-				JOptionPane.showMessageDialog(null, "Không thể cập nhật phiếu thuê đã thanh toán!", "Warning!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Phiếu thuê đã thanh toán, không thể cập nhật!", "Warning!", JOptionPane.WARNING_MESSAGE);
 			}
 			else {
 				phieuThue.setDanhSachKhach(listKhach);
