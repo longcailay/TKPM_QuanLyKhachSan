@@ -194,6 +194,29 @@ public class wsQuanLyPhong extends JPanel {
 		btnTraPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnTraPhong.setBounds(143, 516, 117, 33);
 		panel_2.add(btnTraPhong);
+		btnTraPhong.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(lblPhong.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần trả!","Warning", JOptionPane.WARNING_MESSAGE);
+				}else {
+					if(ctp.getTinhTrang() == 0) {
+						JOptionPane.showMessageDialog(null, "Phòng còn trống!","Warning", JOptionPane.WARNING_MESSAGE);
+					}
+					else {
+						int btnResult = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm vào hóa đơn thanh toán!", "Infomation!",JOptionPane.YES_NO_OPTION);
+						if(btnResult == JOptionPane.YES_OPTION) {
+							System.out.print("YES");
+						}
+						if(btnResult == JOptionPane.NO_OPTION) {
+							System.out.print(ctp.getId());
+							TraPhongBUS.TraPhong(ctp.getId());
+							JOptionPane.showMessageDialog(null, "Trả phòng thành công!","Information!",JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+			}
+		});
 		
 		btnSuaPhong = new JButton("Sửa phòng");
 		btnSuaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -278,7 +301,7 @@ public class wsQuanLyPhong extends JPanel {
 		
 		
 		cmbTinhTrang = new JComboBox();
-		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Còn trống", "Đã thuê"}));
+		cmbTinhTrang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Còn trống", "Đang thuê"}));
 		
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.addActionListener(new ActionListener() {
@@ -411,11 +434,13 @@ public class wsQuanLyPhong extends JPanel {
 		if(ctp.getTinhTrang() == 0) {
 			tinhTrang = "Còn trống";
 			txtNgayThue.setText("");
+			//btnTraPhong.setEnabled(false);
 		}
 		else {
-			tinhTrang = "Đã thuê";
+			tinhTrang = "Đang thuê";
 			String t = ctp.getNgayThue().toString();
 			txtNgayThue.setText(t.substring(0,3) + " " + t.substring(8,10) + "/" + t.substring(4,7) + "/" + t.substring(24));
+			//btnTraPhong.setEnabled(true);
 		}
 		txtTinhTrang.setText(tinhTrang);
 		dtpGhiChu.setText(ctp.getGhiChu());
@@ -450,7 +475,7 @@ public class wsQuanLyPhong extends JPanel {
 	public void btnTimKiemClick() {
 		String loaiPhong = cmbLoaiPhong.getSelectedItem().toString();
 		int tinhTrang = -1;
-		if(cmbTinhTrang.getSelectedItem().toString().equals("Đã thuê")) {
+		if(cmbTinhTrang.getSelectedItem().toString().equals("Đang thuê")) {
 			tinhTrang = 1;
 		}
 		if(cmbTinhTrang.getSelectedItem().toString().equals("Còn trống")) {

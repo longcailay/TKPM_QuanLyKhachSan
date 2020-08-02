@@ -78,6 +78,14 @@ public class HomePage extends JFrame {
 			}
 		});
 		
+		btnThanhToan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setText(btnThanhToan.getText());
+				loadNewWorkspace("ThanhToan");
+			}
+		});
+		
 		btnThuePhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnThuePhong.getText());
