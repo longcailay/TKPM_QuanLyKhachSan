@@ -93,4 +93,7 @@ public class PhieuThueBUS {
 	public static PhieuThue LoadPhieuThueTheoID(int idPhieuThue) {
 		return PhieuThueDAO.LoadPhieuThueTheoID(idPhieuThue);
 	}
+	public static ArrayList<Integer> LoadDanhSachIDPhieuThueChuaThanhToan() {
+		return PhieuThueDAO.LoadDanhSachIDPhieuThueChuaThanhToan();
+	}
 }

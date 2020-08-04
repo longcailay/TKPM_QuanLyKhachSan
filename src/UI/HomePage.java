@@ -23,9 +23,9 @@ public class HomePage extends JFrame {
 	private GroupLayout groupLayout;
 	
 	//3 Panel chinh
-	private JPanel pnWorkspace;
+	public static JPanel pnWorkspace= new JPanel();
 	public static JPanel pnMenu = new JPanel();
-	private JPanel pnTitle;
+	public static JPanel pnTitle= new JPanel();
 	
 	//panel Title
 	public static JLabel lblTitle;
@@ -65,7 +65,7 @@ public class HomePage extends JFrame {
 	{
 		pnMenu.setAlignmentY(0.0f);
 		pnMenu.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pnMenu.setBackground(Color.YELLOW);
+		pnMenu.setBackground(new Color(0, 51, 255));
 		pnMenu.setForeground(new Color(0, 255, 0));
 		
 		InitializePanelMenu(pnMenu);//set vị trí và kích thước các Button trong PanelMenu
@@ -142,7 +142,7 @@ public class HomePage extends JFrame {
 	public void setupTitle(JPanel pnTitle) {
 		pnTitle.setAlignmentY(0.0f);
 		pnTitle.setAlignmentX(0.0f);
-		pnTitle.setBackground(Color.green);
+		pnTitle.setBackground(new Color(0, 51, 255));
 		lblTitle = new JLabel();
 	}
 	
@@ -209,6 +209,8 @@ public class HomePage extends JFrame {
 	
 	public HomePage() {		
 		setSize(new Dimension(1200, 800));
+		//setBackground(new Color(0, 51, 255));
+		//setForeground(new Color(0, 51, 255));
 		setTitle("HoApp");
 		setLocationRelativeTo(null);//set center of screen
 

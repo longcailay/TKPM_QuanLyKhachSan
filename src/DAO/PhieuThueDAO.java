@@ -175,5 +175,16 @@ public class PhieuThueDAO {
 			}
 			return result;
 		}
-	 
+	 public static ArrayList<Integer> LoadDanhSachIDPhieuThueChuaThanhToan() {
+		 ArrayList<Integer> result = new ArrayList<Integer>();
+		 String query = "SELECT ID FROM PHIEU_THUE WHERE TinhTrang = 2";
+		 DataProvider dp = new DataProvider();
+		 JTable table = dp.ExcuteQuery(query);
+		 int countRow = table.getRowCount();
+		 for (int i = 0; i < countRow; i++) {
+			 int id = (int)table.getModel().getValueAt(i, 0);
+			 result.add(id);
+		 }
+		 return result;
+	 }
 }
