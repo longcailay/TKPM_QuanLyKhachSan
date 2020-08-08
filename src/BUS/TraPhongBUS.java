@@ -13,4 +13,14 @@ public class TraPhongBUS {
 			return TraPhongDAO.TraPhong(idPhong);
 		}
 	}
+	
+	public static int layIDPhieuThue(int idPhong) {//lấy id phiếu thuê của phòng đang trả
+		if(idPhong < 0) {
+			JOptionPane.showMessageDialog(null, "idPhong không hợp lê!", "Error!", JOptionPane.ERROR_MESSAGE);
+			return 0;
+		}
+		else {
+			return TraPhongDAO.layIDPhieuThue(idPhong);
+		}
+	}
 }

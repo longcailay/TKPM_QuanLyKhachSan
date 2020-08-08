@@ -76,14 +76,15 @@ public class NguoiDung {
 		this.tinhTrang = tinhTrang;
 		this.phanQuyen = phanQuyen;
 	}
+	
 	public NguoiDung() {
 		this.id = 1;
-		this.hoTen = "Nguyễn Văn A";
-		this.cmnd = "123456789";
-		this.sdt = "0329435555";
-		this.diaChi = "Tien giang";
+		this.hoTen = "Nguyễn Long Hồ";
+		this.cmnd = "3123484721";
+		this.sdt = "0329435151";
+		this.diaChi = "Cai Lậy, Tiền Giang";
 		this.taiKhoan = "admin";
-		this.matKhau = "113";
+		this.matKhau = "admin";
 		this.tinhTrang = 1;
 		this.phanQuyen = 1;
 	}

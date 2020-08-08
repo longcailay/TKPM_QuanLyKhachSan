@@ -87,6 +87,7 @@ public class wsQuanLyPhong extends JPanel {
 	public static JButton btnChiTietPhong = new JButton();
 	
 	public static PhieuThue phieuThue = new PhieuThue();
+	public static ArrayList<String> dsIDPhieuThue = new ArrayList<String>();
 	/**
 	 * Create the panel.
 	 */
@@ -206,6 +207,10 @@ public class wsQuanLyPhong extends JPanel {
 					else {
 						int btnResult = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm vào hóa đơn thanh toán!", "Infomation!",JOptionPane.YES_NO_OPTION);
 						if(btnResult == JOptionPane.YES_OPTION) {
+							dsIDPhieuThue.add(String.valueOf(TraPhongBUS.layIDPhieuThue(ctp.getId())));
+							TraPhongBUS.TraPhong(ctp.getId());
+							JOptionPane.showMessageDialog(null, "Thêm vào hóa đơn thành công!","Information!",JOptionPane.INFORMATION_MESSAGE);
+							
 							System.out.print("YES");
 						}
 						if(btnResult == JOptionPane.NO_OPTION) {

@@ -7,53 +7,86 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.TextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterJob;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
+import BUS.HoaDonBUS;
 import BUS.LoaiKhachBUS;
 import BUS.LoaiPhongBUS;
 import BUS.PhieuThueBUS;
 import DTO.PhieuThue;
 import DTO.PhieuThueChiTiet;
+import UI.HomePage;
+import DTO.HoaDon;
 import DTO.Khach;
 import DTO.LoaiPhong;
+import DTO.ChiTietHoaDon;
 import java.awt.Component;
+
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 public class wsThanhToan extends JPanel{
+	private static final PrinterJob PDFPrinterJob = null;
 	private JTextField txtTenPhong;
 	private JTextField txtNgayThue;
 	private JTextField txtNgayTra;
 	private JTextField txtTienPhong;
 	private JTable tbDanhSachKhach;
-	private JTextField txtKhachHang;
-	private JTextField txtDiaChi;
+	public static JTextField txtKhachHang;
+	public static JTextField txtDiaChi;
 	private JTable tbPhieuThue;
-	private JTextField txtTriGia;
-	private JComboBox cmbMaPhieuThue;
+	public static JTextField txtTriGia;
+	private  JComboBox cmbMaPhieuThue;
+	private JButton btnThemVaoHoaDon;
 	private PhieuThue phieuThue = new PhieuThue();//Phiếu thuê mà Combox đang chọn
 	private ArrayList<Integer> dsIDPhieuThueCTT = PhieuThueBUS.LoadDanhSachIDPhieuThueChuaThanhToan();// danh sach ID phieu thue chua thanh toan
 	private PhieuThueChiTiet ptct = new PhieuThueChiTiet();
-	private ArrayList<PhieuThueChiTiet> dsPTCT = new ArrayList<PhieuThueChiTiet>();
+	public static ArrayList<PhieuThueChiTiet> dsPTCT = new ArrayList<PhieuThueChiTiet>();
 	private float triGia = 0.0f;
+	
+	
+	public static int idHoaDon = HoaDonBUS.getIDHoaDonMax() + 1;
+	private int idNguoiDung = HomePage.nguoiDung.getId();
+	
+	//định dạng đơn vị tiền tệ VNĐ
+	private Locale localeVN = new Locale("vi", "VN");
+	private NumberFormat numberFormatVN = NumberFormat.getCurrencyInstance(localeVN);
+	
+	private JPanel panel_1;
+	private JPanel panel;
 	public wsThanhToan() {
+		//System.out.println("KKK: " + wsQuanLyPhong.dsIDPhieuThue.get(0));
+		//System.out.println("TTT: " + wsQuanLyPhong.dsIDPhieuThue.get(1));
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 0, 1, (Color) new Color(0, 0, 0)));
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		panel_1.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -78,14 +111,14 @@ public class wsThanhToan extends JPanel{
 		lblNewLabel_3_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		txtKhachHang = new JTextField();
-		txtKhachHang.setForeground(Color.RED);
-		txtKhachHang.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		txtKhachHang.setForeground(Color.BLACK);
+		txtKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtKhachHang.setDisabledTextColor(Color.BLACK);
 		txtKhachHang.setColumns(10);
 		
 		txtDiaChi = new JTextField();
-		txtDiaChi.setForeground(Color.RED);
-		txtDiaChi.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		txtDiaChi.setForeground(Color.BLACK);
+		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtDiaChi.setDisabledTextColor(Color.BLACK);
 		txtDiaChi.setColumns(10);
 		
@@ -125,6 +158,13 @@ public class wsThanhToan extends JPanel{
 		btnHoanTat.setForeground(Color.WHITE);
 		btnHoanTat.setBackground(Color.BLUE);
 		btnHoanTat.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnHoanTat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnHoanTatClick();
+			}
+		});
+		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -236,7 +276,7 @@ public class wsThanhToan extends JPanel{
 		JLabel lblNewLabel_3_2_1 = new JLabel("Tiền phòng");
 		lblNewLabel_3_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
-		JButton btnThemVaoHoaDon = new JButton("Thêm vào hóa đơn");
+		btnThemVaoHoaDon = new JButton("Thêm vào hóa đơn");
 		btnThemVaoHoaDon.setForeground(Color.WHITE);
 		btnThemVaoHoaDon.setBackground(Color.BLUE);
 		btnThemVaoHoaDon.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -385,6 +425,7 @@ public class wsThanhToan extends JPanel{
 		scrollPane.setViewportView(tbDanhSachKhach);
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
+		loadTablePhieuThueBanDau();
 	}
 	
 	void loadCMBMaPhieuThue() {
@@ -474,11 +515,13 @@ public class wsThanhToan extends JPanel{
 		float tongTien = donGia*soNgayThue*(1.0f + phuThuSLK)*phuThuLK;
 		float tongPhuThu =(float) (tongTien - donGia*soNgayThue);
 		
-		txtTienPhong.setText(String.valueOf((int)tongTien) + " vnđ");
+		
+		String strTienPhong = numberFormatVN.format(tongTien);
+		txtTienPhong.setText(strTienPhong);
 		ptct = new PhieuThueChiTiet(phieuThue.getId(), phieuThue.getTenPhong(),soNgayThue, donGia, tongPhuThu, tongTien);
 	}
 	
-	void btnThemVaoHoaDonClick(){
+	public void btnThemVaoHoaDonClick(){
 		if(cmbMaPhieuThue.getModel().getSelectedItem() != null) {
 			dsPTCT.add(ptct);
 			cmbMaPhieuThue.removeItemAt(cmbMaPhieuThue.getSelectedIndex());
@@ -487,6 +530,26 @@ public class wsThanhToan extends JPanel{
 			//System.out.println("NO");
 		}
 		loadTablePhieuThue();
+	}
+	
+	
+	///////////////////////////////////////////////
+	void loadTablePhieuThueBanDau() {//lúc trả phòng ta chọn "Thêm vào hóa đơn"
+		if(wsQuanLyPhong.dsIDPhieuThue.size() > 0) {
+			String cmb = "";
+			for(int i = 1; i < cmbMaPhieuThue.getItemCount(); i++) {
+				cmb = cmbMaPhieuThue.getItemAt(i).toString();
+				for(int j = 0; j < wsQuanLyPhong.dsIDPhieuThue.size(); j++) {
+					if(cmb.equals(wsQuanLyPhong.dsIDPhieuThue.get(j))){
+						cmbMaPhieuThue.setSelectedIndex(i);
+						i--;
+						btnThemVaoHoaDon.doClick();
+					}
+				}
+			}
+		}
+		wsQuanLyPhong.dsIDPhieuThue = new ArrayList<String>();
+		cmbMaPhieuThue.setSelectedIndex(0);
 	}
 	
 	void loadTablePhieuThue() {
@@ -501,9 +564,9 @@ public class wsThanhToan extends JPanel{
 			tbPhieuThue.setValueAt(dsPTCT.get(i).getId(), i, 0);
 			tbPhieuThue.setValueAt(dsPTCT.get(i).getTenPhong(), i, 1);
 			tbPhieuThue.setValueAt(dsPTCT.get(i).getSoNgay(), i, 2);
-			tbPhieuThue.setValueAt((int)dsPTCT.get(i).getDonGia(), i, 3);
-			tbPhieuThue.setValueAt((int)dsPTCT.get(i).getPhuThu(), i, 4);
-			tbPhieuThue.setValueAt((int)dsPTCT.get(i).getTien(), i, 5);
+			tbPhieuThue.setValueAt(numberFormatVN.format(dsPTCT.get(i).getDonGia()), i, 3);
+			tbPhieuThue.setValueAt(numberFormatVN.format(dsPTCT.get(i).getPhuThu()), i, 4);
+			tbPhieuThue.setValueAt(numberFormatVN.format(dsPTCT.get(i).getTien()), i, 5);
 		}
 		triGiaHoaDon();
 	}
@@ -512,6 +575,37 @@ public class wsThanhToan extends JPanel{
 		for(int i = 0; i < dsPTCT.size(); i++) {
 			triGia += dsPTCT.get(i).getTien();
 		}
-		txtTriGia.setText(String.valueOf((int)triGia) + " vnđ");
+		txtTriGia.setText(numberFormatVN.format(triGia));
+	}
+	
+	void btnHoanTatClick() {
+		HoaDon hd = new HoaDon(idHoaDon, txtKhachHang.getText(), txtDiaChi.getText(), triGia, idNguoiDung);
+		int success = HoaDonBUS.TaoHoaDon(hd);
+		if(success == -1) {
+			return;
+		}
+		else {
+			if(dsPTCT.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Hóa đơn phải có ít nhất một phiếu thuê!", "Warning!", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			for(PhieuThueChiTiet pt : dsPTCT) {
+				ChiTietHoaDon cthd = new ChiTietHoaDon(idHoaDon, pt.getId(), pt.getSoNgay(), pt.getDonGia(), pt.getPhuThu(), pt.getTien());
+				success = HoaDonBUS.TaoChiTietHoaDon(cthd);
+				if(success == -1) {
+					JOptionPane.showMessageDialog(null, "Tạo chi tiết hóa đơn thất bại!", "Error!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			InHoaDon a = new InHoaDon();
+			a.setVisible(false);
+			idHoaDon = HoaDonBUS.getIDHoaDonMax() + 1;
+			dsPTCT = new ArrayList<PhieuThueChiTiet>();
+			dsIDPhieuThueCTT = PhieuThueBUS.LoadDanhSachIDPhieuThueChuaThanhToan();
+			txtKhachHang.setText("");
+			txtDiaChi.setText("");
+			loadTablePhieuThue();
+		}	
+
 	}
 }

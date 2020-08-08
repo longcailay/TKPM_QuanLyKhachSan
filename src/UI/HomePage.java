@@ -41,6 +41,7 @@ public class HomePage extends JFrame {
 
 	//Cái này là người dùng
 	public static NguoiDung nguoiDung = new NguoiDung();
+	
 	/**
 	 * Launch the application.
 	 */
