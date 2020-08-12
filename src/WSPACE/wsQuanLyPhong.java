@@ -50,6 +50,8 @@ import java.awt.GridLayout;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.UIManager;
+import javax.swing.border.MatteBorder;
 
 public class wsQuanLyPhong extends JPanel {
 	
@@ -92,14 +94,17 @@ public class wsQuanLyPhong extends JPanel {
 	 * Create the panel.
 	 */
 	public wsQuanLyPhong() {
+		setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		//JPanel pnWorkspace = new JPanel();
-		this.setBackground(Color.PINK);
+		this.setBackground(UIManager.getColor("Button.background"));
 		
 		panel = new JPanel();
+		panel.setBorder(new MatteBorder(0, 0, 0, 2, (Color) new Color(0, 0, 0)));
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentY(0.0f);
 		
 		panel_2 = new JPanel();
+		panel_2.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
 		panel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 10));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -264,7 +269,7 @@ public class wsQuanLyPhong extends JPanel {
 		panel_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		panel_3.setMinimumSize(new Dimension(15, 15));
 		panel_3.setForeground(new Color(0, 0, 0));
-		panel_3.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel_3.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_3.setAutoscrolls(true);
 		panel_3.setAlignmentX(Component.LEFT_ALIGNMENT);
 		

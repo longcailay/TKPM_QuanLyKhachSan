@@ -32,6 +32,8 @@ import DTO.Phong;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.UIManager;
+import javax.swing.border.MatteBorder;
 
 public class wsThuePhong extends JPanel {
 	private JTable tbPhieuThue;
@@ -52,9 +54,10 @@ public class wsThuePhong extends JPanel {
 	 * Create the panel.
 	 */
 	public wsThuePhong() {
+		setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		
 		//JPanel pnWorkspace = new JPanel();
-		this.setBackground(Color.PINK);
+		this.setBackground(UIManager.getColor("Button.background"));
 		
 		JPanel panel = new JPanel();
 		

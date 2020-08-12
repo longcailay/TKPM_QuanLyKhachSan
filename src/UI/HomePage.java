@@ -1,11 +1,15 @@
 package UI;
 import java.awt.EventQueue;
+import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -17,6 +21,10 @@ import java.awt.Component;
 import javax.swing.JLabel;
 
 import WSPACE.*;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.Label;
+import java.awt.SystemColor;
 
 public class HomePage extends JFrame {
 	//Các group Layout cho 3 Panel chính
@@ -39,6 +47,8 @@ public class HomePage extends JFrame {
 	public static JButton btnCaiDat;	
 	public static JButton btnThanhToan;
 
+	
+	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	//Cái này là người dùng
 	public static NguoiDung nguoiDung = new NguoiDung();
 	
@@ -66,7 +76,7 @@ public class HomePage extends JFrame {
 	{
 		pnMenu.setAlignmentY(0.0f);
 		pnMenu.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pnMenu.setBackground(new Color(0, 51, 255));
+		pnMenu.setBackground(new Color(0, 153, 255));
 		pnMenu.setForeground(new Color(0, 255, 0));
 		
 		InitializePanelMenu(pnMenu);//set vị trí và kích thước các Button trong PanelMenu
@@ -76,6 +86,7 @@ public class HomePage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnQuanLyPhong.getText());
 				loadNewWorkspace("QuanLyPhong");
+				setButtonPressedColor(btnQuanLyPhong);
 			}
 		});
 		
@@ -84,6 +95,16 @@ public class HomePage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnThanhToan.getText());
 				loadNewWorkspace("ThanhToan");
+				setButtonPressedColor(btnThanhToan);
+			}
+		});
+		
+		btnHoaDon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setText(btnHoaDon.getText());
+				loadNewWorkspace("HoaDon");
+				setButtonPressedColor(btnHoaDon);
 			}
 		});
 		
@@ -91,6 +112,7 @@ public class HomePage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnThuePhong.getText());
 				loadNewWorkspace("ThuePhong");
+				setButtonPressedColor(btnThuePhong);
 			}
 		});
 		
@@ -99,10 +121,26 @@ public class HomePage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblTitle.setText(btnNhanVien.getText());
 				loadNewWorkspace("NhanVien");
+				setButtonPressedColor(btnNhanVien);
 			}
 		});
 		
+		btnCaiDat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setText(btnCaiDat.getText());
+				loadNewWorkspace("CaiDat");
+				setButtonPressedColor(btnCaiDat);
+			}
+		});
 		
+		listButton.add(btnQuanLyPhong);
+		listButton.add(btnThuePhong);
+		listButton.add(btnHoaDon);
+		listButton.add(btnNhanVien);
+		listButton.add(btnBaoCao);
+		listButton.add(btnCaiDat);
+		listButton.add(btnThanhToan);
 		pnMenu.setLayout(null);
 	}
 	
@@ -143,8 +181,9 @@ public class HomePage extends JFrame {
 	public void setupTitle(JPanel pnTitle) {
 		pnTitle.setAlignmentY(0.0f);
 		pnTitle.setAlignmentX(0.0f);
-		pnTitle.setBackground(new Color(0, 51, 255));
+		pnTitle.setBackground(new Color(240, 240, 240));
 		lblTitle = new JLabel();
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
 	}
 	
 	public void setupWorkspace(JPanel pnWorkspace) {
@@ -180,34 +219,64 @@ public class HomePage extends JFrame {
 	{
 		btnQuanLyPhong = new JButton("Quản Lý Phòng");
 		btnQuanLyPhong.setBounds(0, 109, 270, 73);
+		btnQuanLyPhong.setBackground(new Color(0, 51, 255));
+		btnQuanLyPhong.setBorder(null);
+		btnQuanLyPhong.setForeground(SystemColor.control);
 		pnMenu.add(btnQuanLyPhong);
 		
-		btnThuePhong = new JButton("Quản lý phiếu thuê");
+		btnThuePhong = new JButton("Phiếu thuê");
+		btnThuePhong.setForeground(SystemColor.control);
+		btnThuePhong.setBorder(null);
+		btnThuePhong.setBackground(new Color(0, 51, 255));
 		btnThuePhong.setBounds(0, 327, 270, 73);
 		pnMenu.add(btnThuePhong);
 		
 		btnHoaDon = new JButton("Hóa Đơn");
+		btnHoaDon.setForeground(SystemColor.control);
+		btnHoaDon.setBorder(null);
+		btnHoaDon.setBackground(new Color(0, 51, 255));
 		btnHoaDon.setBounds(0, 254, 270, 73);
 		pnMenu.add(btnHoaDon);
 		
 		btnNhanVien = new JButton("Nhân Viên");
+		btnNhanVien.setForeground(SystemColor.control);
+		btnNhanVien.setBorder(null);
+		btnNhanVien.setBackground(new Color(0, 51, 255));
 		btnNhanVien.setBounds(0, 400, 270, 73);
 		pnMenu.add(btnNhanVien);
 		
 		btnBaoCao = new JButton("Báo Cáo");
+		btnBaoCao.setForeground(SystemColor.control);
+		btnBaoCao.setBorder(null);
+		btnBaoCao.setBackground(new Color(0, 51, 255));
 		btnBaoCao.setBounds(0, 472, 270, 73);
 		pnMenu.add(btnBaoCao);
 		
 		btnCaiDat = new JButton("Cài Đặt");
+		btnCaiDat.setForeground(SystemColor.control);
+		btnCaiDat.setBorder(null);
+		btnCaiDat.setBackground(new Color(0, 51, 255));
 		btnCaiDat.setBounds(0, 542, 270, 79);
 		pnMenu.add(btnCaiDat);
 		
 		btnThanhToan = new JButton("Thanh Toán");
+		btnThanhToan.setBorder(null);
+		btnThanhToan.setForeground(SystemColor.control);
+		btnThanhToan.setBackground(new Color(0, 51, 255));
 		btnThanhToan.setBounds(0, 181, 270, 73);
 		pnMenu.add(btnThanhToan);
 	}
 		
-	
+	void setButtonPressedColor(JButton btn) {
+		for(JButton button: listButton) {
+			if(button.equals(btn)) {
+				btn.setBackground(new Color(0, 51, 153));
+			}
+			else {
+				button.setBackground(new Color(0, 51, 255));
+			}
+		}
+	}
 	public HomePage() {		
 		setSize(new Dimension(1200, 800));
 		//setBackground(new Color(0, 51, 255));
@@ -218,6 +287,11 @@ public class HomePage extends JFrame {
 		//Cài đặt Panel Menu
 		pnMenu = new JPanel();
 		setupPanelMenu(pnMenu);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(HomePage.class.getResource("/images/hotel.png")));
+		lblNewLabel.setBounds(0, 0, 270, 111);
+		pnMenu.add(lblNewLabel);
 		
 		//Cài đặt Title
 		pnTitle = new JPanel();
@@ -233,7 +307,7 @@ public class HomePage extends JFrame {
 		gl_pnTitle.setHorizontalGroup(
 			gl_pnTitle.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnTitle.createSequentialGroup()
-					.addGap(357)
+					.addGap(10)
 					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(371, Short.MAX_VALUE))
 		);

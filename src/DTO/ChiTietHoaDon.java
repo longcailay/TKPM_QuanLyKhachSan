@@ -52,5 +52,9 @@ public class ChiTietHoaDon {
 		this.phuThu = phuThu;
 		this.tien = tien;
 	}
+	public ChiTietHoaDon() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 }

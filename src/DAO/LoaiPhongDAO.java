@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTable;
 
+import DTO.LoaiKhach;
 import DTO.LoaiPhong;
 
 import DataConnection.DataProvider;
@@ -13,7 +14,7 @@ public class LoaiPhongDAO {
 
 	public static ArrayList<LoaiPhong> loadDSLoaiPhong(){
 		ArrayList<LoaiPhong> result = new ArrayList<LoaiPhong>();
-		String query = "exec pro_LoadDanhSachLoaiPhong";
+		String query = "SELECT * FROM LOAI_PHONG";
 		DataProvider dp = new DataProvider();
 		JTable table = dp.ExcuteQuery(query);
 		
@@ -47,4 +48,19 @@ public class LoaiPhongDAO {
 		return result;
 	}
 	
+	public static int CapNhatLoaiPhong(LoaiPhong loaiPhong) {
+		int result = -1;
+		String query = "UPDATE LOAI_PHONG SET TenLoai = N'" + loaiPhong.getTenLoai() + "', DonGia = " + loaiPhong.getDonGia() + ", SL_KhachBinhThuong = " + loaiPhong.getSoLuongKhachBinhThuong() + ", SL_KhachToiDa = " + loaiPhong.getSoLuongKhachToiDa() + ", PhuThu = " + loaiPhong.getPhuThu() + "  WHERE ID = " + loaiPhong.getId();
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);
+		return result;
+	}
+	
+	public static int ThemLoaiPhong(LoaiPhong lp) {
+		int result = -1;
+		String query = "INSERT INTO LOAI_PHONG (TenLoai, DonGia, SL_KhachBinhThuong, SL_KhachToiDa, PhuThu) VALUES(N'" + lp.getTenLoai() + "', " + lp.getDonGia() + ", " + lp.getSoLuongKhachBinhThuong() + ", " + lp.getSoLuongKhachToiDa() + ", "+ lp.getPhuThu() +")";
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);		
+		return result;
+	}
 }

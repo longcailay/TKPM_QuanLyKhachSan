@@ -47,5 +47,9 @@ public class HoaDon {
 		this.nguoiDung = nguoiDung;
 	}
 	
+	public HoaDon() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 }

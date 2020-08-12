@@ -32,6 +32,14 @@ public class LoaiKhachDAO {
 		return result;
 	}
 	
+	public static int ThemLoaiKhach(String tenLoai, double phuThu) {
+		int result;
+		String query = "INSERT INTO LOAI_KHACH (TenLoai, PhuThu) VALUES(N'" + tenLoai + "', " + phuThu + ")";
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);		
+		return result;
+	}
+	
 	public static int LoadMaLoaiKhachTheoTenLoaiKhach(String tenLoaiKhach) {
 		int result = -1;
 		String query = "pro_LoadMaLoaiKhachTheoTenLoaiKhach N'" + tenLoaiKhach + "'";
@@ -52,6 +60,14 @@ public class LoaiKhachDAO {
 			result.setTenLoai(table.getValueAt(0, 1).toString());
 			result.setPhuThu((double)table.getValueAt(0, 2));
 		}
+		return result;
+	}
+	
+	public static int CapNhatLoaiKhach(LoaiKhach loaiKhach) {
+		int result = -1;
+		String query = "UPDATE LOAI_KHACH SET TenLoai = N'" + loaiKhach.getTenLoai() + "', PhuThu = " + loaiKhach.getPhuThu() +"  WHERE ID = " + loaiKhach.getId();
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);
 		return result;
 	}
 }

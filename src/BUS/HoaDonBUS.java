@@ -1,6 +1,8 @@
 package BUS;
 
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import DAO.HoaDonDAO;
@@ -27,5 +29,17 @@ public class HoaDonBUS {
 	
 	public static int TaoChiTietHoaDon(ChiTietHoaDon cthd) {
 		return HoaDonDAO.TaoChiTietHoaDon(cthd);
+	}
+	public static ArrayList<HoaDon> LoadDanhSachHoaDon() {
+		return HoaDonDAO.LoadDanhSachHoaDon();
+	}
+	
+	public static ArrayList<HoaDon> LoadDanhSachHoaDonTheoMaHoaDonVaKhachHang(String idHoaDon, String strKhachHang) {
+		if(idHoaDon.equals("Tất cả")) {
+			return HoaDonDAO.LoadDanhSachHoaDonTheoMaHoaDonVaKhachHang(-1, strKhachHang);
+		}
+		else {
+			return HoaDonDAO.LoadDanhSachHoaDonTheoMaHoaDonVaKhachHang(Integer.valueOf(idHoaDon), strKhachHang);
+		}
 	}
 }
