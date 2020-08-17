@@ -125,6 +125,15 @@ public class HomePage extends JFrame {
 			}
 		});
 		
+		btnBaoCao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblTitle.setText(btnBaoCao.getText());
+				loadNewWorkspace("BaoCao");
+				setButtonPressedColor(btnBaoCao);
+			}
+		});
+		
 		btnCaiDat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

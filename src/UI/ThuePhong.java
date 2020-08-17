@@ -61,6 +61,8 @@ import DTO.PhieuThue;
 import WSPACE.wsQuanLyPhong;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import com.toedter.calendar.JYearChooser;
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -316,10 +318,6 @@ public class ThuePhong extends JFrame {
 				btnCapNhatClick();
 			}
 		});
-		
-		JLabel lblNewLabel_2 = new JLabel(Integer.toString(phieuThue.getId()));
-		lblNewLabel_2.setBounds(318, 23, 45, 13);
-		contentPane.add(lblNewLabel_2);
 		
 		btnHuy = new JButton("Hủy");
 		btnHuy.setForeground(Color.BLACK);

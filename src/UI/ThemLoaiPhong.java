@@ -142,7 +142,7 @@ public class ThemLoaiPhong extends JFrame {
 		Label label = new Label("Tên loại phòng");
 		label.setForeground(Color.BLACK);
 		label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label.setBounds(94, 62, 101, 33);
+		label.setBounds(94, 62, 139, 33);
 		contentPane.add(label);
 		
 		Label label_1 = new Label("Số khách bình thường");

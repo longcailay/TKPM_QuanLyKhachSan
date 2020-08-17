@@ -52,6 +52,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+import javax.swing.border.LineBorder;
 
 public class wsQuanLyPhong extends JPanel {
 	
@@ -99,7 +100,7 @@ public class wsQuanLyPhong extends JPanel {
 		this.setBackground(UIManager.getColor("Button.background"));
 		
 		panel = new JPanel();
-		panel.setBorder(new MatteBorder(0, 0, 0, 2, (Color) new Color(0, 0, 0)));
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentY(0.0f);
 		
@@ -111,7 +112,7 @@ public class wsQuanLyPhong extends JPanel {
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 542, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 572, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -120,10 +121,9 @@ public class wsQuanLyPhong extends JPanel {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
 					.addContainerGap())
+				.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
 		);
 		panel_2.setLayout(null);
 		
@@ -264,12 +264,13 @@ public class wsQuanLyPhong extends JPanel {
 		panel_2.add(lblKhchHng);
 		
 		panel_1 = new JPanel();
+		panel_1.setBorder(null);
 		
 		panel_3 = new JPanel();
 		panel_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		panel_3.setMinimumSize(new Dimension(15, 15));
 		panel_3.setForeground(new Color(0, 0, 0));
-		panel_3.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_3.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		panel_3.setAutoscrolls(true);
 		panel_3.setAlignmentX(Component.LEFT_ALIGNMENT);
 		

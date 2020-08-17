@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/BUS/BaoCaoBUS.java=UTF-8
 encoding//src/BUS/ChiTietHoaDonBUS.java=UTF-8
 encoding//src/BUS/HoaDonBUS.java=UTF-8
 encoding//src/BUS/KhachBUS.java=UTF-8
@@ -23,6 +24,7 @@ encoding//src/UI/ThemLoaiPhong.java=UTF-8
 encoding//src/UI/ThemPhongMoi.java=UTF-8
 encoding//src/UI/ThuePhong.java=UTF-8
 encoding//src/WSPACE/InHoaDon.java=UTF-8
+encoding//src/WSPACE/wsBaoCao.java=UTF-8
 encoding//src/WSPACE/wsCaiDat.java=UTF-8
 encoding//src/WSPACE/wsHoaDon.java=UTF-8
 encoding//src/WSPACE/wsQuanLyPhong.java=UTF-8
