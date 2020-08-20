@@ -144,6 +144,7 @@ public class wsThanhToan extends JPanel{
 		txtTriGia.setColumns(10);
 		
 		JButton btnDatLai = new JButton("Đặt lại");
+		btnDatLai.setBackground(Color.ORANGE);
 		btnDatLai.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnDatLai.addActionListener(new ActionListener() {
 			@Override

@@ -1,9 +1,13 @@
 package DAO;
 
+
+import java.util.ArrayList;
+
 import javax.swing.JTable;
 
-import DTO.LoaiKhach;
+
 import DTO.NguoiDung;
+
 import DataConnection.DataProvider;
 
 public class NguoiDungDAO {
@@ -36,6 +40,70 @@ public class NguoiDungDAO {
 			String hoTen =(String) table.getModel().getValueAt(0, 0);
 			result = hoTen;
 		}
+		return result;
+	}
+	
+	public static ArrayList<NguoiDung> LoadDSNguoiDung(){
+		ArrayList<NguoiDung> result = new ArrayList<NguoiDung>();
+		String query = "select * from NGUOI_DUNG where TinhTrang = 1";
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		
+		int countRow  = table.getRowCount();
+		for(int i = 0; i < countRow; i++) {
+			int id =(int) table.getModel().getValueAt(i, 0);
+			String hoTen =(String) table.getModel().getValueAt(i, 1);
+			String cmnd =(String) table.getModel().getValueAt(i, 2);
+			String sdt =(String) table.getModel().getValueAt(i, 3);
+			String diaChi = (String)table.getModel().getValueAt(i, 4);
+			String taiKhoan =(String) table.getModel().getValueAt(i, 5);
+			String matKhau = (String)table.getModel().getValueAt(i, 6);
+			int tinhTrang = (int) table.getModel().getValueAt(i, 7);
+			int phanQuyen =(int) table.getModel().getValueAt(i, 8);
+			result.add(new NguoiDung(id, hoTen, cmnd, sdt, diaChi, taiKhoan, matKhau, tinhTrang, phanQuyen));
+		}
+		return result;
+	}
+	
+
+	public static int ThemNguoiDungMoi(NguoiDung nd) {
+		int result;
+		String query = "exec pro_ThemNguoiDung N'"+ nd.getHoTen() + "', N'" + nd.getCmnd() + "', N'" + nd.getSdt() + "', N'" + nd.getDiaChi() + "', N'" + nd.getTaiKhoan() + "', N'" + nd.getMatKhau() + "', " + nd.getPhanQuyen();
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);		
+		return result;
+	}
+	
+	public static boolean KiemTraTenTaiKhoanTonTai(String tenTaiKhoan) {
+		boolean result = false;
+		int count = 0;
+		String query = "select count(TaiKhoan) from NGUOI_DUNG where TaiKhoan = N'" + tenTaiKhoan + "'";
+		DataProvider dp = new DataProvider();
+		JTable table = dp.ExcuteQuery(query);
+		
+		int countRow  = table.getRowCount();
+		if(countRow > 0) {
+			count =(int) table.getModel().getValueAt(0, 0);
+		}
+		if(count >= 1) {//tài khoản đã tồn tại
+			result = true;
+		}
+		return result;
+	}
+	
+	public static int CapNhatNguoiDung(NguoiDung nd) {
+		int result;
+		String query = "EXEC pro_CapNhatNguoiDung "+ nd.getId() + ", N'"+ nd.getHoTen() + "', N'" + nd.getCmnd() + "', N'" + nd.getSdt() + "', N'" + nd.getDiaChi() + "', N'" + nd.getTaiKhoan() + "', N'" + nd.getMatKhau() + "', " + nd.getPhanQuyen();
+		DataProvider dp = new DataProvider();
+		result = dp.ExcuteNonQuery(query);		
+		return result;
+	}
+	
+	
+	public static int XoaNguoiDung(int id) {
+		String query = "Update NGUOI_DUNG set TinhTrang = 0 where ID = " + id;
+		DataProvider dp = new DataProvider();
+		int result = dp.ExcuteNonQuery(query);
 		return result;
 	}
 	

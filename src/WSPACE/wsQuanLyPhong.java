@@ -36,6 +36,7 @@ import UI.ThuePhong;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JEditorPane;
 import javax.swing.BoxLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -192,11 +193,14 @@ public class wsQuanLyPhong extends JPanel {
 		dtpGhiChu.setEditable(false);
 		
 		btnThemPhongMoi = new JButton("Thêm phòng");
+		btnThemPhongMoi.setForeground(new Color(0, 0, 0));
+		btnThemPhongMoi.setBackground(Color.GREEN);
 		btnThemPhongMoi.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnThemPhongMoi.setBounds(10, 516, 117, 33);
 		panel_2.add(btnThemPhongMoi);
 		
 		btnTraPhong = new JButton("Trả phòng");
+		btnTraPhong.setBackground(new Color(189, 183, 107));
 		btnTraPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnTraPhong.setBounds(143, 516, 117, 33);
 		panel_2.add(btnTraPhong);
@@ -229,6 +233,7 @@ public class wsQuanLyPhong extends JPanel {
 		});
 		
 		btnSuaPhong = new JButton("Sửa phòng");
+		btnSuaPhong.setBackground(Color.ORANGE);
 		btnSuaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSuaPhong.setBounds(10, 579, 117, 33);
 		panel_2.add(btnSuaPhong);
@@ -246,6 +251,7 @@ public class wsQuanLyPhong extends JPanel {
 		
 		
 		btnXoaPhong = new JButton("Xóa phòng");
+		btnXoaPhong.setBackground(Color.RED);
 		btnXoaPhong.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnXoaPhong.setBounds(143, 579, 117, 33);
 		panel_2.add(btnXoaPhong);
@@ -332,6 +338,8 @@ public class wsQuanLyPhong extends JPanel {
 		
 		
 		btnThuePhong= new JButton("Thuê phòng");
+		btnThuePhong.setForeground(Color.WHITE);
+		btnThuePhong.setBackground(Color.BLUE);
 		btnThuePhong.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -429,7 +437,7 @@ public class wsQuanLyPhong extends JPanel {
 						btnChiTietPhong = b;
 					}
 				});				
-				panel_3.add(b);
+				panel_3.add(b);				
 			}
 		}
     }

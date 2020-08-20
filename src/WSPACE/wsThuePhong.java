@@ -118,6 +118,7 @@ public class wsThuePhong extends JPanel {
 		tbKhachThue.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbKhachThue.getColumnModel().getColumn(0).setMaxWidth(30);
 		scrollPane_1.setViewportView(tbKhachThue);
+		
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)

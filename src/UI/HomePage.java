@@ -46,7 +46,7 @@ public class HomePage extends JFrame {
 	public static JButton btnBaoCao;	
 	public static JButton btnCaiDat;	
 	public static JButton btnThanhToan;
-
+	public static JButton btnDangXuat = new JButton("Đăng xuất");
 	
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	//Cái này là người dùng
@@ -318,6 +318,7 @@ public class HomePage extends JFrame {
 				.addGroup(gl_pnTitle.createSequentialGroup()
 					.addGap(10)
 					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+					//.addComponent(btnDangXuat,GroupLayout.DEFAULT_SIZE, 100, GroupLayout.DEFAULT_SIZE)
 					.addContainerGap(371, Short.MAX_VALUE))
 		);
 		gl_pnTitle.setVerticalGroup(
@@ -325,6 +326,7 @@ public class HomePage extends JFrame {
 				.addGroup(gl_pnTitle.createSequentialGroup()
 					.addGap(5)
 					.addComponent(lblTitle, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+					//.addComponent(btnDangXuat,GroupLayout.DEFAULT_SIZE, 20, GroupLayout.DEFAULT_SIZE)
 					.addContainerGap())
 		);
 		pnTitle.setLayout(gl_pnTitle);
