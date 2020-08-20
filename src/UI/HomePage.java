@@ -46,12 +46,13 @@ public class HomePage extends JFrame {
 	public static JButton btnBaoCao;	
 	public static JButton btnCaiDat;	
 	public static JButton btnThanhToan;
-	public static JButton btnDangXuat = new JButton("Đăng xuất");
+	public static JButton btnDangXuat;
 	
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	//Cái này là người dùng
 	public static NguoiDung nguoiDung = new NguoiDung();
-	
+	public static HomePage frame;
+	private static UI.DangNhap dn;
 	/**
 	 * Launch the application.
 	 */
@@ -59,9 +60,11 @@ public class HomePage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomePage frame = new HomePage();
+					frame = new HomePage();
 					frame.btnQuanLyPhong.doClick();
-					frame.setVisible(true);	
+					frame.setVisible(false);	
+					dn = new UI.DangNhap();
+					dn.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -142,6 +145,14 @@ public class HomePage extends JFrame {
 				setButtonPressedColor(btnCaiDat);
 			}
 		});
+		btnDangXuat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				dn.setVisible(true);
+			}
+		});
+		
 		
 		listButton.add(btnQuanLyPhong);
 		listButton.add(btnThuePhong);
@@ -150,6 +161,8 @@ public class HomePage extends JFrame {
 		listButton.add(btnBaoCao);
 		listButton.add(btnCaiDat);
 		listButton.add(btnThanhToan);
+		listButton.add(btnDangXuat);
+		
 		pnMenu.setLayout(null);
 	}
 	
@@ -274,6 +287,13 @@ public class HomePage extends JFrame {
 		btnThanhToan.setBackground(new Color(0, 51, 255));
 		btnThanhToan.setBounds(0, 181, 270, 73);
 		pnMenu.add(btnThanhToan);
+		
+		btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat.setForeground(SystemColor.menu);
+		btnDangXuat.setBorder(null);
+		btnDangXuat.setBackground(new Color(0, 51, 255));
+		btnDangXuat.setBounds(0, 619, 270, 79);
+		pnMenu.add(btnDangXuat);
 	}
 		
 	void setButtonPressedColor(JButton btn) {
@@ -301,6 +321,8 @@ public class HomePage extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(HomePage.class.getResource("/images/hotel.png")));
 		lblNewLabel.setBounds(0, 0, 270, 111);
 		pnMenu.add(lblNewLabel);
+		
+		
 		
 		//Cài đặt Title
 		pnTitle = new JPanel();
