@@ -211,7 +211,7 @@ public class LoaiPhongBUS {
 		}
 		
 		JOptionPane.showMessageDialog(null, "Thêm loại phòng thành công!", "Warning!", JOptionPane.INFORMATION_MESSAGE);
-		LoaiPhong lp = new LoaiPhong(-1, tenLoai,BigDecimal.valueOf(Double.valueOf(donGia)), Integer.valueOf(slkbt), Integer.valueOf(slktd),Integer.valueOf(phuThu));
+		LoaiPhong lp = new LoaiPhong(-1, tenLoai,BigDecimal.valueOf(Double.valueOf(donGia)), Integer.valueOf(slkbt), Integer.valueOf(slktd),Double.valueOf(phuThu));
 		
 		return LoaiPhongDAO.ThemLoaiPhong(lp);
 	}

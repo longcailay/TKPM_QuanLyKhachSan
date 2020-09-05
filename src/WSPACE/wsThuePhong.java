@@ -177,6 +177,16 @@ public class wsThuePhong extends JPanel {
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
 				"STT", "ID", "T\u00EAn ph\u00F2ng", "Ng\u00E0y thu\u00EA", "Ng\u00E0y tr\u1EA3 ph\u00F2ng", "T\u00ECnh tr\u1EA1ng", "Ng\u01B0\u1EDDi l\u1EADp phi\u1EBFu"
@@ -191,6 +201,7 @@ public class wsThuePhong extends JPanel {
 		});
 		tbPhieuThue.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tbPhieuThue.getColumnModel().getColumn(0).setMaxWidth(30);
+		tbPhieuThue.getColumnModel().getColumn(1).setPreferredWidth(50);
 		tbPhieuThue.getColumnModel().getColumn(1).setMaxWidth(50);
 		scrollPane.setViewportView(tbPhieuThue);
 		

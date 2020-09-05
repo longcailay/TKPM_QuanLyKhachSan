@@ -7,12 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import BUS.DangNhapBUS;
 
 import DTO.NguoiDung;
 
 
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
@@ -20,13 +24,15 @@ import java.awt.event.ActionListener;
 
 import java.awt.Label;
 import javax.swing.SwingConstants;
-
+import javax.swing.WindowConstants;
 import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class DangNhap extends JFrame {
 
@@ -57,7 +63,13 @@ public class DangNhap extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DangNhap() {		
+	public DangNhap() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				HomePage.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			}
+		});		
 		setResizable(false);
 		setTitle("HoApp - Đăng nhập");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,12 +88,6 @@ public class DangNhap extends JFrame {
 		lblNewLabel.setBounds(161, 10, 199, 28);
 		contentPane.add(lblNewLabel);
 		
-		Label label = new Label("T\u00E0i kho\u1EA3n");
-		label.setForeground(Color.BLACK);
-		label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label.setBounds(94, 91, 101, 33);
-		contentPane.add(label);
-		
 		txtTaiKhoan = new JTextField();
 		txtTaiKhoan.addFocusListener(new FocusAdapter() {
 			@Override
@@ -95,12 +101,6 @@ public class DangNhap extends JFrame {
 		txtTaiKhoan.setBounds(222, 91, 199, 33);
 		contentPane.add(txtTaiKhoan);
 		txtTaiKhoan.setColumns(10);
-		
-		Label label_2_1 = new Label("M\u1EADt kh\u1EA9u");
-		label_2_1.setForeground(Color.BLACK);
-		label_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label_2_1.setBounds(94, 165, 101, 33);
-		contentPane.add(label_2_1);
 		
 		btnDangNhap = new JButton("\u0110\u0103ng nh\u1EADp");
 		btnDangNhap.setBackground(new Color(0, 102, 255));
@@ -137,6 +137,18 @@ public class DangNhap extends JFrame {
 		lblThongBao.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblThongBao.setBounds(94, 228, 327, 21);
 		contentPane.add(lblThongBao);
+		
+		JLabel lblTiKhon = new JLabel("Tài khoản");
+		lblTiKhon.setForeground(Color.BLACK);
+		lblTiKhon.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblTiKhon.setBounds(73, 96, 134, 28);
+		contentPane.add(lblTiKhon);
+		
+		JLabel lblTiKhon_1 = new JLabel("Mật khẩu");
+		lblTiKhon_1.setForeground(Color.BLACK);
+		lblTiKhon_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblTiKhon_1.setBounds(73, 170, 134, 28);
+		contentPane.add(lblTiKhon_1);
 		btnHuy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -166,6 +178,11 @@ public class DangNhap extends JFrame {
 					phanQuyenNhanVien();
 				}
 				UI.HomePage.nguoiDung = nguoiDung;
+				Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
+				UI.HomePage.frame.setMaximumSize(DimMax);
+
+				UI.HomePage.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				
 				UI.HomePage.frame.setVisible(true);
 				setVisible(false);
 			}
@@ -214,6 +231,4 @@ public class DangNhap extends JFrame {
 		UI.HomePage.btnDangXuat.setBounds(0, 400, 270, 73);
 		
 	}
-	
-	
 }

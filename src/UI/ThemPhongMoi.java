@@ -119,12 +119,6 @@ public class ThemPhongMoi extends JFrame {
 		contentPane.add(cmbLoaiPhong);
 		loadLoaiPhong();
 		
-		Label label_2_1 = new Label("Loại phòng");
-		label_2_1.setForeground(Color.BLACK);
-		label_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label_2_1.setBounds(94, 111, 101, 33);
-		contentPane.add(label_2_1);
-		
 		edpGhiChu = new JEditorPane();
 		edpGhiChu.setToolTipText("");
 		edpGhiChu.setBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0)), new LineBorder(new Color(0, 0, 0))));
@@ -152,6 +146,12 @@ public class ThemPhongMoi extends JFrame {
 		btnHuy.setBackground(SystemColor.text);
 		btnHuy.setBounds(304, 368, 117, 33);
 		contentPane.add(btnHuy);
+		
+		Label label_1 = new Label("Loại phòng");
+		label_1.setForeground(Color.BLACK);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_1.setBounds(94, 111, 101, 33);
+		contentPane.add(label_1);
 		btnHuy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -190,5 +190,4 @@ public class ThemPhongMoi extends JFrame {
 		 operation = 1;
 		super.setDefaultCloseOperation(operation);
 	}
-	 
 }

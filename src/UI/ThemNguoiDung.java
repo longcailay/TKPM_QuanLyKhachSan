@@ -91,7 +91,7 @@ public class ThemNguoiDung extends JFrame {
 		});
 		
 		setResizable(false);
-		setTitle("HoApp - Thêm phòng mới");
+		setTitle("HoApp - Thêm nhân viên");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 300, 781, 557);
 		contentPane = new JPanel();
@@ -133,19 +133,23 @@ public class ThemNguoiDung extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-							.addGap(100)
-							.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-							.addGap(200))
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+									.addGap(100)
+									.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+									.addGap(200))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 397, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(panel, GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+									.addGap(14)))
+							.addGap(0))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 397, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-							.addGap(14)))
-					.addGap(0))
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 757, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

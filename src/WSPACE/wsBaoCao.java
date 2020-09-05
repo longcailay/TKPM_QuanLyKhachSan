@@ -110,10 +110,11 @@ public class wsBaoCao extends JPanel{
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel_3_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(cldThang, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cldThang, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
 							.addGap(103)
 							.addComponent(btnBaoCao, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(121, Short.MAX_VALUE))
+					.addContainerGap(102, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -125,8 +126,8 @@ public class wsBaoCao extends JPanel{
 					.addGap(19)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnBaoCao, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-						.addComponent(cldThang, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(cmbLoaiBaoCao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(cmbLoaiBaoCao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cldThang, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
@@ -140,8 +141,15 @@ public class wsBaoCao extends JPanel{
 	private JFreeChart createChart(PieDataset dataset) {
 		JFreeChart chart = ChartFactory.createPieChart(cmbLoaiBaoCao.getModel().getSelectedItem().toString(), dataset, true, true, false);
 		 //Format Label
+		String t = "";
+		if(cmbLoaiBaoCao.getSelectedItem().toString().equals("Doanh thu theo loại phòng")) {
+			t = "vnđ";
+		}
+		else {
+			t = "ngày";
+		}
 	    PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator(
-	        "{0} : {2}", new DecimalFormat("0"), new DecimalFormat("0%"));
+	        "{0} : {2} - {1} " + t, new DecimalFormat("0"), new DecimalFormat("0%"));
 	    ((PiePlot) chart.getPlot()).setLabelGenerator(labelGenerator);
 	    return chart;
 	}

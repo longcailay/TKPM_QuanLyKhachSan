@@ -17,7 +17,7 @@ public class DataProvider {
 	private Connection getConnection() {
 		try {
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			conn = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QuanLyKhachSan1;user=sa;password=05111998");
+			conn = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QuanLyKhachSan;user=sa;password=05111998");
 		} catch (ClassNotFoundException e) {
 			System.err.println("Không tìm thấy class.");
 		} catch (SQLException e) {

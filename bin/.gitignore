@@ -1,5 +1,6 @@
 /UI/
 /WSPACE/
-/DAO/
 /BUS/
-/DTO/
+/DataConnection/
+/DAO/
+/images/

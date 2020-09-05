@@ -23,6 +23,9 @@ import javax.swing.JLabel;
 import WSPACE.*;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
+
 import java.awt.Label;
 import java.awt.SystemColor;
 
@@ -331,7 +334,8 @@ public class HomePage extends JFrame {
 		//Cài đặt Workspace (khung làm việc chính)
 		pnWorkspace = new JPanel();	
 		setupWorkspace(pnWorkspace);
-			
+		
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		//Begin: group Layout cho panel Title
 		GroupLayout gl_pnTitle = new GroupLayout(pnTitle);

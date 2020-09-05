@@ -68,7 +68,7 @@ public class NguoiDungDAO {
 
 	public static int ThemNguoiDungMoi(NguoiDung nd) {
 		int result;
-		String query = "exec pro_ThemNguoiDung N'"+ nd.getHoTen() + "', N'" + nd.getCmnd() + "', N'" + nd.getSdt() + "', N'" + nd.getDiaChi() + "', N'" + nd.getTaiKhoan() + "', N'" + nd.getMatKhau() + "', " + nd.getPhanQuyen();
+		String query = "insert into NGUOI_DUNG (HoTen, CMND, SDT, DiaChi,TaiKhoan, MatKhau, TinhTrang, PhanQuyen) values(N'" + nd.getHoTen() + "', N'" + nd.getCmnd() + "', N'" + nd.getSdt() + "',N'" + nd.getDiaChi() + "',N'" +  nd.getTaiKhoan() +"',N'" + nd.getMatKhau()+ "',1," + nd.getPhanQuyen()+ ")";
 		DataProvider dp = new DataProvider();
 		result = dp.ExcuteNonQuery(query);		
 		return result;
@@ -93,7 +93,9 @@ public class NguoiDungDAO {
 	
 	public static int CapNhatNguoiDung(NguoiDung nd) {
 		int result;
-		String query = "EXEC pro_CapNhatNguoiDung "+ nd.getId() + ", N'"+ nd.getHoTen() + "', N'" + nd.getCmnd() + "', N'" + nd.getSdt() + "', N'" + nd.getDiaChi() + "', N'" + nd.getTaiKhoan() + "', N'" + nd.getMatKhau() + "', " + nd.getPhanQuyen();
+		String query = "update NGUOI_DUNG set HoTen = N'" + nd.getHoTen() + "', CMND = N'"+ nd.getCmnd()+ "', SDT = N'" + nd.getSdt()+ "', DiaChi = N'"+nd.getDiaChi()+"', MatKhau = N'"+nd.getMatKhau()+ "', PhanQuyen = " + nd.getPhanQuyen() + " where id = " + nd.getId();
+		System.out.println(query);
+		//String query1 = "EXEC pro_CapNhatNguoiDung "+ nd.getId() + ", N'"+ nd.getHoTen() + "', N'" + nd.getCmnd() + "', N'" + nd.getSdt() + "', N'" + nd.getDiaChi() + "', N'" + nd.getTaiKhoan() + "', N'" + nd.getMatKhau() + "', " + nd.getPhanQuyen();
 		DataProvider dp = new DataProvider();
 		result = dp.ExcuteNonQuery(query);		
 		return result;

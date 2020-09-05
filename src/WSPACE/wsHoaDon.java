@@ -281,7 +281,7 @@ public class wsHoaDon extends JPanel {
 			tbDSHoaDon.setValueAt(hoaDon.getKhachHang(), row, 2);
 			tbDSHoaDon.setValueAt(hoaDon.getDiaChi(), row, 3);
 			tbDSHoaDon.setValueAt(numberFormatVN.format(hoaDon.getTongTien()), row, 4);
-			tbDSHoaDon.setValueAt(hoaDon.getNguoiDung(), row, 5);
+			tbDSHoaDon.setValueAt(NguoiDungBUS.LoadTenNguoiDungTheoID(hoaDon.getNguoiDung()), row, 5);
 			row++;
 		}
 	}

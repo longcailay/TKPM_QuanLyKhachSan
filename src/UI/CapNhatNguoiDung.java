@@ -64,7 +64,7 @@ public class CapNhatNguoiDung extends JFrame {
 	private JLabel lblNewLabel_6;
 	private JLabel lblNewLabel_7;
 	private JTextField txtTaiKhoan = new JTextField(wsNhanVien.nguoiDung.getTaiKhoan());
-	private JPasswordField txtMatKhau = new JPasswordField("12345678");
+	private JPasswordField txtMatKhau = new JPasswordField(NguoiDungBUS.LoadNguoiDungTheoID(idNguoiDung).getMatKhau());
 	private JComboBox cmbPhanQuyen;
 	/**
 	 * Launch the application.
@@ -243,7 +243,6 @@ public class CapNhatNguoiDung extends JFrame {
 		txtMatKhau.setBounds(117, 202, 176, 19);
 		panel.add(txtMatKhau);
 		contentPane.setLayout(gl_contentPane);
-		txtMatKhau.setEditable(false);
 		btnHuy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

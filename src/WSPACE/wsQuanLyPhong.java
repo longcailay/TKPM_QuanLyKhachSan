@@ -413,6 +413,9 @@ public class wsQuanLyPhong extends JPanel {
 				if(phong.getLoaiPhong().equals("Loại C")) {
 					pathImage = "/images/roomCConTrong.png";
 				}
+				if(phong.getLoaiPhong().equals("Loại D")) {
+					pathImage = "/images/roomDConTrong.png";
+				}
 			}
 			
 			if(phong.getTinhTrang() == 1) {
@@ -424,6 +427,9 @@ public class wsQuanLyPhong extends JPanel {
 				}
 				if(phong.getLoaiPhong().equals("Loại C")) {
 					pathImage = "/images/roomCDangThue.png";
+				}
+				if(phong.getLoaiPhong().equals("Loại D")) {
+					pathImage = "/images/roomDDangThue.png";
 				}
 			}
 			
